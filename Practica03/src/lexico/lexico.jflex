@@ -89,15 +89,11 @@ return   				{ this.yylval = yytext();
          			  		return Parser.CTE_REAL; }
 { Identificador }		{ this.yylval = yytext();
 							return Parser.ID; }	
-{ Caracter }			{ if(yytext().equals("\n") || yytext().equals("\t"))
-							this.yylval = yytext();
-						  else {
-							String aux = yytext().substring(1, yytext().length() - 1);
-						  	if (aux.length() >= 2)
-								this.yylval = (char) Integer.parseInt(aux.substring(1));
-						  	else
-						  		this.yylval = aux;
-						  }
+{ Caracter }			{ String aux = yytext().substring(1, yytext().length() - 1);
+						  if (aux.length() > 2)
+						  	this.yylval = (char) Integer.parseInt(aux.substring(1));
+						  else
+						  	this.yylval = aux;
 						  return Parser.CTE_CARACTER; }											 	
 [\n \r \t]		    	{ }				
 .						{ System.err.println("Ha fallado el token " + yytext()

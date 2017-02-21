@@ -32,11 +32,15 @@ sentencias: sentencias sentencia
 		 ;
 		 	
 sentencia: variable '=' expresion ';'
-		 | estructura
+		 | estructura ';'
+		 | WHILE '(' expresion ')' '{' sentencias '}'
+		 | IF '(' expresion ')' '{' sentencias '}'
+		 | IF '(' expresion ')' '{' sentencias '}' ELSE '{' sentencias '}'
+		 | WRITE expresiones ';'
          ;
          
-estructura: STRUCT '{' campos '}' ID ';'
-		   | variable ';'
+estructura: STRUCT '{' campos '}' ID
+		   | variable
 		   ;		   
 
 // Campos dentro de un Struct		   
@@ -49,9 +53,16 @@ variableFuncion: variableFuncion variable
 		 | /*Vacio*/
 		 ;
 
-variable: tipoSimple identificador 
+variable: identificador
+		| identificador '[' CTE_ENTERA ']'
+		| identificador '[' CTE_ENTERA ']' '[' CTE_ENTERA ']'
+		| tipoSimple identificador 
 		| tipoSimple '[' CTE_ENTERA ']' identificador  
-		;		   
+		;
+
+expresiones: expresiones ',' CTE_CARACTER
+		   | CTE_CARACTER
+		   ;	   
 	  		     
 expresion: identificador
          | CTE_ENTERA
@@ -61,6 +72,7 @@ expresion: identificador
          | expresion '*' expresion 
          | expresion '/' expresion 
          | expresion '-' expresion
+         | expresion '%' expresion
          | expresion '>' expresion
          | expresion '<' expresion 
          | expresion MAYORIGUALQUE expresion 

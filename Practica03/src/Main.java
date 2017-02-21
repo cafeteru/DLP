@@ -16,25 +16,26 @@ import sintactico.Parser;
 public class Main {
 
 	public static void main(String args[]) throws IOException {
-		if (args.length < 1) {
-			System.err.println("Necesito el archivo de entrada.");
-			return;
-		}
-
-		FileReader fr = null;
-		try {
-			fr = new FileReader(args[0]);
-		} catch (IOException io) {
-			System.err.println("El archivo " + args[0]
-					+ " no se ha podido abrir.");
-			return;
-		}
-
-		// * Creamos léxico y sintáctico
-		Lexico lexico = new Lexico(fr);
-		Parser parser = new Parser(lexico);
-		// * "Parseamos"
-		parser.run();
+//		if (args.length < 1) {
+//			System.err.println("Necesito el archivo de entrada.");
+//			return;
+//		}
+//
+//		FileReader fr = null;
+//		try {
+//			fr = new FileReader(args[0]);
+//		} catch (IOException io) {
+//			System.err.println("El archivo " + args[0]
+//					+ " no se ha podido abrir.");
+//			return;
+//		}
+//
+//		// * Creamos léxico y sintáctico
+//		Lexico lexico = new Lexico(fr);
+//		Parser parser = new Parser(lexico);
+//		// * "Parseamos"
+//		parser.run();
+		
 	}
 
 }
