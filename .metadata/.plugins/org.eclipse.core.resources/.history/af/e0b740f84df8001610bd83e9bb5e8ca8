@@ -1,0 +1,10 @@
+int i, j, n;
+char c;
+double h;
+int[20] d, c;
+struct {
+} pair;
+struct {
+   int integer;
+   char character;
+} pair;

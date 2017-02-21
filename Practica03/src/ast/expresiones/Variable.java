@@ -1,0 +1,45 @@
+package ast.expresiones;
+
+import ast.util.NodoPosicion;
+
+/**
+ * Clase que simula en el análizador léxico un token que es una variable.
+ * 
+ * @author Iván González Mahagamage
+ *
+ */
+public class Variable extends NodoPosicion implements Expresion {
+	private String clave;
+
+	/**
+	 * Constructor con parámetros.
+	 * 
+	 * @param linea
+	 *            Línea en la que se encuentra el lexema.
+	 * @param columna
+	 *            Columna en la que se encuentra el lexema.
+	 * @param clave
+	 *            Clave de la variable.
+	 */
+	public Variable(int linea, int columna, String clave) {
+		super(linea, columna);
+		this.clave = clave;
+	}
+
+	/**
+	 * Método que devuelve el parámetro clase.
+	 * 
+	 * @return Clave de la variable.
+	 */
+	public String getClave() {
+		return clave;
+	}
+
+	/**
+	 * Redefinición del método toString().
+	 */
+	@Override
+	public String toString() {
+		return clave;
+	}
+}

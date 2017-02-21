@@ -1,0 +1,11 @@
+struct {
+   int[10] integer;
+   char[20] character;
+   struct {
+   	int[10] integer;
+   	char[20] character;
+} pair;
+} pair;
+
+int a = 7;
+int a >= 7;

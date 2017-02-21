@@ -1,0 +1,6 @@
+struct {
+   struct {
+   	int[10] integer;
+   	char[20] character;
+} pair;
+} pair;

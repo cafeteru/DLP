@@ -1,0 +1,4 @@
+struct {
+   int[10] trtrt, ggg, integer;
+   char[20] character;
+} pair;

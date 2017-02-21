@@ -1,0 +1,992 @@
+   0  $accept : sentencias $end
+
+   1  sentencias : sentencias sentencia
+   2             | sentencia
+
+   3  sentencia : variable '=' expresion ';'
+   4            | estructura
+
+   5  estructura : STRUCT '{' campos '}' ID ';'
+   6             | variable ';'
+
+   7  campos : campos estructura
+   8         | variable ';'
+
+   9  variableFuncion : variableFuncion variable
+  10                  |
+
+  11  variable : tipoSimple identificador
+  12           | tipoSimple '[' CTE_ENTERA ']' identificador
+
+  13  expresion : identificador
+  14            | CTE_ENTERA
+  15            | CTE_REAL
+  16            | CTE_CARACTER
+  17            | expresion '+' expresion
+  18            | expresion '*' expresion
+  19            | expresion '/' expresion
+  20            | expresion '-' expresion
+  21            | expresion '>' expresion
+  22            | expresion '<' expresion
+  23            | expresion MAYORIGUALQUE expresion
+  24            | expresion MENORIGUALQUE expresion
+  25            | expresion DISTINTO expresion
+  26            | expresion IGUALDAD expresion
+  27            | expresion Y expresion
+  28            | expresion O expresion
+  29            | '-' expresion
+  30            | '(' expresion ')'
+
+  31  identificador : identificador ',' ID
+  32                | ID
+
+  33  tipoSimple : INT
+  34             | DOUBLE
+  35             | CHAR
+
+state 0
+	$accept : . sentencias $end  (0)
+
+	INT  shift 1
+	DOUBLE  shift 2
+	CHAR  shift 3
+	STRUCT  shift 4
+	.  error
+
+	sentencias  goto 5
+	sentencia  goto 6
+	variable  goto 7
+	estructura  goto 8
+	tipoSimple  goto 9
+
+
+state 1
+	tipoSimple : INT .  (33)
+
+	.  reduce 33
+
+
+state 2
+	tipoSimple : DOUBLE .  (34)
+
+	.  reduce 34
+
+
+state 3
+	tipoSimple : CHAR .  (35)
+
+	.  reduce 35
+
+
+state 4
+	estructura : STRUCT . '{' campos '}' ID ';'  (5)
+
+	'{'  shift 10
+	.  error
+
+
+state 5
+	$accept : sentencias . $end  (0)
+	sentencias : sentencias . sentencia  (1)
+
+	$end  accept
+	INT  shift 1
+	DOUBLE  shift 2
+	CHAR  shift 3
+	STRUCT  shift 4
+	.  error
+
+	sentencia  goto 11
+	variable  goto 7
+	estructura  goto 8
+	tipoSimple  goto 9
+
+
+state 6
+	sentencias : sentencia .  (2)
+
+	.  reduce 2
+
+
+state 7
+	sentencia : variable . '=' expresion ';'  (3)
+	estructura : variable . ';'  (6)
+
+	'='  shift 12
+	';'  shift 13
+	.  error
+
+
+state 8
+	sentencia : estructura .  (4)
+
+	.  reduce 4
+
+
+state 9
+	variable : tipoSimple . identificador  (11)
+	variable : tipoSimple . '[' CTE_ENTERA ']' identificador  (12)
+
+	ID  shift 14
+	'['  shift 15
+	.  error
+
+	identificador  goto 16
+
+
+state 10
+	estructura : STRUCT '{' . campos '}' ID ';'  (5)
+
+	INT  shift 1
+	DOUBLE  shift 2
+	CHAR  shift 3
+	.  error
+
+	variable  goto 17
+	campos  goto 18
+	tipoSimple  goto 9
+
+
+state 11
+	sentencias : sentencias sentencia .  (1)
+
+	.  reduce 1
+
+
+state 12
+	sentencia : variable '=' . expresion ';'  (3)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 24
+	identificador  goto 25
+
+
+state 13
+	estructura : variable ';' .  (6)
+
+	.  reduce 6
+
+
+state 14
+	identificador : ID .  (32)
+
+	.  reduce 32
+
+
+state 15
+	variable : tipoSimple '[' . CTE_ENTERA ']' identificador  (12)
+
+	CTE_ENTERA  shift 26
+	.  error
+
+
+state 16
+	variable : tipoSimple identificador .  (11)
+	identificador : identificador . ',' ID  (31)
+
+	','  shift 27
+	'='  reduce 11
+	';'  reduce 11
+
+
+state 17
+	campos : variable . ';'  (8)
+
+	';'  shift 28
+	.  error
+
+
+state 18
+	estructura : STRUCT '{' campos . '}' ID ';'  (5)
+	campos : campos . estructura  (7)
+
+	INT  shift 1
+	DOUBLE  shift 2
+	CHAR  shift 3
+	STRUCT  shift 4
+	'}'  shift 29
+	.  error
+
+	variable  goto 30
+	estructura  goto 31
+	tipoSimple  goto 9
+
+
+state 19
+	expresion : CTE_ENTERA .  (14)
+
+	.  reduce 14
+
+
+state 20
+	expresion : CTE_REAL .  (15)
+
+	.  reduce 15
+
+
+state 21
+	expresion : CTE_CARACTER .  (16)
+
+	.  reduce 16
+
+
+state 22
+	expresion : '-' . expresion  (29)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 32
+	identificador  goto 25
+
+
+state 23
+	expresion : '(' . expresion ')'  (30)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 33
+	identificador  goto 25
+
+
+state 24
+	sentencia : variable '=' expresion . ';'  (3)
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	Y  shift 34
+	O  shift 35
+	MAYORIGUALQUE  shift 36
+	MENORIGUALQUE  shift 37
+	DISTINTO  shift 38
+	IGUALDAD  shift 39
+	'>'  shift 40
+	'<'  shift 41
+	'+'  shift 42
+	'-'  shift 43
+	'*'  shift 44
+	'/'  shift 45
+	';'  shift 46
+	.  error
+
+
+state 25
+	expresion : identificador .  (13)
+	identificador : identificador . ',' ID  (31)
+
+	','  shift 27
+	Y  reduce 13
+	O  reduce 13
+	MAYORIGUALQUE  reduce 13
+	MENORIGUALQUE  reduce 13
+	DISTINTO  reduce 13
+	IGUALDAD  reduce 13
+	'>'  reduce 13
+	'<'  reduce 13
+	'+'  reduce 13
+	'-'  reduce 13
+	'*'  reduce 13
+	'/'  reduce 13
+	')'  reduce 13
+	';'  reduce 13
+
+
+state 26
+	variable : tipoSimple '[' CTE_ENTERA . ']' identificador  (12)
+
+	']'  shift 47
+	.  error
+
+
+state 27
+	identificador : identificador ',' . ID  (31)
+
+	ID  shift 48
+	.  error
+
+
+state 28
+	campos : variable ';' .  (8)
+
+	.  reduce 8
+
+
+state 29
+	estructura : STRUCT '{' campos '}' . ID ';'  (5)
+
+	ID  shift 49
+	.  error
+
+
+state 30
+	estructura : variable . ';'  (6)
+
+	';'  shift 13
+	.  error
+
+
+state 31
+	campos : campos estructura .  (7)
+
+	.  reduce 7
+
+
+state 32
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+	expresion : '-' expresion .  (29)
+
+	.  reduce 29
+
+
+state 33
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+	expresion : '(' expresion . ')'  (30)
+
+	Y  shift 34
+	O  shift 35
+	MAYORIGUALQUE  shift 36
+	MENORIGUALQUE  shift 37
+	DISTINTO  shift 38
+	IGUALDAD  shift 39
+	'>'  shift 40
+	'<'  shift 41
+	'+'  shift 42
+	'-'  shift 43
+	'*'  shift 44
+	'/'  shift 45
+	')'  shift 50
+	.  error
+
+
+state 34
+	expresion : expresion Y . expresion  (27)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 51
+	identificador  goto 25
+
+
+state 35
+	expresion : expresion O . expresion  (28)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 52
+	identificador  goto 25
+
+
+state 36
+	expresion : expresion MAYORIGUALQUE . expresion  (23)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 53
+	identificador  goto 25
+
+
+state 37
+	expresion : expresion MENORIGUALQUE . expresion  (24)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 54
+	identificador  goto 25
+
+
+state 38
+	expresion : expresion DISTINTO . expresion  (25)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 55
+	identificador  goto 25
+
+
+state 39
+	expresion : expresion IGUALDAD . expresion  (26)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 56
+	identificador  goto 25
+
+
+state 40
+	expresion : expresion '>' . expresion  (21)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 57
+	identificador  goto 25
+
+
+state 41
+	expresion : expresion '<' . expresion  (22)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 58
+	identificador  goto 25
+
+
+state 42
+	expresion : expresion '+' . expresion  (17)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 59
+	identificador  goto 25
+
+
+state 43
+	expresion : expresion '-' . expresion  (20)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 60
+	identificador  goto 25
+
+
+state 44
+	expresion : expresion '*' . expresion  (18)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 61
+	identificador  goto 25
+
+
+state 45
+	expresion : expresion '/' . expresion  (19)
+
+	CTE_ENTERA  shift 19
+	CTE_REAL  shift 20
+	CTE_CARACTER  shift 21
+	ID  shift 14
+	'-'  shift 22
+	'('  shift 23
+	.  error
+
+	expresion  goto 62
+	identificador  goto 25
+
+
+state 46
+	sentencia : variable '=' expresion ';' .  (3)
+
+	.  reduce 3
+
+
+state 47
+	variable : tipoSimple '[' CTE_ENTERA ']' . identificador  (12)
+
+	ID  shift 14
+	.  error
+
+	identificador  goto 63
+
+
+state 48
+	identificador : identificador ',' ID .  (31)
+
+	.  reduce 31
+
+
+state 49
+	estructura : STRUCT '{' campos '}' ID . ';'  (5)
+
+	';'  shift 64
+	.  error
+
+
+state 50
+	expresion : '(' expresion ')' .  (30)
+
+	.  reduce 30
+
+
+state 51
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion Y expresion .  (27)
+	expresion : expresion . O expresion  (28)
+
+	MAYORIGUALQUE  shift 36
+	MENORIGUALQUE  shift 37
+	DISTINTO  shift 38
+	IGUALDAD  shift 39
+	'>'  shift 40
+	'<'  shift 41
+	'+'  shift 42
+	'-'  shift 43
+	'*'  shift 44
+	'/'  shift 45
+	Y  reduce 27
+	O  reduce 27
+	')'  reduce 27
+	';'  reduce 27
+
+
+state 52
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+	expresion : expresion O expresion .  (28)
+
+	MAYORIGUALQUE  shift 36
+	MENORIGUALQUE  shift 37
+	DISTINTO  shift 38
+	IGUALDAD  shift 39
+	'>'  shift 40
+	'<'  shift 41
+	'+'  shift 42
+	'-'  shift 43
+	'*'  shift 44
+	'/'  shift 45
+	Y  reduce 28
+	O  reduce 28
+	')'  reduce 28
+	';'  reduce 28
+
+
+state 53
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion MAYORIGUALQUE expresion .  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	'+'  shift 42
+	'-'  shift 43
+	'*'  shift 44
+	'/'  shift 45
+	Y  reduce 23
+	O  reduce 23
+	MAYORIGUALQUE  reduce 23
+	MENORIGUALQUE  reduce 23
+	DISTINTO  reduce 23
+	IGUALDAD  reduce 23
+	'>'  reduce 23
+	'<'  reduce 23
+	')'  reduce 23
+	';'  reduce 23
+
+
+state 54
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion MENORIGUALQUE expresion .  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	'+'  shift 42
+	'-'  shift 43
+	'*'  shift 44
+	'/'  shift 45
+	Y  reduce 24
+	O  reduce 24
+	MAYORIGUALQUE  reduce 24
+	MENORIGUALQUE  reduce 24
+	DISTINTO  reduce 24
+	IGUALDAD  reduce 24
+	'>'  reduce 24
+	'<'  reduce 24
+	')'  reduce 24
+	';'  reduce 24
+
+
+state 55
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion DISTINTO expresion .  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	'+'  shift 42
+	'-'  shift 43
+	'*'  shift 44
+	'/'  shift 45
+	Y  reduce 25
+	O  reduce 25
+	MAYORIGUALQUE  reduce 25
+	MENORIGUALQUE  reduce 25
+	DISTINTO  reduce 25
+	IGUALDAD  reduce 25
+	'>'  reduce 25
+	'<'  reduce 25
+	')'  reduce 25
+	';'  reduce 25
+
+
+state 56
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion IGUALDAD expresion .  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	'+'  shift 42
+	'-'  shift 43
+	'*'  shift 44
+	'/'  shift 45
+	Y  reduce 26
+	O  reduce 26
+	MAYORIGUALQUE  reduce 26
+	MENORIGUALQUE  reduce 26
+	DISTINTO  reduce 26
+	IGUALDAD  reduce 26
+	'>'  reduce 26
+	'<'  reduce 26
+	')'  reduce 26
+	';'  reduce 26
+
+
+state 57
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion '>' expresion .  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	'+'  shift 42
+	'-'  shift 43
+	'*'  shift 44
+	'/'  shift 45
+	Y  reduce 21
+	O  reduce 21
+	MAYORIGUALQUE  reduce 21
+	MENORIGUALQUE  reduce 21
+	DISTINTO  reduce 21
+	IGUALDAD  reduce 21
+	'>'  reduce 21
+	'<'  reduce 21
+	')'  reduce 21
+	';'  reduce 21
+
+
+state 58
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion '<' expresion .  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	'+'  shift 42
+	'-'  shift 43
+	'*'  shift 44
+	'/'  shift 45
+	Y  reduce 22
+	O  reduce 22
+	MAYORIGUALQUE  reduce 22
+	MENORIGUALQUE  reduce 22
+	DISTINTO  reduce 22
+	IGUALDAD  reduce 22
+	'>'  reduce 22
+	'<'  reduce 22
+	')'  reduce 22
+	';'  reduce 22
+
+
+state 59
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion '+' expresion .  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	'*'  shift 44
+	'/'  shift 45
+	Y  reduce 17
+	O  reduce 17
+	MAYORIGUALQUE  reduce 17
+	MENORIGUALQUE  reduce 17
+	DISTINTO  reduce 17
+	IGUALDAD  reduce 17
+	'>'  reduce 17
+	'<'  reduce 17
+	'+'  reduce 17
+	'-'  reduce 17
+	')'  reduce 17
+	';'  reduce 17
+
+
+state 60
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion '-' expresion .  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	'*'  shift 44
+	'/'  shift 45
+	Y  reduce 20
+	O  reduce 20
+	MAYORIGUALQUE  reduce 20
+	MENORIGUALQUE  reduce 20
+	DISTINTO  reduce 20
+	IGUALDAD  reduce 20
+	'>'  reduce 20
+	'<'  reduce 20
+	'+'  reduce 20
+	'-'  reduce 20
+	')'  reduce 20
+	';'  reduce 20
+
+
+state 61
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion '*' expresion .  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	.  reduce 18
+
+
+state 62
+	expresion : expresion . '+' expresion  (17)
+	expresion : expresion . '*' expresion  (18)
+	expresion : expresion . '/' expresion  (19)
+	expresion : expresion '/' expresion .  (19)
+	expresion : expresion . '-' expresion  (20)
+	expresion : expresion . '>' expresion  (21)
+	expresion : expresion . '<' expresion  (22)
+	expresion : expresion . MAYORIGUALQUE expresion  (23)
+	expresion : expresion . MENORIGUALQUE expresion  (24)
+	expresion : expresion . DISTINTO expresion  (25)
+	expresion : expresion . IGUALDAD expresion  (26)
+	expresion : expresion . Y expresion  (27)
+	expresion : expresion . O expresion  (28)
+
+	.  reduce 19
+
+
+state 63
+	variable : tipoSimple '[' CTE_ENTERA ']' identificador .  (12)
+	identificador : identificador . ',' ID  (31)
+
+	','  shift 27
+	'='  reduce 12
+	';'  reduce 12
+
+
+state 64
+	estructura : STRUCT '{' campos '}' ID ';' .  (5)
+
+	.  reduce 5
+
+
+Rules never reduced:
+	variableFuncion : variableFuncion variable  (9)
+	variableFuncion :  (10)
+
+
+43 terminals, 10 nonterminals
+36 grammar rules, 65 states
