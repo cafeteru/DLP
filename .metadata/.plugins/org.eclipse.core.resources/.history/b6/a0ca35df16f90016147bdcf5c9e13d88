@@ -1,0 +1,10 @@
+void p() {}
+
+int f(int n, double r) {
+  double real;
+  char c1, c2;
+  c1 = (char)n;
+  real = c1 + n + r;
+  p(1);
+  return (int)c1;
+}

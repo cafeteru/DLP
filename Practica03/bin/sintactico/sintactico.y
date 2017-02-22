@@ -27,20 +27,29 @@ import java.io.Reader;
 
 %%
 // * Gramática y acciones Yacc
-/*programa: funciones main
-        ;
+programa: funciones main
+		;
 
-main: VOID MAIN '('')' '{' variableFuncion sentencias '}'
-    ;*/
+main: VOID MAIN '('')' '{' cuerpoMain '}'
+    ;
     
+cuerpoMain: variables sentencias 
+		  ;
+      
 funciones: funciones funcion
 		 | /*vacio*/
 		 ;
-
+		 
 funcion: tipoFuncion ID '(' parametro ')' '{' cuerpo '}'
 	   ;
-
-parametro: parametro variables ','
+				
+tipoParametro: ID
+			 | CTE_ENTERA
+			 | CTE_REAL
+			 ;
+	   
+parametro: parametro ',' tipoSimple ID
+		 | tipoSimple ID
 		 | /*vacio*/
 		 ;
 		 
@@ -60,43 +69,55 @@ sentencias: sentencias sentencia
 	     | sentencia
 		 ;
 		 	
-sentencia: variable '=' expresion ';'
+sentencia: llamadaVariable '=' expresion ';' // Asignación
+		 | declaracionVariable '=' expresion ';' // Asignación
 		 | estructura ';'
 		 | WHILE '(' expresion ')' '{' sentencias '}'
 		 | IF '(' expresion ')' '{' sentencias '}'
 		 | IF '(' expresion ')' '{' sentencias '}' ELSE '{' sentencias '}'
-		 | WRITE expresiones ';'
-		 | READ expresiones ';'
+		 | WRITE expresiones
+		 | READ expresiones
+		 | ID '(' parametroLlamada ')' ';' /*Llamada a funcion*/
          ;
          
+parametroLlamada: parametroLlamada ',' tipoParametro
+				| /*vacio*/
+				;
+         
 estructura: STRUCT '{' campos '}' ID
-		   | variable
 		   ;		   
 
 // Campos dentro de un Struct		   
 campos: campos estructura
-	  | variable ';'
+	  | campos llamadaVariable
+	  | campos declaracionVariable
+	  | llamadaVariable
+	  | declaracionVariable
       ;
 
 // Variables locales de las funciones      
-variables: variables variable
+variables: variables declaracionVariable ';'
 		 | /*Vacio*/
 		 ;
 
-variable: identificador
-		| identificador '[' CTE_ENTERA ']'
-		| identificador '[' CTE_ENTERA ']' '[' CTE_ENTERA ']'
-		| tipoSimple identificador 
-		| tipoSimple '[' CTE_ENTERA ']' identificador  
-		| tipoSimple '[' CTE_ENTERA ']' '[' CTE_ENTERA ']' identificador 
-		;
+llamadaVariable: ID
+		       | ID '[' CTE_ENTERA ']'
+		       | ID '[' CTE_ENTERA ']' '[' CTE_ENTERA ']'
+		       ;
+		
+declaracionVariable: tipoSimple identificador ';'
+		           | tipoSimple '[' CTE_ENTERA ']' identificador ';' 
+		           | tipoSimple '[' CTE_ENTERA ']' '[' CTE_ENTERA ']' identificador ';'
+		           ;
 
-expresiones: expresiones ',' CTE_CARACTER
-		   | CTE_CARACTER
+expresiones: expresiones ',' expresion
+		   | expresion ';'
 		   ;	   
 	  		     
-expresion: identificador
-         | CTE_ENTERA
+expresion: ID
+		 | ID '[' CTE_ENTERA ']'
+		 | ID '[' CTE_ENTERA ']' '[' CTE_ENTERA ']'
+		 | CTE_ENTERA
          | CTE_REAL
          | CTE_CARACTER
          | expresion '+' expresion
@@ -115,7 +136,7 @@ expresion: identificador
          | expresion '.' expresion
          | '-' expresion %prec MENOS_UNARIO 
          | '(' expresion ')'
-         | ID '(' expresion ')'
+         | '(' tipoSimple ')' ID
          ;
          
 identificador: identificador ',' ID 

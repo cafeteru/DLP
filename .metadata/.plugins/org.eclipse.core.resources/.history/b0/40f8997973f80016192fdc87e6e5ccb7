@@ -1,7 +1,0 @@
- while (ir >= i) {
-    if (pair == vector[0] || pair || i%2==0)
-      write 't', 'r', 'u', 'e', '\n';
-    else 
-      write 'f', 'a', 'l', 's', 'e', '\n';
-    i=i+1;
-  }
