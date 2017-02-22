@@ -1,7 +1,11 @@
- while (ir >= i) {
-    if (pair == vector || pair || i%2==0){
-      write 't', 'r', 'u', 'e', '\n';
-    } else { 
-      write 'f', 'a', 'l', 's', 'e', '\n';
-    }i=i+1;
-  }
+// * Función vacia
+void p() {}
+
+int f(int n, double r) {
+  double real;
+  char c1, c2;
+  c1 = (char)n;
+  real = c1 + n + r;
+  p(); // * Invocacion procedimiento
+  return (int)c1;
+}

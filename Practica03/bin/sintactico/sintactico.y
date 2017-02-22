@@ -27,6 +27,27 @@ import java.io.Reader;
 
 %%
 // * Gramática y acciones Yacc
+programa: funciones main
+        ;
+
+main: VOID MAIN '('')' '{' variableFuncion sentencias '}'
+    ;
+    
+funciones: funciones funcion
+		 | /*vacio*/
+		 ;
+
+funcion: tipoFuncion ID '(' identificador ')' '{' variables sentencias retorno '}'
+	   ;
+
+retorno: RETURN expresion ';'
+		| /*vacio*/
+		;
+
+tipoFuncion: tipoSimple
+		   | VOID
+		   ;
+
 sentencias: sentencias sentencia
 	     | sentencia
 		 ;
@@ -37,6 +58,7 @@ sentencia: variable '=' expresion ';'
 		 | IF '(' expresion ')' '{' sentencias '}'
 		 | IF '(' expresion ')' '{' sentencias '}' ELSE '{' sentencias '}'
 		 | WRITE expresiones ';'
+		 | READ expresiones ';'
          ;
          
 estructura: STRUCT '{' campos '}' ID
@@ -49,7 +71,7 @@ campos: campos estructura
       ;
 
 // Variables locales de las funciones      
-variableFuncion: variableFuncion variable
+variables: variables variable
 		 | /*Vacio*/
 		 ;
 
@@ -58,6 +80,7 @@ variable: identificador
 		| identificador '[' CTE_ENTERA ']' '[' CTE_ENTERA ']'
 		| tipoSimple identificador 
 		| tipoSimple '[' CTE_ENTERA ']' identificador  
+		| tipoSimple '[' CTE_ENTERA ']' '[' CTE_ENTERA ']' identificador 
 		;
 
 expresiones: expresiones ',' CTE_CARACTER
@@ -81,8 +104,10 @@ expresion: identificador
          | expresion IGUALDAD expresion 
          | expresion Y expresion 
          | expresion O expresion
+         | expresion '.' expresion
          | '-' expresion %prec MENOS_UNARIO 
          | '(' expresion ')'
+         | ID '(' expresion ')'
          ;
          
 identificador: identificador ',' ID 
