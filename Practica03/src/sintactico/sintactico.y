@@ -24,22 +24,22 @@ import java.io.Reader;
 %nonassoc '[' ']'
 %left '.'
 %nonassoc '(' ')'
-%left SINCORCHETES
 %nonassoc '{' '}'
 
 %%
 // * Gramática y acciones Yacc
-programa: funciones main
+programa: metodos VOID MAIN '('')' '{' sentencias '}'
 		;
 
-main: VOID MAIN '('')' '{' sentencias '}'
-    ;
-      
-funciones: funciones funcion
-		 | /*vacio*/
-		 ;
-		 
-funcion: tipoFuncion ID '(' parametro ')' '{' cuerpo '}'
+metodos: metodos metodo
+       |/*vacio*/
+       ;
+  
+metodo: funcion
+	  | declaracionVariable ';'
+	  ;	
+     
+funcion: tipoSimple ID '(' parametro ')' '{' cuerpo '}'
 	   ;
 	   
 llamadaFuncion: ID '(' expresiones ')'
@@ -55,7 +55,7 @@ parametro: parametro ',' tipoSimple ID
 		 | /*vacio*/
 		 ;
 		 
-cuerpo: variables sentencias retorno
+cuerpo: sentencias retorno
 	  | /*vacio*/
 	  ;
 
@@ -63,20 +63,15 @@ retorno: RETURN expresion ';'
 		| /*vacio*/
 		;
 
-tipoFuncion: VOID
-		   | tipoSimple
-		   ;
-
 sentencias: sentencias sentencia
 	     | sentencia
 		 ;
 		 	
-sentencia: llamadaVariable
-		 | declaracionVariable
+sentencia: llamadaVariable 
+		 | declaracionVariable ';'
 		 | llamadaVariable '=' expresion ';' // Asignación
 		 | declaracionVariable '=' expresion ';' // Asignación
 		 | ID '.' ID '=' expresion ';'
-		 | estructura ';'
 		 | WHILE '(' expresion ')' '{' sentencias '}'
 		 | IF '(' expresion ')' '{' sentencias '}'
 		 | IF '(' expresion ')' sentencia 
@@ -97,10 +92,9 @@ estructura: STRUCT '{' campos '}' ID
 
 // Campos dentro de un Struct		   
 campos: campos estructura
-	  | campos llamadaVariable
-	  | campos declaracionVariable
-	  | llamadaVariable
-	  | declaracionVariable
+	  | campos declaracionVariable ';' 
+	  | declaracionVariable ';'
+	  | estructura
       ;
 
 llamadaVariable: ID
@@ -108,9 +102,10 @@ llamadaVariable: ID
 		       | ID '[' expresiones ']' '[' expresiones ']'
 		       ;
 		
-declaracionVariable: tipoSimple identificador ';'
-		           | tipoSimple '[' expresiones ']' identificador ';' 
-		           | tipoSimple '[' expresiones ']' '[' expresiones ']' identificador ';'
+declaracionVariable: tipoSimple identificador
+		           | tipoSimple '[' expresiones ']' identificador 
+		           | tipoSimple '[' expresiones ']' '[' expresiones ']' identificador 
+		           | estructura ';'
 		           ;
 
 expresiones: expresiones ',' expresion
@@ -146,10 +141,11 @@ identificador: identificador ',' ID
 		     | ID	
 		     ;
 	
-tipoSimple: INT
-	| DOUBLE
-	| CHAR 
-	;
+tipoSimple:VOID 
+          | INT
+	      | DOUBLE
+	      | CHAR 
+	      ;
 %%
 
 // * Código Java

@@ -1,18 +1,41 @@
+
+// * Definicion de variables y funciones
+int i, j, n;
+char c;
+
+// * Función vacia
+void p() {}
+
+void f(int n, double r) {
+  double real;
+  char c1, c2;
+  c1 = (char)n;
+  real = c1 + n + r;
+  p(); // * Invocacion procedimiento
+  return (int)c1;
+}
+
+int i, j, n;
+
 // * Funcion main
 void main() {
   // * Record
   struct {
     int integer;
     char character;
+      struct {
+    int integer;
+    char character;
+  } pair;
   } pair;
   // * Array
- // double[10][5] vector;
+  double[10][5] vector;
   
   i=0;
   j=0;
   while(i<10){
     while(j<5) {
-     // vector[i][j] = i + j;
+      vector[i][j] = i + j;
       j=j+1;
     }
   i=i+1;
@@ -32,3 +55,6 @@ void main() {
   vector[9][(int)4.3]=5.6;
   f(1, 2.2); // * Invocation como sentencia
 }
+
+
+
