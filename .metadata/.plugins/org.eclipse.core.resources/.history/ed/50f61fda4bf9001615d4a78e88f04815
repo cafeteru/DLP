@@ -35,9 +35,12 @@ metodos: metodos metodo
        |/*vacio*/
        ;
   
-metodo: tipoSimple ID '(' parametro ')' '{' cuerpo '}'
+metodo: funcion
 	  | declaracionVariable ';'
 	  ;	
+     
+funcion: tipoSimple ID '(' parametro ')' '{' cuerpo '}'
+	   ;
 	   
 llamadaFuncion: ID '(' expresiones ')'
 			  ;
@@ -52,9 +55,13 @@ parametro: parametro ',' tipoSimple ID
 		 | /*vacio*/
 		 ;
 		 
-cuerpo: sentencias
+cuerpo: sentencias retorno
 	  | /*vacio*/
 	  ;
+
+retorno: RETURN expresion ';'
+		| /*vacio*/
+		;
 
 sentencias: sentencias sentencia
 	     | sentencia
@@ -74,12 +81,19 @@ sentencia: llamadaVariable
 		 | READ expresiones ';'
 		 | ID '(' parametroLlamada ')' ';' /*Llamada a funcion*/
 		 | llamadaFuncion ';'
-		 | RETURN expresion ';'
          ;
          
 parametroLlamada: parametroLlamada ',' tipoParametro
 				| /*vacio*/
-				;   
+				;
+         
+estructura: STRUCT '{' campos '}' ID
+		   ;		   
+
+// Campos dentro de un Struct		   
+campos: campos declaracionVariable 
+	  | declaracionVariable ';'
+      ;
 
 llamadaVariable: ID
 		       | ID '[' expresiones ']'
@@ -88,13 +102,10 @@ llamadaVariable: ID
 		
 declaracionVariable: tipoSimple identificador
 		           | tipoSimple indices identificador 
-		           | STRUCT '{' campos '}' ID
+		           | estructura ';'
 		           ;
 		           
-// Campos dentro de un Struct		   
-campos: campos declaracionVariable ';'
-	  | declaracionVariable ';'
-      ;
+
 
 expresiones: expresiones ',' expresion
 		   | expresion

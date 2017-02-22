@@ -52,9 +52,13 @@ parametro: parametro ',' tipoSimple ID
 		 | /*vacio*/
 		 ;
 		 
-cuerpo: sentencias
+cuerpo: sentencias retorno
 	  | /*vacio*/
 	  ;
+
+retorno: RETURN expresion ';'
+		| /*vacio*/
+		;
 
 sentencias: sentencias sentencia
 	     | sentencia
@@ -74,7 +78,6 @@ sentencia: llamadaVariable
 		 | READ expresiones ';'
 		 | ID '(' parametroLlamada ')' ';' /*Llamada a funcion*/
 		 | llamadaFuncion ';'
-		 | RETURN expresion ';'
          ;
          
 parametroLlamada: parametroLlamada ',' tipoParametro

@@ -35,12 +35,9 @@ metodos: metodos metodo
        |/*vacio*/
        ;
   
-metodo: funcion
+metodo: tipoSimple ID '(' parametro ')' '{' cuerpo '}'
 	  | declaracionVariable ';'
 	  ;	
-     
-funcion: tipoSimple ID '(' parametro ')' '{' cuerpo '}'
-	   ;
 	   
 llamadaFuncion: ID '(' expresiones ')'
 			  ;
@@ -55,13 +52,9 @@ parametro: parametro ',' tipoSimple ID
 		 | /*vacio*/
 		 ;
 		 
-cuerpo: sentencias retorno
+cuerpo: sentencias
 	  | /*vacio*/
 	  ;
-
-retorno: RETURN expresion ';'
-		| /*vacio*/
-		;
 
 sentencias: sentencias sentencia
 	     | sentencia
@@ -81,21 +74,12 @@ sentencia: llamadaVariable
 		 | READ expresiones ';'
 		 | ID '(' parametroLlamada ')' ';' /*Llamada a funcion*/
 		 | llamadaFuncion ';'
+		 | RETURN expresion ';'
          ;
          
 parametroLlamada: parametroLlamada ',' tipoParametro
 				| /*vacio*/
-				;
-         
-estructura: STRUCT '{' campos '}' ID
-		   ;		   
-
-// Campos dentro de un Struct		   
-campos: campos estructura
-	  | campos declaracionVariable ';' 
-	  | declaracionVariable ';'
-	  | estructura
-      ;
+				;   
 
 llamadaVariable: ID
 		       | ID '[' expresiones ']'
@@ -103,10 +87,14 @@ llamadaVariable: ID
 		       ;
 		
 declaracionVariable: tipoSimple identificador
-		           | tipoSimple '[' expresiones ']' identificador 
-		           | tipoSimple '[' expresiones ']' '[' expresiones ']' identificador 
-		           | estructura ';'
+		           | tipoSimple indices identificador 
+		           | STRUCT '{' campos '}' ID
 		           ;
+		           
+// Campos dentro de un Struct		   
+campos: campos declaracionVariable ';'
+	  | declaracionVariable ';'
+      ;
 
 expresiones: expresiones ',' expresion
 		   | expresion
@@ -137,11 +125,15 @@ expresion: llamadaVariable
          | llamadaFuncion
          ;
          
+indices: indices '[' CTE_ENTERA ']'
+	 | '[' CTE_ENTERA ']'
+	 ;
+         
 identificador: identificador ',' ID 
 		     | ID	
 		     ;
 	
-tipoSimple:VOID 
+tipoSimple: VOID 
           | INT
 	      | DOUBLE
 	      | CHAR 
