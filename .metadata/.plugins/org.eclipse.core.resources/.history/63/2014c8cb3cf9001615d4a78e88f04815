@@ -85,7 +85,6 @@ sentencia: llamadaVariable
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
 		 | ID '(' parametroLlamada ')' ';' /*Llamada a funcion*/
-		 | llamadaFuncion ';'
          ;
          
 parametroLlamada: parametroLlamada ',' tipoParametro
@@ -104,13 +103,13 @@ campos: campos estructura
       ;
 
 llamadaVariable: ID
-		       | ID '[' expresiones ']'
-		       | ID '[' expresiones ']' '[' expresiones ']'
+		       | ID '[' expresion ']'
+		       | ID '[' expresion ']' '[' expresion ']'
 		       ;
 		
 declaracionVariable: tipoSimple identificador ';'
-		           | tipoSimple '[' expresiones ']' identificador ';' 
-		           | tipoSimple '[' expresiones ']' '[' expresiones ']' identificador ';'
+		           | tipoSimple '[' expresion ']' identificador ';' 
+		           | tipoSimple '[' expresion ']' '[' expresion ']' identificador ';'
 		           ;
 
 expresiones: expresiones ',' expresion
@@ -138,7 +137,7 @@ expresion: llamadaVariable
          | '-' expresion %prec MENOS_UNARIO 
          | '!' expresion %prec NEGACION 
          | '(' expresion ')'
-         | '(' tipoSimple ')' expresion
+         | '(' tipoSimple ')' ID
          | llamadaFuncion
          ;
          

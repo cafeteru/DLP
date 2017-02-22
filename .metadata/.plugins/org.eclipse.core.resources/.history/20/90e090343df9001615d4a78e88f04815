@@ -85,7 +85,6 @@ sentencia: llamadaVariable
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
 		 | ID '(' parametroLlamada ')' ';' /*Llamada a funcion*/
-		 | llamadaFuncion ';'
          ;
          
 parametroLlamada: parametroLlamada ',' tipoParametro

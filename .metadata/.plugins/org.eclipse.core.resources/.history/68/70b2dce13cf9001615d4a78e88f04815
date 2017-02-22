@@ -85,7 +85,6 @@ sentencia: llamadaVariable
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
 		 | ID '(' parametroLlamada ')' ';' /*Llamada a funcion*/
-		 | llamadaFuncion ';'
          ;
          
 parametroLlamada: parametroLlamada ',' tipoParametro
@@ -138,7 +137,7 @@ expresion: llamadaVariable
          | '-' expresion %prec MENOS_UNARIO 
          | '!' expresion %prec NEGACION 
          | '(' expresion ')'
-         | '(' tipoSimple ')' expresion
+         | '(' tipoSimple ')' ID
          | llamadaFuncion
          ;
          

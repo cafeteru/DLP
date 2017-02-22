@@ -42,7 +42,7 @@ funciones: funciones funcion
 funcion: tipoFuncion ID '(' parametro ')' '{' cuerpo '}'
 	   ;
 	   
-llamadaFuncion: ID '(' expresiones ')'
+llamadaFuncion: ID '(' expresiones ')' ';'
 			  ;
 				
 tipoParametro: ID
@@ -85,7 +85,6 @@ sentencia: llamadaVariable
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
 		 | ID '(' parametroLlamada ')' ';' /*Llamada a funcion*/
-		 | llamadaFuncion ';'
          ;
          
 parametroLlamada: parametroLlamada ',' tipoParametro

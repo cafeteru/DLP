@@ -41,6 +41,9 @@ funciones: funciones funcion
 		 
 funcion: tipoFuncion ID '(' parametro ')' '{' cuerpo '}'
 	   ;
+	   
+llamadaFuncion: ID '(' expresiones ')'
+			  ;
 				
 tipoParametro: ID
 			 | CTE_ENTERA
@@ -76,10 +79,13 @@ sentencia: llamadaVariable
 		 | estructura ';'
 		 | WHILE '(' expresion ')' '{' sentencias '}'
 		 | IF '(' expresion ')' '{' sentencias '}'
-		 | IF '(' expresion ')' '{' sentencias '}' ELSE '{' sentencias '}'
-		 | WRITE expresiones
-		 | READ expresiones
+		 | IF '(' expresion ')' sentencia 
+		 | ELSE '{' sentencias '}'
+		 | ELSE sentencia
+		 | WRITE expresiones ';'
+		 | READ expresiones ';'
 		 | ID '(' parametroLlamada ')' ';' /*Llamada a funcion*/
+		 | llamadaFuncion ';'
          ;
          
 parametroLlamada: parametroLlamada ',' tipoParametro
@@ -98,22 +104,20 @@ campos: campos estructura
       ;
 
 llamadaVariable: ID
-		       | ID '[' CTE_ENTERA ']'
-		       | ID '[' CTE_ENTERA ']' '[' CTE_ENTERA ']'
+		       | ID '[' expresiones ']'
+		       | ID '[' expresiones ']' '[' expresiones ']'
 		       ;
 		
 declaracionVariable: tipoSimple identificador ';'
-		           | tipoSimple '[' CTE_ENTERA ']' identificador ';' 
-		           | tipoSimple '[' CTE_ENTERA ']' '[' CTE_ENTERA ']' identificador ';'
+		           | tipoSimple '[' expresiones ']' identificador ';' 
+		           | tipoSimple '[' expresiones ']' '[' expresiones ']' identificador ';'
 		           ;
 
 expresiones: expresiones ',' expresion
-		   | expresion ';'
+		   | expresion
 		   ;	   
 	  		     
-expresion: ID
-		 | ID '[' CTE_ENTERA ']'
-		 | ID '[' CTE_ENTERA ']' '[' CTE_ENTERA ']'
+expresion: llamadaVariable
 		 | CTE_ENTERA
          | CTE_REAL
          | CTE_CARACTER
@@ -134,7 +138,8 @@ expresion: ID
          | '-' expresion %prec MENOS_UNARIO 
          | '!' expresion %prec NEGACION 
          | '(' expresion ')'
-         | '(' tipoSimple ')' ID
+         | '(' tipoSimple ')' expresion
+         | llamadaFuncion
          ;
          
 identificador: identificador ',' ID 

@@ -22,11 +22,12 @@ void main() {
   pair.character = '0';
   pair.integer = '0';
   while (pair.integer >= i) {
-    if (pair.integer == vector[0][0] || !pair.character || i%2==0)
+    if (pair.integer == vector[0][0] || !pair.character || i%2==0){
+    int i;
       write 't', 'r', 'u', 'e', '\n';
-    else 
+    }else{ 
       write 'f', 'a', 'l', 's', 'e', '\n';
-    i=i+1;
+    }i=i+1;
   }
   write f(i, (double)i); // * Invocacion como expresion
   vector[9][(int)4.3]=5.6;

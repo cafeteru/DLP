@@ -29,6 +29,6 @@ void main() {
     i=i+1;
   }
   write f(i, (double)i); // * Invocacion como expresion
-  vector[9][(int)4.3]=5.6;
+  vector[9][4.3]=5.6;
   f(1, 2.2); // * Invocation como sentencia
 }
