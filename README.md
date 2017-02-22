@@ -1,4 +1,4 @@
 # DLP
 Diseño de Lenguajes de Programación
 
-Prácticas
+Prácticas de laboratorio 2017
