@@ -27,25 +27,33 @@ import java.io.Reader;
 
 %%
 // * Gramática y acciones Yacc
-programa: funciones main
+/*programa: funciones main
         ;
 
 main: VOID MAIN '('')' '{' variableFuncion sentencias '}'
-    ;
+    ;*/
     
 funciones: funciones funcion
 		 | /*vacio*/
 		 ;
 
-funcion: tipoFuncion ID '(' identificador ')' '{' variables sentencias retorno '}'
+funcion: tipoFuncion ID '(' parametro ')' '{' cuerpo '}'
 	   ;
+
+parametro: parametro variables ','
+		 | /*vacio*/
+		 ;
+		 
+cuerpo: variables sentencias retorno
+	  | /*vacio*/
+	  ;
 
 retorno: RETURN expresion ';'
 		| /*vacio*/
 		;
 
-tipoFuncion: tipoSimple
-		   | VOID
+tipoFuncion: VOID
+		   | tipoSimple
 		   ;
 
 sentencias: sentencias sentencia
