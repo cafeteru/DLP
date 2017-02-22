@@ -20,9 +20,11 @@ import java.io.Reader;
 %left '+' '-'
 %left '*' '/' '%'
 %right MENOS_UNARIO
+%right NEGACION
 %nonassoc '[' ']'
 %left '.'
 %nonassoc '(' ')'
+%left SINCORCHETES
 %nonassoc '{' '}'
 
 %%
@@ -30,11 +32,8 @@ import java.io.Reader;
 programa: funciones main
 		;
 
-main: VOID MAIN '('')' '{' cuerpoMain '}'
+main: VOID MAIN '('')' '{' sentencias '}'
     ;
-    
-cuerpoMain: variables sentencias 
-		  ;
       
 funciones: funciones funcion
 		 | /*vacio*/
@@ -69,8 +68,11 @@ sentencias: sentencias sentencia
 	     | sentencia
 		 ;
 		 	
-sentencia: llamadaVariable '=' expresion ';' // Asignación
+sentencia: llamadaVariable
+		 | declaracionVariable
+		 | llamadaVariable '=' expresion ';' // Asignación
 		 | declaracionVariable '=' expresion ';' // Asignación
+		 | ID '.' ID '=' expresion ';'
 		 | estructura ';'
 		 | WHILE '(' expresion ')' '{' sentencias '}'
 		 | IF '(' expresion ')' '{' sentencias '}'
@@ -94,11 +96,6 @@ campos: campos estructura
 	  | llamadaVariable
 	  | declaracionVariable
       ;
-
-// Variables locales de las funciones      
-variables: variables declaracionVariable ';'
-		 | /*Vacio*/
-		 ;
 
 llamadaVariable: ID
 		       | ID '[' CTE_ENTERA ']'
@@ -135,6 +132,7 @@ expresion: ID
          | expresion O expresion
          | expresion '.' expresion
          | '-' expresion %prec MENOS_UNARIO 
+         | '!' expresion %prec NEGACION 
          | '(' expresion ')'
          | '(' tipoSimple ')' ID
          ;
