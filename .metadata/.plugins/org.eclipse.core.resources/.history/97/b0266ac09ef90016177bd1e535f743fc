@@ -72,12 +72,12 @@ sentencia: llamadaVariable
 		 | ELSE sentencia
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
-		 | ID '(' parametroLlamadaMetodo ')' ';' /*Llamada a funcion*/
+		 | ID '(' parametroMetodo ')' ';' /*Llamada a funcion*/
 		 | llamadaFuncion ';'
 		 | RETURN expresion ';'
          ;
          
-parametroLlamadaMetodo: parametroLlamadaMetodo ',' tipoParametro
+parametroMetodo: parametroMetodo ',' tipoParametro
 				| /*vacio*/
 				;   
 

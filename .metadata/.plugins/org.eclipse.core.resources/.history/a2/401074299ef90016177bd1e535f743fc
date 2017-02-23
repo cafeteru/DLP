@@ -35,7 +35,7 @@ metodos: metodos metodo
        |/*vacio*/
        ;
   
-metodo: tipoSimple ID '(' parametro ')' '{' cuerpoMetodo '}'
+metodo: tipoSimple ID '(' parametro ')' '{' cuerpo '}'
 	  | declaracionVariable ';'
 	  ;	
 	   
@@ -52,7 +52,7 @@ parametro: parametro ',' tipoSimple ID
 		 | /*vacio*/
 		 ;
 		 
-cuerpoMetodo: sentencias
+cuerpo: sentencias
 	  | /*vacio*/
 	  ;
 
@@ -72,21 +72,22 @@ sentencia: llamadaVariable
 		 | ELSE sentencia
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
-		 | ID '(' parametroLlamadaMetodo ')' ';' /*Llamada a funcion*/
+		 | ID '(' parametroLlamada ')' ';' /*Llamada a funcion*/
 		 | llamadaFuncion ';'
 		 | RETURN expresion ';'
          ;
          
-parametroLlamadaMetodo: parametroLlamadaMetodo ',' tipoParametro
+parametroLlamada: parametroLlamada ',' tipoParametro
 				| /*vacio*/
 				;   
 
-llamadaVariable: ID llamadaArray
-		       | ID 
+llamadaVariable: ID
+		       | ID '[' expresiones ']'
+		       | ID '[' expresiones ']' '[' expresiones ']'
 		       ;
 		
 declaracionVariable: tipoSimple identificador
-		           | tipoSimple indices identificador 
+		           | tipoSimple dimensionesArray identificador 
 		           | STRUCT '{' campos '}' ID
 		           ;
 		           
@@ -125,10 +126,9 @@ expresion: llamadaVariable
          ;
          
 llamadaArray: llamadaArray '[' expresiones ']'
-			| '[' expresiones ']'
-			;
+			; '[' expresiones ']'
          
-indices: indices '[' CTE_ENTERA ']'
+dimensionesArray: dimensionesArray '[' CTE_ENTERA ']'
 	 | '[' CTE_ENTERA ']'
 	 ;
          

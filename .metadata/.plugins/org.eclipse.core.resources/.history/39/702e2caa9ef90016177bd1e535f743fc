@@ -35,7 +35,7 @@ metodos: metodos metodo
        |/*vacio*/
        ;
   
-metodo: tipoSimple ID '(' parametro ')' '{' cuerpoMetodo '}'
+metodo: tipoSimple ID '(' parametro ')' '{' cuerpo '}'
 	  | declaracionVariable ';'
 	  ;	
 	   
@@ -52,7 +52,7 @@ parametro: parametro ',' tipoSimple ID
 		 | /*vacio*/
 		 ;
 		 
-cuerpoMetodo: sentencias
+cuerpo: sentencias
 	  | /*vacio*/
 	  ;
 
@@ -72,12 +72,12 @@ sentencia: llamadaVariable
 		 | ELSE sentencia
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
-		 | ID '(' parametroLlamadaMetodo ')' ';' /*Llamada a funcion*/
+		 | ID '(' parametroMetodo ')' ';' /*Llamada a funcion*/
 		 | llamadaFuncion ';'
 		 | RETURN expresion ';'
          ;
          
-parametroLlamadaMetodo: parametroLlamadaMetodo ',' tipoParametro
+parametroMetodo: parametroMetodo ',' tipoParametro
 				| /*vacio*/
 				;   
 
