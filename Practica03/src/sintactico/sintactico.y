@@ -35,7 +35,8 @@ metodos: metodos metodo
        |/*vacio*/
        ;
   
-metodo: tipoSimple ID '(' parametro ')' '{' cuerpoMetodo '}'
+metodo: tipoSimple ID '(' parametro ')' '{' cuerpoMetodo '}' /*funcion*/
+	  | VOID ID '(' parametro ')' '{' cuerpoMetodo '}' /*procedimiento*/
 	  | declaracionVariable ';'
 	  ;	
 	   
@@ -66,16 +67,18 @@ sentencia: llamadaVariable
 		 | declaracionVariable '=' expresion ';' // Asignación
 		 | ID '.' ID '=' expresion ';'
 		 | WHILE '(' expresion ')' '{' sentencias '}'
-		 | IF '(' expresion ')' '{' sentencias '}'
-		 | IF '(' expresion ')' sentencia 
-		 | ELSE '{' sentencias '}'
-		 | ELSE sentencia
+		 | IF '(' expresion ')' cuerpoIf
+		 | ELSE cuerpoIf
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
 		 | ID '(' parametroLlamadaMetodo ')' ';' /*Llamada a funcion*/
 		 | llamadaFuncion ';'
 		 | RETURN expresion ';'
          ;
+         
+cuerpoIf: '{' sentencias '}'
+		| sentencia
+		;
          
 parametroLlamadaMetodo: parametroLlamadaMetodo ',' tipoParametro
 				| /*vacio*/
@@ -136,8 +139,7 @@ identificador: identificador ',' ID
 		     | ID	
 		     ;
 	
-tipoSimple: VOID 
-          | INT
+tipoSimple: INT
 	      | DOUBLE
 	      | CHAR 
 	      ;
