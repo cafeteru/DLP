@@ -67,8 +67,7 @@ sentencia: llamadaVariable
 		 | declaracionVariable '=' expresion ';' // Asignación
 		 | ID '.' ID '=' expresion ';'
 		 | WHILE '(' expresion ')' '{' sentencias '}'
-		 | IF '(' expresion ')' cuerpoIf
-		 | ELSE cuerpoIf
+		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
 		 | ID '(' parametroLlamadaMetodo ')' ';' /*Llamada a funcion*/
@@ -76,7 +75,7 @@ sentencia: llamadaVariable
 		 | RETURN expresion ';'
          ;
          
-cuerpoIf: '{' sentencias '}'
+cuerpoCondicional: '{' sentencias '}'
 		| sentencia
 		;
          
