@@ -35,7 +35,7 @@ public class Main {
 		Parser parser = new Parser(lexico);
 		// * "Parseamos"
 		parser.run();
-		
+
 	}
 
 }

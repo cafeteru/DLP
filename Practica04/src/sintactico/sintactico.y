@@ -22,6 +22,7 @@ import java.io.Reader;
 %right MENOS_UNARIO
 %right NEGACION
 %nonassoc '[' ']'
+%left COND
 %left '.'
 %nonassoc '(' ')'
 %nonassoc '{' '}'
@@ -41,6 +42,7 @@ metodo: tipoSimple ID '(' parametro ')' '{' cuerpoMetodo '}' /*funcion*/
 	  ;	
 	   
 llamadaFuncion: ID '(' expresiones ')'
+              | ID '(' parametroLlamadaMetodo ')'
 			  ;
 				
 tipoParametro: ID
@@ -67,10 +69,10 @@ sentencia: llamadaVariable
 		 | declaracionVariable '=' expresion ';' // Asignación
 		 | ID '.' ID '=' expresion ';'
 		 | WHILE '(' expresion ')' '{' sentencias '}'
-		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional
+		 | IF '(' expresion ')' cuerpoCondicional %prec COND
+		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
-		 | ID '(' parametroLlamadaMetodo ')' ';' /*Llamada a funcion*/
 		 | llamadaFuncion ';'
 		 | RETURN expresion ';'
          ;
@@ -131,8 +133,8 @@ llamadaArray: llamadaArray '[' expresiones ']'
 			;
          
 indices: indices '[' CTE_ENTERA ']'
-	 | '[' CTE_ENTERA ']'
-	 ;
+	   | '[' CTE_ENTERA ']'
+	   ;
          
 identificador: identificador ',' ID 
 		     | ID	
