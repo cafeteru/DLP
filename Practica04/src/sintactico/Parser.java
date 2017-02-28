@@ -23,7 +23,8 @@ package sintactico;
 /* * El package lo añade yacc si utilizamos la opción -Jpackage*/
 import lexico.Lexico;
 import java.io.Reader;
-//#line 23 "Parser.java"
+import ast.*;
+//#line 24 "Parser.java"
 
 
 
@@ -557,13 +558,16 @@ final static String yyrule[] = {
 "tipoSimple : CHAR",
 };
 
-//#line 149 "../../src/sintactico/sintactico.y"
+//#line 150 "../../src/sintactico/sintactico.y"
 
 // * Código Java
 // * Se crea una clase "Parser", lo que aquí ubiquemos será:
 //	- Atributos, si son variables
 //	- Métodos, si son funciones
 //   de la clase "Parser"
+
+private NodoAST ast;
+public NodoAST getAST(){ return this.ast; }
 
 // * Estamos obligados a implementar:
 //	int yylex()
@@ -577,6 +581,7 @@ private int yylex () {
     int token=0;
     try { 
 	token=lexico.yylex(); 
+	this.yyval = lexico.getYylval();
     } catch(Throwable e) {
 	    System.err.println ("Error Léxico en línea " + lexico.getLine()+
 		" y columna "+lexico.getColumn()+":\n\t"+e); 
@@ -594,7 +599,7 @@ public void yyerror (String error) {
 public Parser(Lexico lexico) {
 	this.lexico = lexico;
 }
-//#line 534 "Parser.java"
+//#line 539 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -748,6 +753,11 @@ boolean doaction;
     switch(yyn)
       {
 //########## USER-SUPPLIED ACTIONS ##########
+case 1:
+//#line 34 "../../src/sintactico/sintactico.y"
+{ this.ast = new Programa();}
+break;
+//#line 692 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

@@ -4,6 +4,7 @@
 // * El package lo añade yacc si utilizamos la opción -Jpackage
 import lexico.Lexico;
 import java.io.Reader;
+import ast.*;
 %}
 
 // * Declaraciones Yacc
@@ -30,7 +31,7 @@ import java.io.Reader;
 
 %%
 // * Gramática y acciones Yacc
-programa: metodos VOID MAIN '('')' '{' sentencias '}'
+programa: metodos VOID MAIN '('')' '{' sentencias '}' { this.ast = new Programa();}
 		;
 
 metodos: metodos metodo
@@ -153,6 +154,9 @@ tipoSimple: INT
 //	- Métodos, si son funciones
 //   de la clase "Parser"
 
+private NodoAST ast;
+public NodoAST getAST(){ return this.ast; }
+
 // * Estamos obligados a implementar:
 //	int yylex()
 //	void yyerror(String)
@@ -165,6 +169,7 @@ private int yylex () {
     int token=0;
     try { 
 	token=lexico.yylex(); 
+	this.yyval = lexico.getYylval();
     } catch(Throwable e) {
 	    System.err.println ("Error Léxico en línea " + lexico.getLine()+
 		" y columna "+lexico.getColumn()+":\n\t"+e); 
