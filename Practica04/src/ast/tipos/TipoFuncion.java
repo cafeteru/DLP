@@ -1,17 +1,24 @@
 package ast.tipos;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
+import ast.definiciones.DefVariable;
 
 public class TipoFuncion implements Tipo {
-	private Set<DefVariable> parametros = new HashSet<>();
-	private Set<Tipo> retorno = new HashSet<>();
+	private List<DefVariable> parametros = new ArrayList<>();
+	private Tipo retorno;
 
 	public TipoFuncion(List<DefVariable> parametros, Tipo retorno) {
 		for (DefVariable defVariable : parametros) {
 			this.parametros.add(defVariable);
 		}
-		this.retorno.add(retorno);
+		this.retorno = retorno;
+	}
+
+	@Override
+	public String toString() {
+		return "TipoFuncion [parametros=" + parametros + ", retorno=" + retorno
+				+ "]";
 	}
 }

@@ -17,9 +17,9 @@ int[10][10] matrix;
 
 // Funciones
 void setValue(int row, int columnn, int value){
-	/*if (row >= 0 && row < MATRIXSIZE && columnn >= 0 && columnn < MATRIXSIZE) {
+	if (row >= 0 && row < MATRIXSIZE && columnn >= 0 && columnn < MATRIXSIZE) {
 		matrix[row][column] = value;
-	}*/
+	}
 }
 
 int getValue(int row, int columnn) {

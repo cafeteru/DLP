@@ -1,13 +1,53 @@
 package ast.expresiones;
 
-import java.util.List;
+import ast.util.NodoPosicion;
 
-public class OperacionBinaria {
-	private List<Expresion> expresion;
+public class OperacionBinaria extends NodoPosicion
+		implements Expresion {
+	protected String operador;
+	private Expresion izq;
+	private Expresion der;
 
-	public OperacionBinaria(Expresion expresion1, Expresion expresion2) {
-		this.expresion.add(expresion1);
-		this.expresion.add(expresion2);
+	/**
+	 * Constructor con parámetros.
+	 * 
+	 * @param linea
+	 *            Línea en la que se encuentra el lexema.
+	 * @param columna
+	 *            Columna en la que se encuentra el lexema.
+	 * @param izq
+	 *            Expresión que se encuentra a la izquierda del operando.
+	 * @param operador
+	 *            Operando de la operación.
+	 * 
+	 * @param der
+	 *            Expresión que se encuentra a la derecha del operando.
+	 * 
+	 */
+	public OperacionBinaria(int linea, int columna, Expresion izq, String operador,
+			Expresion der) {
+		super(linea, columna);
+		this.izq = izq;
+		this.der = der;
+		this.operador = operador;
+	}
+
+	/**
+	 * Método que devuelve el parámetro izq.
+	 * 
+	 * @return Expresión que se encuentra a la izquierda del operando.
+	 */
+	public Expresion getIzq() {
+		return izq;
+	}
+
+	/**
+	 * Método que devuelve el parámetro der.
+	 * 
+	 * @return Expresión que se encuentra a la derecha del operando.
+	 */
+	public Expresion getDer() {
+		return der;
 	}
 
 }

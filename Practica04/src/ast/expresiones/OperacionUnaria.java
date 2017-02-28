@@ -1,11 +1,16 @@
 package ast.expresiones;
 
-import java.util.List;
+import ast.util.CompositeSentencia;
 
-public class OperacionUnaria {
-	private List<Expresion> expresion;
+public class OperacionUnaria extends CompositeSentencia implements Expresion {
+	protected String operador;
+	private Expresion expresion;
 
-	public OperacionUnaria(Expresion expresion) {
-		this.expresion.add(expresion);
+	public OperacionUnaria(int linea, int columna, String operador,
+			Expresion expresion) {
+		super(linea, columna);
+		this.expresion = expresion;
+		this.operador = operador;
 	}
+
 }

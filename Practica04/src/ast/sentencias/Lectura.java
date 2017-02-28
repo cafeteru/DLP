@@ -1,7 +1,9 @@
 package ast.sentencias;
 
+import java.util.List;
+
 import ast.expresiones.Expresion;
-import ast.util.CompositeExpresion;
+import ast.util.CompositeExpresiones;
 
 /**
  * Clase que simula en el análizador léxico un token que es una lectura.
@@ -9,7 +11,7 @@ import ast.util.CompositeExpresion;
  * @author Iván González Mahagamage
  *
  */
-public class Lectura extends CompositeExpresion implements Sentencia {
+public class Lectura extends CompositeExpresiones implements Sentencia {
 
 	/**
 	 * Constructor con parámetros.
@@ -18,12 +20,12 @@ public class Lectura extends CompositeExpresion implements Sentencia {
 	 *            Línea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
-	 * @param expresion
+	 * @param sentecia
 	 *            Expresión que queremos leer.
 	 */
-	public Lectura(int linea, int columna, Expresion expresion) {
+	public Lectura(int linea, int columna, List<Expresion> expresiones) {
 		super(linea, columna);
-		getExpresiones().add(expresion);
+		this.expresiones = expresiones;
 	}
 
 	/**

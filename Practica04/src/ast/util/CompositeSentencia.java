@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ast.expresiones.Expresion;
+import ast.sentencias.Sentencia;
 
 /**
  * Clase intermedia que asigna una lista de expresiones a los token que la
@@ -12,8 +13,8 @@ import ast.expresiones.Expresion;
  * @author Iván González Mahagamage
  *
  */
-public class CompositeExpresion extends NodoPosicion {
-	private List<Expresion> expresiones;
+public class CompositeSentencia extends NodoPosicion {
+	protected List<Sentencia> sentencias;
 
 	/**
 	 * Constructor con parámetros.
@@ -23,9 +24,9 @@ public class CompositeExpresion extends NodoPosicion {
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 */
-	public CompositeExpresion(int linea, int columna) {
+	public CompositeSentencia(int linea, int columna) {
 		super(linea, columna);
-		expresiones = new ArrayList<>();
+		sentencias = new ArrayList<>();
 	}
 
 	/**
@@ -33,7 +34,7 @@ public class CompositeExpresion extends NodoPosicion {
 	 * 
 	 * @return Lista de expresiones.
 	 */
-	public List<Expresion> getExpresiones() {
-		return expresiones;
+	public List<Sentencia> getSentencias() {
+		return sentencias;
 	}
 }

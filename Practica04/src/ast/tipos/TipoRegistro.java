@@ -1,11 +1,11 @@
 package ast.tipos;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class TipoRegistro implements Tipo {
-	private Set<CampoRegistro> campos = new HashSet<>();
+	// Si eso cambiar a ArrayList
+	private List<CampoRegistro> campos = new ArrayList<>();
 
 	public TipoRegistro(List<CampoRegistro> campos) {
 		for (CampoRegistro campoRegistro : campos) {

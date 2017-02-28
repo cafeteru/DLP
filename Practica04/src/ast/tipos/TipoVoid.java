@@ -1,7 +1,5 @@
 package ast.tipos;
 
-
-
 public class TipoVoid implements Tipo {
 	private static TipoVoid instancia;
 

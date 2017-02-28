@@ -1,14 +1,11 @@
 package ast.tipos;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class TipoArray implements Tipo {
 	private int tamaño;
-	private Set<Tipo> elementos = new HashSet<>();
+	private Tipo tipo;
 
 	public TipoArray(int tamaño, Tipo tipo) {
 		this.tamaño = tamaño;
-		elementos.add(tipo);
+		this.tipo = tipo;
 	}
 }
