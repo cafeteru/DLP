@@ -22,8 +22,9 @@ import java.io.Reader;
 %right MENOS_UNARIO
 %right NEGACION
 %nonassoc '[' ']'
-%left COND
 %left '.'
+%nonassoc MENORQUEELSE
+%nonassoc ELSE
 %nonassoc '(' ')'
 %nonassoc '{' '}'
 
@@ -36,13 +37,13 @@ metodos: metodos metodo
        |/*vacio*/
        ;
   
-metodo: tipoSimple ID '(' parametro ')' '{' cuerpoMetodo '}' /*funcion*/
-	  | VOID ID '(' parametro ')' '{' cuerpoMetodo '}' /*procedimiento*/
+metodo: tipoSimple ID '(' parametros ')' '{' cuerpoMetodo '}' /*funcion*/
+	  | VOID ID '(' parametros ')' '{' cuerpoMetodo '}' /*procedimiento*/
 	  | declaracionVariable ';'
 	  ;	
 	   
 llamadaFuncion: ID '(' expresiones ')'
-              | ID '(' parametroLlamadaMetodo ')'
+              | ID '(' argumentos ')'
 			  ;
 				
 tipoParametro: ID
@@ -50,10 +51,10 @@ tipoParametro: ID
 			 | CTE_REAL
 			 ;
 	   
-parametro: parametro ',' tipoSimple ID
-		 | tipoSimple ID
-		 | /*vacio*/
-		 ;
+parametros: parametros ',' tipoSimple ID
+		  | tipoSimple ID
+		  | /*vacio*/
+		  ;
 		 
 cuerpoMetodo: sentencias
 	  | /*vacio*/
@@ -69,7 +70,7 @@ sentencia: llamadaVariable
 		 | declaracionVariable '=' expresion ';' // Asignación
 		 | ID '.' ID '=' expresion ';'
 		 | WHILE '(' expresion ')' '{' sentencias '}'
-		 | IF '(' expresion ')' cuerpoCondicional %prec COND
+		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE
 		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
@@ -78,12 +79,12 @@ sentencia: llamadaVariable
          ;
          
 cuerpoCondicional: '{' sentencias '}'
-		| sentencia
-		;
+		         | sentencia
+		         ;
          
-parametroLlamadaMetodo: parametroLlamadaMetodo ',' tipoParametro
-				| /*vacio*/
-				;   
+argumentos: argumentos ',' tipoParametro
+		  | /*vacio*/
+		  ;   
 
 llamadaVariable: ID llamadaArray
 		       | ID 

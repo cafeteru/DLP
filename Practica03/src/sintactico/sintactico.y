@@ -23,6 +23,8 @@ import java.io.Reader;
 %right NEGACION
 %nonassoc '[' ']'
 %left '.'
+%nonassoc MENORQUEELSE
+%nonassoc ELSE
 %nonassoc '(' ')'
 %nonassoc '{' '}'
 
@@ -35,12 +37,13 @@ metodos: metodos metodo
        |/*vacio*/
        ;
   
-metodo: tipoSimple ID '(' parametro ')' '{' cuerpoMetodo '}' /*funcion*/
-	  | VOID ID '(' parametro ')' '{' cuerpoMetodo '}' /*procedimiento*/
+metodo: tipoSimple ID '(' parametros ')' '{' cuerpoMetodo '}' /*funcion*/
+	  | VOID ID '(' parametros ')' '{' cuerpoMetodo '}' /*procedimiento*/
 	  | declaracionVariable ';'
 	  ;	
 	   
 llamadaFuncion: ID '(' expresiones ')'
+              | ID '(' argumentos ')'
 			  ;
 				
 tipoParametro: ID
@@ -48,10 +51,10 @@ tipoParametro: ID
 			 | CTE_REAL
 			 ;
 	   
-parametro: parametro ',' tipoSimple ID
-		 | tipoSimple ID
-		 | /*vacio*/
-		 ;
+parametros: parametros ',' tipoSimple ID
+		  | tipoSimple ID
+		  | /*vacio*/
+		  ;
 		 
 cuerpoMetodo: sentencias
 	  | /*vacio*/
@@ -67,22 +70,21 @@ sentencia: llamadaVariable
 		 | declaracionVariable '=' expresion ';' // Asignación
 		 | ID '.' ID '=' expresion ';'
 		 | WHILE '(' expresion ')' '{' sentencias '}'
-		 | IF '(' expresion ')' cuerpoIf
-		 | ELSE cuerpoIf
+		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE
+		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 
 		 | WRITE expresiones ';'
 		 | READ expresiones ';'
-		 | ID '(' parametroLlamadaMetodo ')' ';' /*Llamada a funcion*/
 		 | llamadaFuncion ';'
 		 | RETURN expresion ';'
          ;
          
-cuerpoIf: '{' sentencias '}'
-		| sentencia
-		;
+cuerpoCondicional: '{' sentencias '}'
+		         | sentencia
+		         ;
          
-parametroLlamadaMetodo: parametroLlamadaMetodo ',' tipoParametro
-				| /*vacio*/
-				;   
+argumentos: argumentos ',' tipoParametro
+		  | /*vacio*/
+		  ;   
 
 llamadaVariable: ID llamadaArray
 		       | ID 
@@ -132,8 +134,8 @@ llamadaArray: llamadaArray '[' expresiones ']'
 			;
          
 indices: indices '[' CTE_ENTERA ']'
-	 | '[' CTE_ENTERA ']'
-	 ;
+	   | '[' CTE_ENTERA ']'
+	   ;
          
 identificador: identificador ',' ID 
 		     | ID	

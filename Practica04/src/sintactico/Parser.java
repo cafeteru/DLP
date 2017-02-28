@@ -176,7 +176,7 @@ public final static short DISTINTO=277;
 public final static short IGUALDAD=278;
 public final static short MENOS_UNARIO=279;
 public final static short NEGACION=280;
-public final static short COND=281;
+public final static short MENORQUEELSE=281;
 public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
     0,    1,    1,    3,    3,    3,    8,    8,   11,   11,
@@ -476,24 +476,24 @@ null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,"CTE_ENTERA","CTE_REAL",
 "CTE_CARACTER","READ","WRITE","WHILE","IF","ELSE","INT","DOUBLE","CHAR",
 "STRUCT","RETURN","VOID","MAIN","ID","Y","O","MAYORIGUALQUE","MENORIGUALQUE",
-"DISTINTO","IGUALDAD","MENOS_UNARIO","NEGACION","COND",
+"DISTINTO","IGUALDAD","MENOS_UNARIO","NEGACION","MENORQUEELSE",
 };
 final static String yyrule[] = {
 "$accept : programa",
 "programa : metodos VOID MAIN '(' ')' '{' sentencias '}'",
 "metodos : metodos metodo",
 "metodos :",
-"metodo : tipoSimple ID '(' parametro ')' '{' cuerpoMetodo '}'",
-"metodo : VOID ID '(' parametro ')' '{' cuerpoMetodo '}'",
+"metodo : tipoSimple ID '(' parametros ')' '{' cuerpoMetodo '}'",
+"metodo : VOID ID '(' parametros ')' '{' cuerpoMetodo '}'",
 "metodo : declaracionVariable ';'",
 "llamadaFuncion : ID '(' expresiones ')'",
-"llamadaFuncion : ID '(' parametroLlamadaMetodo ')'",
+"llamadaFuncion : ID '(' argumentos ')'",
 "tipoParametro : ID",
 "tipoParametro : CTE_ENTERA",
 "tipoParametro : CTE_REAL",
-"parametro : parametro ',' tipoSimple ID",
-"parametro : tipoSimple ID",
-"parametro :",
+"parametros : parametros ',' tipoSimple ID",
+"parametros : tipoSimple ID",
+"parametros :",
 "cuerpoMetodo : sentencias",
 "cuerpoMetodo :",
 "sentencias : sentencias sentencia",
@@ -512,8 +512,8 @@ final static String yyrule[] = {
 "sentencia : RETURN expresion ';'",
 "cuerpoCondicional : '{' sentencias '}'",
 "cuerpoCondicional : sentencia",
-"parametroLlamadaMetodo : parametroLlamadaMetodo ',' tipoParametro",
-"parametroLlamadaMetodo :",
+"argumentos : argumentos ',' tipoParametro",
+"argumentos :",
 "llamadaVariable : ID llamadaArray",
 "llamadaVariable : ID",
 "declaracionVariable : tipoSimple identificador",
@@ -557,7 +557,7 @@ final static String yyrule[] = {
 "tipoSimple : CHAR",
 };
 
-//#line 148 "../../src/sintactico/sintactico.y"
+//#line 149 "../../src/sintactico/sintactico.y"
 
 // * Código Java
 // * Se crea una clase "Parser", lo que aquí ubiquemos será:

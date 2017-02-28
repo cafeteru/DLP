@@ -32,7 +32,9 @@ public class Main {
 
 		// * Creamos léxico y sintáctico
 		Lexico lexico = new Lexico(fr);
+		
 		Parser parser = new Parser(lexico);
+		
 		// * "Parseamos"
 		parser.run();
 
