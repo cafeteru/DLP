@@ -87,7 +87,7 @@ void main() { //Comentar para probar
 	date.year = 2016;
 	character = (char)date.day;
 	real = 4.5 + 4. * 3e+3 - 5.4E-3;
-	int error; // Descomentar para probar
+	//int error; // Descomentar para probar
 }
 
 

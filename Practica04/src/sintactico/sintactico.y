@@ -4,7 +4,12 @@
 // * El package lo añade yacc si utilizamos la opción -Jpackage
 import lexico.Lexico;
 import java.io.Reader;
+import java.util.*;
 import ast.*;
+import ast.definiciones.*;
+import ast.expresiones.*;
+import ast.sentencias.*;
+import ast.tipos.*;
 %}
 
 // * Declaraciones Yacc
@@ -31,17 +36,24 @@ import ast.*;
 
 %%
 // * Gramática y acciones Yacc
-programa: metodos VOID MAIN '('')' '{' sentencias '}' { this.ast = new Programa();}
+programa: metodos VOID MAIN '('')' '{' declaraciones sentencias '}'			{ 
+
+
+this.ast = new Programa(); }
 		;
 
-metodos: metodos metodo
-       |/*vacio*/
+metodos: metodos metodo     { $$ = $1; ((List)$$).add($2); }
+       |/*vacio*/			{ $$ = new ArrayList();}
        ;
   
-metodo: tipoSimple ID '(' parametros ')' '{' cuerpoMetodo '}' /*funcion*/
-	  | VOID ID '(' parametros ')' '{' cuerpoMetodo '}' /*procedimiento*/
+metodo: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoMetodo '}' /*funcion*/  		
+	  | VOID ID '(' parametros ')' '{' declaraciones cuerpoMetodo '}' /*procedimiento*/
 	  | declaracionVariable ';'
 	  ;	
+	  
+declaraciones: declaraciones declaracionVariable ';'
+			| /*vacio*/
+			;
 	   
 llamadaFuncion: ID '(' expresiones ')'
               | ID '(' argumentos ')'
@@ -66,9 +78,7 @@ sentencias: sentencias sentencia
 		 ;
 		 	
 sentencia: llamadaVariable 
-		 | declaracionVariable ';'
 		 | llamadaVariable '=' expresion ';' // Asignación
-		 | declaracionVariable '=' expresion ';' // Asignación
 		 | ID '.' ID '=' expresion ';'
 		 | WHILE '(' expresion ')' '{' sentencias '}'
 		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE

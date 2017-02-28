@@ -2,7 +2,7 @@ package ast;
 
 import java.util.List;
 
-import ast.sentencias.Sentencia;
+import ast.definiciones.Definicion;
 import ast.util.NodoPosicion;
 
 /**
@@ -12,7 +12,7 @@ import ast.util.NodoPosicion;
  *
  */
 public class Programa extends NodoPosicion implements NodoAST {
-	private List<Sentencia> sentencias;
+	private List<Definicion> definiciones;
 
 	/**
 	 * Constructor con parámetros.
@@ -24,18 +24,9 @@ public class Programa extends NodoPosicion implements NodoAST {
 	 * @param sentencias
 	 *            Conjunto de tokens que forman el programa.
 	 */
-	public Programa(int linea, int columna, List<Sentencia> sentencias) {
+	public Programa(int linea, int columna, List<Definicion> definiciones) {
 		super(linea, columna);
-		this.sentencias = sentencias;
-	}
-
-	/**
-	 * Método que devuelve el parámetro sentencias.
-	 * 
-	 * @return Conjunto de tokens que forman el programa.
-	 */
-	public List<Sentencia> getSentencias() {
-		return sentencias;
+		this.definiciones = definiciones;
 	}
 
 	/**
