@@ -4,6 +4,8 @@
 // * El package lo añade yacc si utilizamos la opción -Jpackage
 import lexico.Lexico;
 import java.io.Reader;
+import java.util.*;
+import ast.*;
 %}
 
 // * Declaraciones Yacc
@@ -30,33 +32,28 @@ import java.io.Reader;
 
 %%
 // * Gramática y acciones Yacc
-programa: metodos VOID MAIN '('')' '{' sentencias '}'
-		;
+programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'			
 
-metodos: metodos metodo
-       |/*vacio*/
+definiciones: definiciones definicion     											
+       |/*vacio*/																	
        ;
   
-metodo: tipoSimple ID '(' parametros ')' '{' cuerpoMetodo '}' /*funcion*/
-	  | VOID ID '(' parametros ')' '{' cuerpoMetodo '}' /*procedimiento*/
+definicion: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' /*funcion*/  	
+																								
+	  | VOID ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' /*procedimiento*/			
 	  | declaracionVariable ';'
 	  ;	
-	   
-llamadaFuncion: ID '(' expresiones ')'
-              | ID '(' argumentos ')'
-			  ;
-				
-tipoParametro: ID
-			 | CTE_ENTERA
-			 | CTE_REAL
-			 ;
+	  
+declaraciones: declaraciones declaracionVariable ';'
+			| /*vacio*/
+			;
 	   
 parametros: parametros ',' tipoSimple ID
 		  | tipoSimple ID
 		  | /*vacio*/
 		  ;
 		 
-cuerpoMetodo: sentencias
+cuerpoDefinicion: sentencias
 	  | /*vacio*/
 	  ;
 
@@ -64,11 +61,7 @@ sentencias: sentencias sentencia
 	     | sentencia
 		 ;
 		 	
-sentencia: llamadaVariable 
-		 | declaracionVariable ';'
-		 | llamadaVariable '=' expresion ';' // Asignación
-		 | declaracionVariable '=' expresion ';' // Asignación
-		 | ID '.' ID '=' expresion ';'
+sentencia: expresion '=' expresion ';' // Asignación
 		 | WHILE '(' expresion ')' '{' sentencias '}'
 		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE
 		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 
@@ -81,18 +74,10 @@ sentencia: llamadaVariable
 cuerpoCondicional: '{' sentencias '}'
 		         | sentencia
 		         ;
-         
-argumentos: argumentos ',' tipoParametro
-		  | /*vacio*/
-		  ;   
-
-llamadaVariable: ID llamadaArray
-		       | ID 
-		       ;
 		
 declaracionVariable: tipoSimple identificador
 		           | tipoSimple indices identificador 
-		           | STRUCT '{' campos '}' ID
+		           | STRUCT '{' campos '}' identificador
 		           ;
 		           
 // Campos dentro de un Struct		   
@@ -104,7 +89,7 @@ expresiones: expresiones ',' expresion
 		   | expresion
 		   ;	   
 	  		     
-expresion: llamadaVariable
+expresion: ID
 		 | CTE_ENTERA
          | CTE_REAL
          | CTE_CARACTER
@@ -127,23 +112,27 @@ expresion: llamadaVariable
          | '(' expresion ')'
          | '(' tipoSimple ')' expresion
          | llamadaFuncion
+         | expresion '[' expresion ']'					
          ;
          
-llamadaArray: llamadaArray '[' expresiones ']'
-			| '[' expresiones ']'
-			;
+llamadaFuncion: ID '(' argumentosLlamada ')'
+			  ;
+			  
+argumentosLlamada: expresiones
+				 | /*vacio*/ 
+				 ;
          
-indices: indices '[' CTE_ENTERA ']'
-	   | '[' CTE_ENTERA ']'
+indices: indices '[' CTE_ENTERA ']'				
+	   | '[' CTE_ENTERA ']'                 	
 	   ;
          
-identificador: identificador ',' ID 
-		     | ID	
+identificador: identificador ',' ID 			
+		     | ID								
 		     ;
 	
-tipoSimple: INT
-	      | DOUBLE
-	      | CHAR 
+tipoSimple: INT									
+	      | DOUBLE								
+	      | CHAR 								
 	      ;
 %%
 
@@ -152,6 +141,9 @@ tipoSimple: INT
 //	- Atributos, si son variables
 //	- Métodos, si son funciones
 //   de la clase "Parser"
+
+private NodoAST ast;
+public NodoAST getAST(){ return this.ast; }
 
 // * Estamos obligados a implementar:
 //	int yylex()
@@ -165,6 +157,7 @@ private int yylex () {
     int token=0;
     try { 
 	token=lexico.yylex(); 
+	this.yyval = lexico.getYylval();
     } catch(Throwable e) {
 	    System.err.println ("Error Léxico en línea " + lexico.getLine()+
 		" y columna "+lexico.getColumn()+":\n\t"+e); 

@@ -1,60 +1,96 @@
+/*
+	Control Evaluciï¿½n Continua
+	DLP 16/17
+*/
 
-// * Definicion de variables y funciones
-int i, j, n;
-char c;
+// Variables globales
+int integer;
+char character;
+double real;
 
-// * Función vacia
-void p() {}
 
-void f(int n, double r) {
-  double real;
-  char c1, c2;
-  c1 = (char)n;
-  real = c1 + n + r;
-  p(); // * Invocacion procedimiento
-  return (int)c1;
+
+int MATRIXSIZE;
+int[10][10] matrix;
+
+
+
+// Funciones
+void setValue(int row, int columnn, int value){
+	if (row >= 0 && row < MATRIXSIZE && columnn >= 0 && columnn < MATRIXSIZE) {
+		matrix[row][column] = value;
+	}
 }
 
-int i, j, n;
+int getValue(int row, int columnn) {
+	if ((row < 0 || row >= MATRIXSIZE) || (columnn < 0 && columnn >= MATRIXSIZE)){
+		return -1;
+	}
+	else{	
+		return matrix[row][column];
+	}
 
-// * Funcion main
-void main() {
-  // * Record
-  struct {
-    int integer;
-    char character;
-      struct {
-    int integer;
-    char character;
-  } pair;
-  } pair;
-  // * Array
-  double[10][5] vector;
-  
-  i=0;
-  j=0;
-  while(i<10){
-    while(j<5) {
-      vector[i][j] = i + j;
-      j=j+1;
-    }
-  i=i+1;
-  }
-  
-  i=0;
-  pair.character = '0';
-  pair.integer = '0';
-  while (pair.integer >= i) {
-    if (pair.integer == vector[0][0] || !pair.character || i%2==0)
-      write 't', 'r', 'u', 'e', '\n';
-    else 
-      write 'f', 'a', 'l', 's', 'e', '\n';
-    i=i+1;
-  }
-  write f(i, (double)i); // * Invocacion como expresion
-  vector[9][(int)4.3]=5.6;
-  f(1, 2.2); // * Invocation como sentencia
+}
+
+void fill(int value) {
+	int i,j;  // Declaracion mï¿½ltiple de variables
+	i = 0;	
+	while (i < MATRIXSIZE) {
+		j = 0;
+		while (j < MATRIXSIZE) {
+			setValue(i,j, value);
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+
+}
+
+void show() {
+	int i,j;
+	i = 0;	
+	write 'a','\n';
+	while (i < MATRIXSIZE) {
+		j = 0;
+		write '\t','a';
+		while (j < MATRIXSIZE) {
+			write getValue(i,j);	
+			j = j + 1;
+		}
+		write 'a','\n';	
+		i = i + 1;
+	}	
+	write 'a';	
 }
 
 
+
+// Registro
+struct { 
+	int day, mounth, year;	
+} date;
+
+
+
+// Programa principal
+//void no_main (){ // Descomentar para probar
+
+void main() { //Comentar para probar
+	char[1][2][3] characters;
+	MATRIXSIZE = 10;
+	fill(1);
+	setValue(5,5,5);
+	integer = getValue(5,5);
+	show();
+	date.day = 9;
+	date.mounth = 3;
+	date.year = 2016;
+	character = (char)date.day;
+	real = 4.5 + 4. * 3e+3 - 5.4E-3;
+	//int error; // Descomentar para probar
+}
+
+
+
+// void no_function(){} // Descomentar para probar
 

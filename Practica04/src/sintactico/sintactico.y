@@ -36,18 +36,22 @@ import ast.tipos.*;
 
 %%
 // * Gramática y acciones Yacc
-programa: metodos VOID MAIN '('')' '{' declaraciones sentencias '}'			{ 
+programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'			{ 	List<Definicion> aux = (List<Definicion>)$1;
+																						aux.add(new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
+																						new TipoFuncion(new ArrayList(), TipoVoid.getInstancia()), 
+																						(List<DefVariable>)$7, (List<Sentencia>)$8));
+																						this.ast = new Programa(lexico.getLine(), lexico.getColumn(), aux); 	} ;
 
-
-this.ast = new Programa(); }
-		;
-
-metodos: metodos metodo     { $$ = $1; ((List)$$).add($2); }
-       |/*vacio*/			{ $$ = new ArrayList();}
+definiciones: definiciones definicion     											{	$$ = $1; ((List<Definicion>)$$).add((Definicion)$2); }
+       |/*vacio*/																	{	$$ = new ArrayList();}
        ;
   
-metodo: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoMetodo '}' /*funcion*/  		
-	  | VOID ID '(' parametros ')' '{' declaraciones cuerpoMetodo '}' /*procedimiento*/
+definicion: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' /*funcion*/  	{ 	$$ = new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
+																										new TipoFuncion(new ArrayList(), TipoVoid.getInstancia()), 
+																									(	List<DefVariable>)$7, (List<Sentencia>)$8); }	
+	  | VOID ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' /*procedimiento*/			{	new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
+																										new TipoFuncion(new ArrayList(), TipoVoid.getInstancia()), 
+																										(List<DefVariable>)$7, (List<Sentencia>)$8);}
 	  | declaracionVariable ';'
 	  ;	
 	  
@@ -55,21 +59,12 @@ declaraciones: declaraciones declaracionVariable ';'
 			| /*vacio*/
 			;
 	   
-llamadaFuncion: ID '(' expresiones ')'
-              | ID '(' argumentos ')'
-			  ;
-				
-tipoParametro: ID
-			 | CTE_ENTERA
-			 | CTE_REAL
-			 ;
-	   
 parametros: parametros ',' tipoSimple ID
 		  | tipoSimple ID
 		  | /*vacio*/
 		  ;
 		 
-cuerpoMetodo: sentencias
+cuerpoDefinicion: sentencias
 	  | /*vacio*/
 	  ;
 
@@ -77,9 +72,8 @@ sentencias: sentencias sentencia
 	     | sentencia
 		 ;
 		 	
-sentencia: llamadaVariable 
-		 | llamadaVariable '=' expresion ';' // Asignación
-		 | ID '.' ID '=' expresion ';'
+sentencia: expresion '=' expresion ';' // Asignación
+								
 		 | WHILE '(' expresion ')' '{' sentencias '}'
 		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE
 		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 
@@ -92,18 +86,11 @@ sentencia: llamadaVariable
 cuerpoCondicional: '{' sentencias '}'
 		         | sentencia
 		         ;
-         
-argumentos: argumentos ',' tipoParametro
-		  | /*vacio*/
-		  ;   
 
-llamadaVariable: ID llamadaArray
-		       | ID 
-		       ;
 		
 declaracionVariable: tipoSimple identificador
 		           | tipoSimple indices identificador 
-		           | STRUCT '{' campos '}' ID
+		           | STRUCT '{' campos '}' identificador
 		           ;
 		           
 // Campos dentro de un Struct		   
@@ -115,7 +102,8 @@ expresiones: expresiones ',' expresion
 		   | expresion
 		   ;	   
 	  		     
-expresion: llamadaVariable
+expresion: ID
+	   
 		 | CTE_ENTERA
          | CTE_REAL
          | CTE_CARACTER
@@ -137,24 +125,29 @@ expresion: llamadaVariable
          | '!' expresion %prec NEGACION 
          | '(' expresion ')'
          | '(' tipoSimple ')' expresion
-         | llamadaFuncion
+         | llamadaFuncion						
+										   
          ;
          
-llamadaArray: llamadaArray '[' expresiones ']'
-			| '[' expresiones ']'
-			;
+llamadaFuncion: ID '(' argumentosLlamada ')'
+			  ;
+			     
+argumentosLlamada: expresiones
+				 | /*vacio*/ 
+				 ;							  
+				
          
-indices: indices '[' CTE_ENTERA ']'
-	   | '[' CTE_ENTERA ']'
+indices: indices '[' CTE_ENTERA ']'				{ $$ = $1; ((List<Integer>)$$).add((int)$3); }
+	   | '[' CTE_ENTERA ']'                 	{ $$ = new ArrayList<Integer>(); ((List<Integer>)$$).add((int)$2);  }
 	   ;
          
-identificador: identificador ',' ID 
-		     | ID	
+identificador: identificador ',' ID 			{ $$ = $1; ((List<String>)$$).add((String)$3); }
+		     | ID								{ $$ = new ArrayList<String>(); ((List<String>)$$).add((String)$1);  }	
 		     ;
 	
-tipoSimple: INT
-	      | DOUBLE
-	      | CHAR 
+tipoSimple: INT									{ $$ = TipoEntero.getInstancia(); }
+	      | DOUBLE								{ $$ = TipoReal.getInstancia(); }
+	      | CHAR 								{ $$ = TipoCaracter.getInstancia(); }
 	      ;
 %%
 
