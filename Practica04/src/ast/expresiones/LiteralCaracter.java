@@ -1,7 +1,6 @@
 package ast.expresiones;
 
 import ast.expresiones.util.ExpresionAbstracta;
-import ast.util.NodoPosicion;
 
 public class LiteralCaracter extends ExpresionAbstracta {
 	private char valor;

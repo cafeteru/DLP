@@ -29,12 +29,10 @@ public class Programa extends NodoPosicion implements NodoAST {
 		this.definiciones = definiciones;
 	}
 
-	/**
-	 * Redefinición del método toString().
-	 */
 	@Override
 	public String toString() {
-		return "Programa";
+		return "Programa [definiciones=" + definiciones + ", linea=" + linea
+				+ ", columna=" + columna + "]";
 	}
 
 }

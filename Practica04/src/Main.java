@@ -1,10 +1,5 @@
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
-
-import ast.definiciones.DefFuncion;
-import ast.definiciones.Definicion;
-import ast.tipos.TipoFuncion;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 import lexico.Lexico;
@@ -39,13 +34,6 @@ public class Main {
 		Lexico lexico = new Lexico(fr);
 
 		Parser parser = new Parser(lexico);
-		// int token;
-		// while ((token=lexico.yylex())!=0) {
-		// System.out.println("Linea: "+lexico.getLine()+
-		// ", columna: "+lexico.getColumn()+
-		// ", token: "+token+
-		// ", valor semántico: "+lexico.getYylval()+".");
-		// }
 		// * "Parseamos"
 		parser.run();
 		IntrospectorModel modelo = new IntrospectorModel("Programa", parser.getAST());
