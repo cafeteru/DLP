@@ -1,6 +1,10 @@
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
+import ast.definiciones.DefFuncion;
+import ast.definiciones.Definicion;
+import ast.tipos.TipoFuncion;
 import lexico.Lexico;
 import sintactico.Parser;
 
@@ -34,13 +38,13 @@ public class Main {
 		Lexico lexico = new Lexico(fr);
 		
 		Parser parser = new Parser(lexico);
-	  int token;
-	  while ((token=lexico.yylex())!=0) {
-	      System.out.println("Linea: "+lexico.getLine()+
-	              ", columna: "+lexico.getColumn()+
-	              ", token: "+token+
-	              ", valor semántico: "+lexico.getYylval()+".");
-	  }
+//	  int token;
+//	  while ((token=lexico.yylex())!=0) {
+//	      System.out.println("Linea: "+lexico.getLine()+
+//	              ", columna: "+lexico.getColumn()+
+//	              ", token: "+token+
+//	              ", valor semántico: "+lexico.getYylval()+".");
+//	  }
 		// * "Parseamos"
 		parser.run();
 

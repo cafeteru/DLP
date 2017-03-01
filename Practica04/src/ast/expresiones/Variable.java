@@ -1,5 +1,6 @@
 package ast.expresiones;
 
+import ast.sentencias.Sentencia;
 import ast.util.NodoPosicion;
 
 /**
@@ -8,7 +9,7 @@ import ast.util.NodoPosicion;
  * @author Iván González Mahagamage
  *
  */
-public class Variable extends NodoPosicion implements Expresion {
+public class Variable extends NodoPosicion implements Expresion, Sentencia {
 	private String clave;
 
 	/**

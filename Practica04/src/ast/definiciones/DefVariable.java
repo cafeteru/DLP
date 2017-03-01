@@ -7,7 +7,7 @@ public class DefVariable extends DefinicionAbstracta {
 	private int OFFSET;
 
 	public DefVariable(int linea, int columna, String nombre, Tipo tipo) {
-		super(linea, columna, nombre, tipo);
+		super(linea, columna, nombre, tipo); 
 	}
 
 }

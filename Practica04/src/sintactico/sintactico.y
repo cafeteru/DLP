@@ -34,33 +34,35 @@ import ast.tipos.*;
 %nonassoc ELSE
 %nonassoc '(' ')'
 
+
 %%
 // * Gramática y acciones Yacc
-programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'			{ 	List<Definicion> aux = (List<Definicion>)$1;
+programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'			{ 	List<Definicion> definiciones = (List<Definicion>)$1;
 																						
-																						aux.add(new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
+																						Definicion main = new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
 																							new TipoFuncion(new ArrayList(), TipoVoid.getInstancia()), 
-																							(List<DefVariable>)$7, (List<Sentencia>)$8));
-																						
-																						this.ast = new Programa(lexico.getLine(), lexico.getColumn(), aux); } ;
-
+																							(List<DefVariable>)$7, (List<Sentencia>)$8);
+																						definiciones.add(main);																						
+																						this.ast = new Programa(lexico.getLine(), lexico.getColumn(), definiciones); 
+																					} ;
 definiciones: definiciones definicion     											{	$$ = $1; for(Definicion aux : (List<Definicion>)$2) 
-																									((List<Definicion>)$$).add(aux); }
-       |/*vacio*/																	{	$$ = new ArrayList();}
+																									((List<Definicion>)$$).add(aux); 
+																					}
+       |/*vacio*/																	{	$$ = new ArrayList(); }
        ;
   
 definicion: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' /*funcion*/  	{ 	List<Definicion> lista = new ArrayList();
-																										lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(), (String) $2,
+																										lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(), (String) $2.toString(),
 																											new TipoFuncion((List<DefVariable>)$4, (Tipo)$1), 
 																											(List<DefVariable>)$7, (List<Sentencia>)$8));
-																										$$ = lista; }
-																										
+																										$$ = lista; 
+																									}																										
 	  | VOID ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' /*procedimiento*/			{	List<Definicion> lista = new ArrayList();
-																										lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(),  (String) $2,
+																										lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(),  (String) $2.toString(),
 																										new TipoFuncion((List<DefVariable>)$4, TipoVoid.getInstancia()), 
 																										(List<DefVariable>)$7, (List<Sentencia>)$8));
-																										$$ = lista;}
-																										
+																										$$ = lista;
+																									}																										
 	  | declaracionVariable ';'																		{ $$ = $1;  }
 	  ;	
 	  
@@ -70,12 +72,19 @@ declaraciones: declaraciones declaracionVariable ';'	{ $$ = $1;
 			| /*vacio*/									{ $$ = new ArrayList<DefVariable>();}
 			;
 	   
-parametros: parametros ',' tipoSimple ID		{ $$ = $1; ((List<DefVariable>)$$).add(new DefVariable(lexico.getLine(), 
-		  										  lexico.getColumn(), (String)$2, (Tipo)$1)); }
-		  | tipoSimple ID						{ $$ = new ArrayList<DefVariable>(); ((List<DefVariable>)$$).add(new DefVariable(lexico.getLine(), 
-		  										  lexico.getColumn(), (String)$2, (Tipo)$1));  }
+parametros: parametros ',' definicioVariable		{ $$ = $1; 
+												  for(DefVariable aux : (List<DefVariable>) $3){
+													((List<DefVariable>)$$).add(aux); 
+													}
+												}
+		  | definicioVariable						{ $$ = $1; }
 		  | /*vacio*/ 							{ $$ = new ArrayList<DefVariable>();}
 		  ;
+		  
+definicioVariable: tipoSimple ID				{ $$ = new ArrayList<>();
+												  ((List<DefVariable>) $$).add(new DefVariable(lexico.getLine(), 
+		  										  lexico.getColumn(), (String)$2.toString(), (Tipo)$1));  }
+			     ;
 		 
 cuerpoDefinicion: sentencias					{ $$ = $1;}
 	  | /*vacio*/								{ $$ = new ArrayList<Sentencia>();}
@@ -111,8 +120,7 @@ declaracionVariable: tipoSimple identificador				{ 	List<DefVariable> variables 
 																	variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), aux, (Tipo)$1));
 															   }	 
 															   $$ = variables; 
-															 }
-															 
+															}															 
 		           | tipoSimple indices identificador 		{	List<Integer> indices = (List<Integer>)$2;
 		           												TipoArray tipo = new TipoArray(indices.get(0), (Tipo)$1);
 		           												for(int i = 1; i < indices.size(); i++){
@@ -123,7 +131,8 @@ declaracionVariable: tipoSimple identificador				{ 	List<DefVariable> variables 
 																for(String id: (List<String>)$3){
 																	variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), id, tipo));
 															    }	 
-															    $$ = variables;  }
+															    $$ = variables;  
+															}
 		           | STRUCT '{' campos '}' identificador    { 	List<CampoRegistro> registrosStruct = new ArrayList();
 		           												for(DefVariable var : (List<DefVariable>) $3){
 		           													registrosStruct.add(new CampoRegistro(var.getNombre(), var.getTipo()));
@@ -143,7 +152,7 @@ expresiones: expresiones ',' expresion				{ $$ = $1; ((List<Expresion>)$$).add((
 		   | expresion								{ $$ = new ArrayList<Expresion>(); ((List<Expresion>)$$).add((Expresion)$1);  }
 		   ;	   
 	  		     
-expresion: ID										{ $$ = new Variable(lexico.getLine(), lexico.getColumn(), (String) $1); }
+expresion: ID										{ $$ = new Variable(lexico.getLine(), lexico.getColumn(), (String) $1.toString()); }
 		 | CTE_ENTERA                               { $$ = new LiteralEntero(lexico.getLine(), lexico.getColumn(), (Integer) $1);}
          | CTE_REAL 								{ $$ = new LiteralReal(lexico.getLine(), lexico.getColumn(), (Double) $1);}
          | CTE_CARACTER 							{ $$ = new LiteralCaracter(lexico.getLine(), lexico.getColumn(), (char) $1);}
@@ -168,9 +177,7 @@ expresion: ID										{ $$ = new Variable(lexico.getLine(), lexico.getColumn(),
          | invocacion						 		{ $$ = $1;}							   
          ;
          
-invocacion: ID '(' argumentosLlamada ')' 		{ $$ = new Invocacion(lexico.getLine(), lexico.getColumn(), 
-											      new Variable(lexico.getLine(), lexico.getColumn(), 
-											      (String)$1),(List<Expresion>)$3); }
+invocacion: ID '(' argumentosLlamada ')' 		{ $$ = new Invocacion(lexico.getLine(), lexico.getColumn(), new Variable(lexico.getLine(), lexico.getColumn(), (String)$1.toString()),(List<Expresion>)$3); }
 		   ;
 			     
 argumentosLlamada: expresiones 					{ $$ = $1;}
@@ -179,11 +186,11 @@ argumentosLlamada: expresiones 					{ $$ = $1;}
 				
          
 indices: indices '[' CTE_ENTERA ']'				{ $$ = $1; ((List<Integer>)$$).add((int)$3); }
-	   | '[' CTE_ENTERA ']'                 	{ $$ = new ArrayList<Integer>(); ((List<Integer>)$$).add((Integer)$2);  }
+	   | '[' CTE_ENTERA ']'                 	{ $$ = new ArrayList<Integer>(); ((List<Integer>)$$).add((Integer)$2); }
 	   ;
          
-identificador: identificador ',' ID 			{ $$ = $1; ((List<String>)$$).add((String)$3); }
-		     | ID								{$$ = new ArrayList<String>(); ((List<String>)$$).add((String)$1);  }	
+identificador: identificador ',' ID 			{ $$ = $1; ((List<String>)$$).add((String)$3.toString()); }
+		     | ID								{ $$ = new ArrayList(); String st = (String) $1.toString(); ((List<String>)$$).add((st)); }	
 		     ;
 	
 tipoSimple: INT									{ $$ = TipoEntero.getInstancia(); }
