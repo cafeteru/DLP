@@ -185,12 +185,12 @@ argumentosLlamada: expresiones 					{ $$ = $1;}
 				 ;							  
 				
          
-indices: indices '[' CTE_ENTERA ']'				{ $$ = $1; ((List<Integer>)$$).add((int)$3); }
+indices: indices '[' CTE_ENTERA ']'				{ $$ = $1; ((List<Integer>)$$).add((Integer)$3); }
 	   | '[' CTE_ENTERA ']'                 	{ $$ = new ArrayList<Integer>(); ((List<Integer>)$$).add((Integer)$2); }
 	   ;
          
 identificador: identificador ',' ID 			{ $$ = $1; ((List<String>)$$).add((String)$3.toString()); }
-		     | ID								{ $$ = new ArrayList(); String st = (String) $1.toString(); ((List<String>)$$).add((st)); }	
+		     | ID								{ $$ = new ArrayList(); ((List<String>)$$).add(((String) $1.toString())); }	
 		     ;
 	
 tipoSimple: INT									{ $$ = TipoEntero.getInstancia(); }

@@ -1007,7 +1007,7 @@ case 59:
 break;
 case 60:
 //#line 188 "../../src/sintactico/sintactico.y"
-{ yyval = val_peek(3); ((List<Integer>)yyval).add((int)val_peek(1)); }
+{ yyval = val_peek(3); ((List<Integer>)yyval).add((Integer)val_peek(1)); }
 break;
 case 61:
 //#line 189 "../../src/sintactico/sintactico.y"
@@ -1019,7 +1019,7 @@ case 62:
 break;
 case 63:
 //#line 193 "../../src/sintactico/sintactico.y"
-{ yyval = new ArrayList(); String st = (String) val_peek(0).toString(); ((List<String>)yyval).add((st)); }
+{ yyval = new ArrayList(); ((List<String>)yyval).add(((String) val_peek(0).toString())); }
 break;
 case 64:
 //#line 196 "../../src/sintactico/sintactico.y"
