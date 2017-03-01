@@ -544,7 +544,6 @@ private int yylex () {
     int token=0;
     try { 
 	token=lexico.yylex(); 
-	this.yyval = lexico.getYylval();
     } catch(Throwable e) {
 	    System.err.println ("Error Léxico en línea " + lexico.getLine()+
 		" y columna "+lexico.getColumn()+":\n\t"+e); 
@@ -562,7 +561,7 @@ public void yyerror (String error) {
 public Parser(Lexico lexico) {
 	this.lexico = lexico;
 }
-//#line 502 "Parser.java"
+//#line 501 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -1033,7 +1032,7 @@ case 66:
 //#line 198 "../../src/sintactico/sintactico.y"
 { yyval = TipoCaracter.getInstancia(); }
 break;
-//#line 968 "Parser.java"
+//#line 967 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

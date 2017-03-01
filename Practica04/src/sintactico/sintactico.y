@@ -42,7 +42,8 @@ programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'			{ 	L
 																						Definicion main = new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
 																							new TipoFuncion(new ArrayList(), TipoVoid.getInstancia()), 
 																							(List<DefVariable>)$7, (List<Sentencia>)$8);
-																						definiciones.add(main);																						
+																						definiciones.add(main);
+																																												
 																						this.ast = new Programa(lexico.getLine(), lexico.getColumn(), definiciones); 
 																					} ;
 definiciones: definiciones definicion     											{	$$ = $1; for(Definicion aux : (List<Definicion>)$2) 
@@ -219,8 +220,8 @@ private Lexico lexico;
 private int yylex () {
     int token=0;
     try { 
-	token=lexico.yylex(); 
-	this.yyval = lexico.getYylval();
+	token=lexico.yylex();
+	this.yyval = lexico.getYylval(); 
     } catch(Throwable e) {
 	    System.err.println ("Error Léxico en línea " + lexico.getLine()+
 		" y columna "+lexico.getColumn()+":\n\t"+e); 
