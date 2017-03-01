@@ -12,4 +12,12 @@ public class AccesoCampo extends NodoPosicion implements Expresion {
 		this.nombreCampo = nombreCampo;
 		this.expresion = expresion;
 	}
+
+	@Override
+	public String toString() {
+		return "AccesoCampo [expresion=" + expresion + ", nombreCampo=" + nombreCampo + ", linea=" + linea
+				+ ", columna=" + columna + "]";
+	}
+	
+	
 }

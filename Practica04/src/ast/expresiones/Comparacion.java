@@ -7,4 +7,10 @@ public class Comparacion extends OperacionBinaria {
 		super(linea, columna, izq, operador, der);
 	}
 
+	@Override
+	public String toString() {
+		return "Comparacion [operador=" + operador + ", linea=" + linea + ", columna=" + columna + "]";
+	}
+
+	
 }

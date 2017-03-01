@@ -36,11 +36,11 @@ public class LiteralEntero extends NodoPosicion implements Expresion {
 		return valor;
 	}
 
-	/**
-	 * Redefinición del método toString().
-	 */
 	@Override
 	public String toString() {
-		return "" + valor;
+		return "LiteralEntero [valor=" + valor + ", linea=" + linea + ", columna=" + columna + "]";
 	}
+
+
+
 }

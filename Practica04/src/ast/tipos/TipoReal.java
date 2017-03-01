@@ -8,4 +8,11 @@ public class TipoReal implements Tipo {
 			instancia = new TipoReal();
 		return instancia;
 	}
+
+	@Override
+	public String toString() {
+		return "TipoReal []";
+	}
+	
+	
 }

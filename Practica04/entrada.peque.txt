@@ -1,3 +1,28 @@
-void main(){ 
-	0;
-}
+ // * Record
+  struct {
+     int integer,dfs;
+     int[1][1]vector, vector;
+     
+      // * Record
+   struct {
+     int dia,mes,anio;
+     char character;
+   } pair, asdas;
+   
+  } pair, adsads;
+  
+
+  
+  void f(int a){}
+  
+
+  
+  
+  void main(){
+   
+   while(a == 0){
+    a = -a;
+   }
+  
+  
+  }

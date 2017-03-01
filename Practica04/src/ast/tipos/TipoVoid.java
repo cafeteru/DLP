@@ -9,4 +9,9 @@ public class TipoVoid implements Tipo {
 		return instancia;
 	}
 
+	@Override
+	public String toString() {
+		return "TipoVoid []";
+	}
+
 }

@@ -50,11 +50,11 @@ public class Asignacion extends NodoPosicion implements Sentencia {
 		return valor;
 	}
 
-	/**
-	 * Redefinición del método toString().
-	 */
 	@Override
 	public String toString() {
-		return "=";
+		return "Asignacion [variable=" + variable + ", valor=" + valor + ", linea=" + linea + ", columna=" + columna
+				+ "]";
 	}
+	
+	
 }

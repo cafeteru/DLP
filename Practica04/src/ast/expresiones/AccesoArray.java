@@ -11,4 +11,11 @@ public class AccesoArray extends NodoPosicion implements Expresion {
 		this.izq = izq;
 		this.der = der;
 	}
+
+	@Override
+	public String toString() {
+		return "AccesoArray [izq=" + izq + ", der=" + der + ", linea=" + linea + ", columna=" + columna + "]";
+	}
+	
+	
 }

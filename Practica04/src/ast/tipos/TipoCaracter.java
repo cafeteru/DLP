@@ -8,4 +8,11 @@ public class TipoCaracter implements Tipo {
 			instancia = new TipoCaracter();
 		return instancia;
 	}
+
+	@Override
+	public String toString() {
+		return "TipoCaracter []";
+	}
+	
+	
 }

@@ -8,4 +8,12 @@ public class TipoArray implements Tipo {
 		this.tamaño = tamaño;
 		this.tipo = tipo;
 	}
+
+	@Override
+	public String toString() {
+		return "TipoArray [tamaño=" + tamaño + ", tipo=" + tipo + "]";
+	}
+	
+	
 }
+

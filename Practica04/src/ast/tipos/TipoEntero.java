@@ -8,4 +8,12 @@ public class TipoEntero implements Tipo {
 			instancia = new TipoEntero();
 		return instancia;
 	}
+
+	@Override
+	public String toString() {
+		return "TipoEntero []";
+	}
+	
+	
 }
+

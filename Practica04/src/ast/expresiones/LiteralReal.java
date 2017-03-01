@@ -19,4 +19,11 @@ public class LiteralReal extends NodoPosicion implements Expresion {
 		super(linea, columna);
 		this.valor = valor;
 	}
+
+	@Override
+	public String toString() {
+		return "LiteralReal [valor=" + valor + ", linea=" + linea + ", columna=" + columna + "]";
+	}
+	
+	
 }

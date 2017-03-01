@@ -12,4 +12,12 @@ public class Cast extends NodoPosicion implements Expresion {
 		this.tipoCast = tipoCast;
 		this.expresion = expresion;
 	}
+
+	@Override
+	public String toString() {
+		return "Cast [tipoCast=" + tipoCast + ", expresion=" + expresion + ", linea=" + linea + ", columna=" + columna
+				+ "]";
+	}
+	
+	
 }

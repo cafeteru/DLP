@@ -7,4 +7,10 @@ public class Logica extends OperacionBinaria {
 		super(linea, columna, izq, operador, der);
 	}
 
+	@Override
+	public String toString() {
+		return "Logica [operador=" + operador + ", linea=" + linea + ", columna=" + columna + "]";
+	}
+
+	
 }

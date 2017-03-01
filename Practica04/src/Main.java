@@ -5,6 +5,8 @@ import java.util.List;
 import ast.definiciones.DefFuncion;
 import ast.definiciones.Definicion;
 import ast.tipos.TipoFuncion;
+import introspector.model.IntrospectorModel;
+import introspector.view.IntrospectorTree;
 import lexico.Lexico;
 import sintactico.Parser;
 
@@ -29,25 +31,25 @@ public class Main {
 		try {
 			fr = new FileReader(args[0]);
 		} catch (IOException io) {
-			System.err.println("El archivo " + args[0]
-					+ " no se ha podido abrir.");
+			System.err.println("El archivo " + args[0] + " no se ha podido abrir.");
 			return;
 		}
 
 		// * Creamos léxico y sintáctico
 		Lexico lexico = new Lexico(fr);
-		
+
 		Parser parser = new Parser(lexico);
-//	  int token;
-//	  while ((token=lexico.yylex())!=0) {
-//	      System.out.println("Linea: "+lexico.getLine()+
-//	              ", columna: "+lexico.getColumn()+
-//	              ", token: "+token+
-//	              ", valor semántico: "+lexico.getYylval()+".");
-//	  }
+		// int token;
+		// while ((token=lexico.yylex())!=0) {
+		// System.out.println("Linea: "+lexico.getLine()+
+		// ", columna: "+lexico.getColumn()+
+		// ", token: "+token+
+		// ", valor semántico: "+lexico.getYylval()+".");
+		// }
 		// * "Parseamos"
 		parser.run();
-
+		IntrospectorModel modelo = new IntrospectorModel("Programa", parser.getAST());
+		new IntrospectorTree("Introspector", modelo);
 	}
 
 }

@@ -7,4 +7,12 @@ public class Negacion extends OperacionUnaria {
 		super(linea, columna, operador, expresion);
 	}
 
+	@Override
+	public String toString() {
+		return "Negacion [operador=" + operador + ", sentencias=" + sentencias + ", linea=" + linea + ", columna="
+				+ columna + "]";
+	}
+	
+	
+
 }

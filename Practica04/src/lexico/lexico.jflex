@@ -45,7 +45,7 @@ Caracter = "'"([0-9]|[a-zA-ZáéíóúñÁÉÍÓÚÑ]|"\\"([0-9]+|"n"|"t"))"'"
 // ************  Acciones ********************
 "//" ~ "\n"				{ } 
 "/*" ~ "*/"        		{ }	
-{ Operador }			{ this.yylval = yytext().charAt(0); 
+{ Operador }			{ this.yylval = new Character(yytext().charAt(0)); 
 							return yytext().charAt(0); }		
 "=="					{ this.yylval = yytext();
 							return Parser.IGUALDAD; }								

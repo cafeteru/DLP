@@ -10,4 +10,16 @@ public class DefVariable extends DefinicionAbstracta {
 		super(linea, columna, nombre, tipo); 
 	}
 
+	@Override
+	public String toString() {
+		return "DefVariable [ambito=" + ambito + ", OFFSET=" + OFFSET + ", linea=" + linea + ", columna=" + columna
+				+ ", getTipo()=" + getTipo() + ", getNombre()=" + getNombre() + ", getLinea()=" + getLinea()
+				+ ", getColumna()=" + getColumna() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+
+
+	
+	
+
 }

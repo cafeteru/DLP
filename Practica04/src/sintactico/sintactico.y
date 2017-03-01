@@ -22,7 +22,7 @@ import ast.tipos.*;
 
 // Más arriba, menos precedencia
 %right '='
-%left Y O '!'
+%left Y O 
 %left '>' MAYORIGUALQUE MENORIGUALQUE '<' DISTINTO IGUALDAD
 %left '+' '-'
 %left '*' '/' '%'
@@ -33,6 +33,7 @@ import ast.tipos.*;
 %nonassoc MENORQUEELSE
 %nonassoc ELSE
 %nonassoc '(' ')'
+%nonassoc '{' '}'
 
 
 %%
@@ -53,13 +54,13 @@ definiciones: definiciones definicion     											{	$$ = $1; for(Definicion a
        ;
   
 definicion: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' /*funcion*/  	{ 	List<Definicion> lista = new ArrayList();
-																										lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(), (String) $2.toString(),
+																										lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(), (String) $2,
 																											new TipoFuncion((List<DefVariable>)$4, (Tipo)$1), 
 																											(List<DefVariable>)$7, (List<Sentencia>)$8));
 																										$$ = lista; 
 																									}																										
 	  | VOID ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' /*procedimiento*/			{	List<Definicion> lista = new ArrayList();
-																										lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(),  (String) $2.toString(),
+																										lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(),  (String) $2,
 																										new TipoFuncion((List<DefVariable>)$4, TipoVoid.getInstancia()), 
 																										(List<DefVariable>)$7, (List<Sentencia>)$8));
 																										$$ = lista;
@@ -84,7 +85,7 @@ parametros: parametros ',' definicioVariable		{ $$ = $1;
 		  
 definicioVariable: tipoSimple ID				{ $$ = new ArrayList<>();
 												  ((List<DefVariable>) $$).add(new DefVariable(lexico.getLine(), 
-		  										  lexico.getColumn(), (String)$2.toString(), (Tipo)$1));  }
+		  										  lexico.getColumn(), (String)$2, (Tipo)$1));  }
 			     ;
 		 
 cuerpoDefinicion: sentencias					{ $$ = $1;}
@@ -95,7 +96,7 @@ sentencias: sentencias sentencia 				{ $$ = $1;((List<Sentencia>)$$).add((Senten
 	     | sentencia 							{ $$ = new ArrayList<Sentencia>(); ((List<Sentencia>)$$).add((Sentencia)$1); }
 		 ;
 		 	
-sentencia: expresion '=' expresion ';' // Asignación							{ $$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$3); }			
+sentencia: expresion '=' expresion ';' 							                { $$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$3); }			
 		 | WHILE '(' expresion ')' '{' sentencias '}'							{ $$ = new SentenciaWhile(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$6);}
 		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE			{ $$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, new ArrayList()); }
 		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 		{ $$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, (List<Sentencia>)$7);}
@@ -153,10 +154,10 @@ expresiones: expresiones ',' expresion				{ $$ = $1; ((List<Expresion>)$$).add((
 		   | expresion								{ $$ = new ArrayList<Expresion>(); ((List<Expresion>)$$).add((Expresion)$1);  }
 		   ;	   
 	  		     
-expresion: ID										{ $$ = new Variable(lexico.getLine(), lexico.getColumn(), (String) $1.toString()); }
+expresion: ID										{ $$ = new Variable(lexico.getLine(), lexico.getColumn(), (String) $1); }
 		 | CTE_ENTERA                               { $$ = new LiteralEntero(lexico.getLine(), lexico.getColumn(), (Integer) $1);}
          | CTE_REAL 								{ $$ = new LiteralReal(lexico.getLine(), lexico.getColumn(), (Double) $1);}
-         | CTE_CARACTER 							{ $$ = new LiteralCaracter(lexico.getLine(), lexico.getColumn(), (char) $1);}
+         | CTE_CARACTER 							{ $$ = new LiteralCaracter(lexico.getLine(), lexico.getColumn(), (char) ((String) $1).charAt(0));}
          | expresion '+' expresion 					{ $$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "+", (Expresion) $3);}
          | expresion '*' expresion  				{ $$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "*", (Expresion) $3);}
          | expresion '/' expresion  				{ $$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "/", (Expresion) $3);}
@@ -170,33 +171,34 @@ expresion: ID										{ $$ = new Variable(lexico.getLine(), lexico.getColumn(),
          | expresion IGUALDAD expresion  			{ $$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "==", (Expresion) $3);}
          | expresion Y expresion  					{ $$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);}
          | expresion O expresion 					{ $$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "||", (Expresion) $3);}
-         | '!' expresion %prec NEGACION  			{ $$ = new Negacion(lexico.getLine(), lexico.getColumn(),  "!", (Expresion) $1);}
-         | '-' expresion %prec MENOS_UNARIO  		{ $$ = new MenosUnario(lexico.getLine(), lexico.getColumn(),  "-",(Expresion) $1);}
+         | '!' expresion %prec NEGACION  			{ $$ = new Negacion(lexico.getLine(), lexico.getColumn(),  "!", (Expresion) $2);}
+         | '-' expresion %prec MENOS_UNARIO  		{ $$ = new MenosUnario(lexico.getLine(), lexico.getColumn(),  "-",(Expresion) $2);}
          | ID '.' expresion 					    { $$ = new AccesoCampo(lexico.getLine(), lexico.getColumn(), (String) $1, (Expresion) $3);}
          | '(' expresion ')' 						{ $$ = $2;}
          | '(' tipoSimple ')' expresion 			{ $$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);}
-         | invocacion						 		{ $$ = $1;}							   
+         | invocacion						 		{ $$ = $1;}
+         | expresion '[' expresion ']'				{ $$ = new AccesoArray(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3); }			   
          ;
          
-invocacion: ID '(' argumentosLlamada ')' 		{ $$ = new Invocacion(lexico.getLine(), lexico.getColumn(), new Variable(lexico.getLine(), lexico.getColumn(), (String)$1.toString()),(List<Expresion>)$3); }
+invocacion: ID '(' argumentosLlamada ')' 			{ $$ = new Invocacion(lexico.getLine(), lexico.getColumn(), new Variable(lexico.getLine(), lexico.getColumn(), (String)$1),(List<Expresion>)$3); }
 		   ;
 			     
-argumentosLlamada: expresiones 					{ $$ = $1;}
-				 | /*vacio*/  					{ $$ = new ArrayList<Expresion>();}
+argumentosLlamada: expresiones 						{ $$ = $1;}
+				 | /*vacio*/  						{ $$ = new ArrayList<Expresion>();}
 				 ;							  
 				
          
-indices: indices '[' CTE_ENTERA ']'				{ $$ = $1; ((List<Integer>)$$).add((Integer)$3); }
-	   | '[' CTE_ENTERA ']'                 	{ $$ = new ArrayList<Integer>(); ((List<Integer>)$$).add((Integer)$2); }
+indices: indices '[' CTE_ENTERA ']'					{ $$ = $1; ((List<Integer>)$$).add((Integer)$3); }
+	   | '[' CTE_ENTERA ']'                 		{ $$ = new ArrayList<Integer>(); ((List<Integer>)$$).add((Integer)$2); }
 	   ;
          
-identificador: identificador ',' ID 			{ $$ = $1; ((List<String>)$$).add((String)$3.toString()); }
-		     | ID								{ $$ = new ArrayList(); ((List<String>)$$).add(((String) $1.toString())); }	
+identificador: identificador ',' ID 				{ $$ = $1; ((List<String>)$$).add((String)$3); }
+		     | ID									{ $$ = new ArrayList(); ((List<String>)$$).add(((String) $1)); }	
 		     ;
 	
-tipoSimple: INT									{ $$ = TipoEntero.getInstancia(); }
-	      | DOUBLE								{ $$ = TipoReal.getInstancia(); }
-	      | CHAR 								{ $$ = TipoCaracter.getInstancia(); }
+tipoSimple: INT										{ $$ = TipoEntero.getInstancia(); }
+	      | DOUBLE									{ $$ = TipoReal.getInstancia(); }
+	      | CHAR 									{ $$ = TipoCaracter.getInstancia(); }
 	      ;
 %%
 
@@ -221,7 +223,7 @@ private int yylex () {
     int token=0;
     try { 
 	token=lexico.yylex();
-	this.yyval = lexico.getYylval(); 
+	this.yylval = lexico.getYylval(); 
     } catch(Throwable e) {
 	    System.err.println ("Error Léxico en línea " + lexico.getLine()+
 		" y columna "+lexico.getColumn()+":\n\t"+e); 

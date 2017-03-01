@@ -15,4 +15,12 @@ public class Aritmetica extends OperacionBinaria {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		return "Aritmetica [operador=" + operador + ", linea=" + linea + ", columna=" + columna + "]";
+	}
+
+
+
+	
 }

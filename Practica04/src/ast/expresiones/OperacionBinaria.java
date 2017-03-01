@@ -50,4 +50,12 @@ public class OperacionBinaria extends NodoPosicion
 		return der;
 	}
 
+	@Override
+	public String toString() {
+		return "OperacionBinaria [operador=" + operador + ", izq=" + izq + ", der=" + der + ", linea=" + linea
+				+ ", columna=" + columna + "]";
+	}
+	
+	
+
 }

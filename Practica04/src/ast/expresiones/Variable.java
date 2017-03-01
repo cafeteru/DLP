@@ -36,11 +36,11 @@ public class Variable extends NodoPosicion implements Expresion, Sentencia {
 		return clave;
 	}
 
-	/**
-	 * Redefinición del método toString().
-	 */
 	@Override
 	public String toString() {
-		return clave;
+		return "Variable [clave=" + clave + ", linea=" + linea + ", columna=" + columna + "]";
 	}
+
+
+
 }

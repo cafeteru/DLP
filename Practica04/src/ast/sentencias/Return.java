@@ -11,4 +11,11 @@ public class Return extends NodoPosicion implements Sentencia{
 		this.expresion = expresion;
 	}
 
+	@Override
+	public String toString() {
+		return "Return [expresion=" + expresion + ", linea=" + linea + ", columna=" + columna + "]";
+	}
+	
+	
+
 }

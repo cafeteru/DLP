@@ -9,4 +9,11 @@ public class CampoRegistro {
 		this.nombre = nombre;
 		this.tipo = tipo;
 	}
+
+	@Override
+	public String toString() {
+		return "CampoRegistro [nombre=" + nombre + ", OFFSET=" + OFFSET + ", tipo=" + tipo + "]";
+	}
+	
+	
 }

@@ -28,11 +28,9 @@ public class Lectura extends CompositeExpresiones implements Sentencia {
 		this.expresiones = expresiones;
 	}
 
-	/**
-	 * Redefinición del método toString().
-	 */
 	@Override
 	public String toString() {
-		return "read";
+		return "Lectura [expresiones=" + expresiones + ", linea=" + linea + ", columna=" + columna + "]";
 	}
+
 }

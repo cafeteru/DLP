@@ -29,11 +29,10 @@ public class Escritura extends CompositeExpresiones implements Sentencia {
 		this.expresiones = expresiones;
 	}
 
-	/**
-	 * Redefinición del método toString().
-	 */
 	@Override
 	public String toString() {
-		return "write";
+		return "Escritura [expresiones=" + expresiones + ", linea=" + linea + ", columna=" + columna + "]";
 	}
+
+
 }

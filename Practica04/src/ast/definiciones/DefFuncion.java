@@ -16,4 +16,12 @@ public class DefFuncion extends DefinicionAbstracta {
 		this.cuerpo = cuerpo;
 	}
 
+	@Override
+	public String toString() {
+		return "DefFuncion [variablesLocales=" + variablesLocales + ", cuerpo=" + cuerpo + ", linea=" + linea
+				+ ", columna=" + columna + ", getTipo()=" + getTipo() + ", getNombre()=" + getNombre() + ", getLinea()="
+				+ getLinea() + ", getColumna()=" + getColumna() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
 }

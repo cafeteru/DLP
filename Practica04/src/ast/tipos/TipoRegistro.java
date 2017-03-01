@@ -12,4 +12,11 @@ public class TipoRegistro implements Tipo {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "TipoRegistro [campos=" + campos + "]";
+	}
+	
+	
+
 }

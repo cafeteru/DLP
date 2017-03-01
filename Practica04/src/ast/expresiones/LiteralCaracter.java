@@ -19,4 +19,11 @@ public class LiteralCaracter extends NodoPosicion implements Expresion {
 		super(linea, columna);
 		this.valor = valor;
 	}
+
+	@Override
+	public String toString() {
+		return "LiteralCaracter [valor=" + valor + ", linea=" + linea + ", columna=" + columna + "]";
+	}
+	
+	
 }

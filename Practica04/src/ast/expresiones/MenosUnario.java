@@ -14,4 +14,12 @@ public class MenosUnario extends OperacionUnaria {
 		super(linea, columna, operador, expresion);
 	}
 
+	@Override
+	public String toString() {
+		return "MenosUnario [operador=" + operador + ", sentencias=" + sentencias + ", linea=" + linea + ", columna="
+				+ columna + "]";
+	}
+	
+	
+
 }

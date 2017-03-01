@@ -13,4 +13,13 @@ public class OperacionUnaria extends CompositeSentencia implements Expresion {
 		this.operador = operador;
 	}
 
+	@Override
+	public String toString() {
+		return "OperacionUnaria [operador=" + operador + ", expresion=" + expresion + ", sentencias=" + sentencias
+				+ ", linea=" + linea + ", columna=" + columna + "]";
+	}
+	
+	
+	
+
 }

@@ -9,7 +9,8 @@ import ast.NodoAST;
  *
  */
 public class NodoPosicion implements NodoAST {
-	int linea, columna;
+	protected int linea;
+	protected int columna;
 
 	/**
 	 * Constructor con parámetros.
