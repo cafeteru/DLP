@@ -1,9 +1,9 @@
 package ast.sentencias;
 
 import ast.expresiones.Expresion;
-import ast.util.NodoPosicion;
+import ast.sentencias.util.SentenciaAbstracta;
 
-public class Return extends NodoPosicion implements Sentencia{
+public class Return extends SentenciaAbstracta {
 	private Expresion expresion;
 
 	public Return(int linea, int columna, Expresion expresion) {
@@ -13,9 +13,8 @@ public class Return extends NodoPosicion implements Sentencia{
 
 	@Override
 	public String toString() {
-		return "Return [expresion=" + expresion + ", linea=" + linea + ", columna=" + columna + "]";
+		return "Return [expresion=" + expresion + ", linea=" + linea
+				+ ", columna=" + columna + "]";
 	}
-	
-	
 
 }

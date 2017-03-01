@@ -1,8 +1,8 @@
 package ast.expresiones;
 
-import ast.util.NodoPosicion;
+import ast.expresiones.util.ExpresionAbstracta;
 
-public class LiteralReal extends NodoPosicion implements Expresion {
+public class LiteralReal extends ExpresionAbstracta {
 	private double valor;
 
 	/**
@@ -22,8 +22,8 @@ public class LiteralReal extends NodoPosicion implements Expresion {
 
 	@Override
 	public String toString() {
-		return "LiteralReal [valor=" + valor + ", linea=" + linea + ", columna=" + columna + "]";
+		return "LiteralReal [valor=" + valor + ", linea=" + linea + ", columna="
+				+ columna + "]";
 	}
-	
-	
+
 }

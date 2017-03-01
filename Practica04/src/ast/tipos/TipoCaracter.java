@@ -13,6 +13,5 @@ public class TipoCaracter implements Tipo {
 	public String toString() {
 		return "TipoCaracter []";
 	}
-	
-	
+
 }

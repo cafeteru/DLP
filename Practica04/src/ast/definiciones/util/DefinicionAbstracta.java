@@ -1,5 +1,6 @@
-package ast.definiciones;
+package ast.definiciones.util;
 
+import ast.definiciones.Definicion;
 import ast.tipos.Tipo;
 import ast.util.NodoPosicion;
 

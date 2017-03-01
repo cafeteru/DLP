@@ -1,7 +1,7 @@
 package ast.expresiones;
 
+import ast.expresiones.util.ExpresionAbstracta;
 import ast.sentencias.Sentencia;
-import ast.util.NodoPosicion;
 
 /**
  * Clase que simula en el análizador léxico un token que es una variable.
@@ -9,7 +9,7 @@ import ast.util.NodoPosicion;
  * @author Iván González Mahagamage
  *
  */
-public class Variable extends NodoPosicion implements Expresion, Sentencia {
+public class Variable extends ExpresionAbstracta implements Sentencia {
 	private String clave;
 
 	/**
@@ -38,9 +38,8 @@ public class Variable extends NodoPosicion implements Expresion, Sentencia {
 
 	@Override
 	public String toString() {
-		return "Variable [clave=" + clave + ", linea=" + linea + ", columna=" + columna + "]";
+		return "Variable [clave=" + clave + ", linea=" + linea + ", columna="
+				+ columna + "]";
 	}
-
-
 
 }

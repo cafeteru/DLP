@@ -1,6 +1,6 @@
 package ast.expresiones;
 
-import ast.util.NodoPosicion;
+import ast.expresiones.util.ExpresionAbstracta;
 
 /**
  * Clase que simula en el análizador léxico un token que es un literal entero.
@@ -9,7 +9,7 @@ import ast.util.NodoPosicion;
  * @author Iván González Mahagamage
  *
  */
-public class LiteralEntero extends NodoPosicion implements Expresion {
+public class LiteralEntero extends ExpresionAbstracta {
 	private int valor;
 
 	/**
@@ -38,9 +38,8 @@ public class LiteralEntero extends NodoPosicion implements Expresion {
 
 	@Override
 	public String toString() {
-		return "LiteralEntero [valor=" + valor + ", linea=" + linea + ", columna=" + columna + "]";
+		return "LiteralEntero [valor=" + valor + ", linea=" + linea
+				+ ", columna=" + columna + "]";
 	}
-
-
 
 }

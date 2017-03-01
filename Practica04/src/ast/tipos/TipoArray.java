@@ -13,7 +13,5 @@ public class TipoArray implements Tipo {
 	public String toString() {
 		return "TipoArray [tamaño=" + tamaño + ", tipo=" + tipo + "]";
 	}
-	
-	
-}
 
+}

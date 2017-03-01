@@ -12,11 +12,11 @@
    7  declaraciones : declaraciones declaracionVariable ';'
    8                |
 
-   9  parametros : parametros ',' definicioVariable
-  10             | definicioVariable
+   9  parametros : parametros ',' definicionVariable
+  10             | definicionVariable
   11             |
 
-  12  definicioVariable : tipoSimple ID
+  12  definicionVariable : tipoSimple ID
 
   13  cuerpoDefinicion : sentencias
   14                   |
@@ -299,7 +299,7 @@ state 23
 
 	tipoSimple  goto 33
 	parametros  goto 34
-	definicioVariable  goto 35
+	definicionVariable  goto 35
 
 
 state 24
@@ -314,7 +314,7 @@ state 24
 
 	tipoSimple  goto 33
 	parametros  goto 36
-	definicioVariable  goto 35
+	definicionVariable  goto 35
 
 
 state 25
@@ -376,7 +376,7 @@ state 32
 
 
 state 33
-	definicioVariable : tipoSimple . ID  (12)
+	definicionVariable : tipoSimple . ID  (12)
 
 	ID  shift 42
 	.  error
@@ -384,7 +384,7 @@ state 33
 
 state 34
 	definicion : VOID ID '(' parametros . ')' '{' declaraciones cuerpoDefinicion '}'  (5)
-	parametros : parametros . ',' definicioVariable  (9)
+	parametros : parametros . ',' definicionVariable  (9)
 
 	')'  shift 43
 	','  shift 44
@@ -392,14 +392,14 @@ state 34
 
 
 state 35
-	parametros : definicioVariable .  (10)
+	parametros : definicionVariable .  (10)
 
 	.  reduce 10
 
 
 state 36
 	definicion : tipoSimple ID '(' parametros . ')' '{' declaraciones cuerpoDefinicion '}'  (4)
-	parametros : parametros . ',' definicioVariable  (9)
+	parametros : parametros . ',' definicionVariable  (9)
 
 	')'  shift 45
 	','  shift 44
@@ -446,7 +446,7 @@ state 41
 
 
 state 42
-	definicioVariable : tipoSimple ID .  (12)
+	definicionVariable : tipoSimple ID .  (12)
 
 	.  reduce 12
 
@@ -459,7 +459,7 @@ state 43
 
 
 state 44
-	parametros : parametros ',' . definicioVariable  (9)
+	parametros : parametros ',' . definicionVariable  (9)
 
 	INT  shift 3
 	DOUBLE  shift 4
@@ -467,7 +467,7 @@ state 44
 	.  error
 
 	tipoSimple  goto 33
-	definicioVariable  goto 49
+	definicionVariable  goto 49
 
 
 state 45
@@ -523,7 +523,7 @@ state 48
 
 
 state 49
-	parametros : parametros ',' definicioVariable .  (9)
+	parametros : parametros ',' definicionVariable .  (9)
 
 	.  reduce 9
 

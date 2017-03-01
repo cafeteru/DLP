@@ -13,7 +13,5 @@ public class TipoEntero implements Tipo {
 	public String toString() {
 		return "TipoEntero []";
 	}
-	
-	
-}
 
+}

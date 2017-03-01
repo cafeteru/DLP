@@ -1,5 +1,7 @@
 package ast.expresiones;
 
+import ast.expresiones.util.OperacionBinaria;
+
 public class Logica extends OperacionBinaria {
 
 	public Logica(int linea, int columna, Expresion izq, String operador,
@@ -9,8 +11,9 @@ public class Logica extends OperacionBinaria {
 
 	@Override
 	public String toString() {
-		return "Logica [operador=" + operador + ", linea=" + linea + ", columna=" + columna + "]";
+		return "Logica [operador=" + operador + ", linea=" + linea
+				+ ", columna=" + columna + ", getIzq()=" + getIzq()
+				+ ", getDer()=" + getDer() + "]";
 	}
 
-	
 }

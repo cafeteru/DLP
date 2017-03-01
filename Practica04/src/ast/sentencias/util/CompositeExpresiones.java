@@ -1,20 +1,14 @@
-package ast.util;
+package ast.sentencias.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ast.expresiones.Expresion;
 import ast.sentencias.Sentencia;
+import ast.util.NodoPosicion;
 
-/**
- * Clase intermedia que asigna una lista de expresiones a los token que la
- * necesiten.
- * 
- * @author Iván González Mahagamage
- *
- */
-public class CompositeSentencia extends NodoPosicion {
-	protected List<Sentencia> sentencias;
+public class CompositeExpresiones extends NodoPosicion implements Sentencia {
+	protected List<Expresion> expresiones;
 
 	/**
 	 * Constructor con parámetros.
@@ -24,9 +18,9 @@ public class CompositeSentencia extends NodoPosicion {
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 */
-	public CompositeSentencia(int linea, int columna) {
+	public CompositeExpresiones(int linea, int columna) {
 		super(linea, columna);
-		sentencias = new ArrayList<>();
+		expresiones = new ArrayList<>();
 	}
 
 	/**
@@ -34,7 +28,7 @@ public class CompositeSentencia extends NodoPosicion {
 	 * 
 	 * @return Lista de expresiones.
 	 */
-	public List<Sentencia> getSentencias() {
-		return sentencias;
+	public List<Expresion> getExpresiones() {
+		return expresiones;
 	}
 }

@@ -16,7 +16,5 @@ public class TipoRegistro implements Tipo {
 	public String toString() {
 		return "TipoRegistro [campos=" + campos + "]";
 	}
-	
-	
 
 }

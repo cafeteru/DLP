@@ -1,9 +1,9 @@
-package ast.expresiones;
+package ast.expresiones.util;
 
+import ast.expresiones.Expresion;
 import ast.util.NodoPosicion;
 
-public class OperacionBinaria extends NodoPosicion
-		implements Expresion {
+public class OperacionBinaria extends NodoPosicion implements Expresion {
 	protected String operador;
 	private Expresion izq;
 	private Expresion der;
@@ -24,8 +24,8 @@ public class OperacionBinaria extends NodoPosicion
 	 *            Expresión que se encuentra a la derecha del operando.
 	 * 
 	 */
-	public OperacionBinaria(int linea, int columna, Expresion izq, String operador,
-			Expresion der) {
+	public OperacionBinaria(int linea, int columna, Expresion izq,
+			String operador, Expresion der) {
 		super(linea, columna);
 		this.izq = izq;
 		this.der = der;
@@ -52,10 +52,9 @@ public class OperacionBinaria extends NodoPosicion
 
 	@Override
 	public String toString() {
-		return "OperacionBinaria [operador=" + operador + ", izq=" + izq + ", der=" + der + ", linea=" + linea
-				+ ", columna=" + columna + "]";
+		return "OperacionBinaria [operador=" + operador + ", izq=" + izq
+				+ ", der=" + der + ", linea=" + linea + ", columna=" + columna
+				+ "]";
 	}
-	
-	
 
 }

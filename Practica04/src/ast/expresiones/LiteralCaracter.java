@@ -1,8 +1,9 @@
 package ast.expresiones;
 
+import ast.expresiones.util.ExpresionAbstracta;
 import ast.util.NodoPosicion;
 
-public class LiteralCaracter extends NodoPosicion implements Expresion {
+public class LiteralCaracter extends ExpresionAbstracta {
 	private char valor;
 
 	/**
@@ -22,8 +23,8 @@ public class LiteralCaracter extends NodoPosicion implements Expresion {
 
 	@Override
 	public String toString() {
-		return "LiteralCaracter [valor=" + valor + ", linea=" + linea + ", columna=" + columna + "]";
+		return "LiteralCaracter [valor=" + valor + ", linea=" + linea
+				+ ", columna=" + columna + "]";
 	}
-	
-	
+
 }

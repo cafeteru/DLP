@@ -1,7 +1,7 @@
 package ast.sentencias;
 
 import ast.expresiones.Expresion;
-import ast.util.NodoPosicion;
+import ast.sentencias.util.SentenciaAbstracta;
 
 /**
  * Clase que simula en el análizador léxico un token que es una asignación.
@@ -9,7 +9,7 @@ import ast.util.NodoPosicion;
  * @author Iván González Mahagamage
  *
  */
-public class Asignacion extends NodoPosicion implements Sentencia {
+public class Asignacion extends SentenciaAbstracta {
 	private Expresion variable;
 	private Expresion valor;
 
@@ -52,9 +52,8 @@ public class Asignacion extends NodoPosicion implements Sentencia {
 
 	@Override
 	public String toString() {
-		return "Asignacion [variable=" + variable + ", valor=" + valor + ", linea=" + linea + ", columna=" + columna
-				+ "]";
+		return "Asignacion [variable=" + variable + ", valor=" + valor
+				+ ", linea=" + linea + ", columna=" + columna + "]";
 	}
-	
-	
+
 }

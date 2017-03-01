@@ -1,8 +1,8 @@
 package ast.expresiones;
 
-import ast.util.NodoPosicion;
+import ast.expresiones.util.ExpresionAbstracta;
 
-public class AccesoCampo extends NodoPosicion implements Expresion {
+public class AccesoCampo extends ExpresionAbstracta {
 	private Expresion expresion;
 	private String nombreCampo;
 
@@ -15,9 +15,9 @@ public class AccesoCampo extends NodoPosicion implements Expresion {
 
 	@Override
 	public String toString() {
-		return "AccesoCampo [expresion=" + expresion + ", nombreCampo=" + nombreCampo + ", linea=" + linea
-				+ ", columna=" + columna + "]";
+		return "AccesoCampo [expresion=" + expresion + ", nombreCampo="
+				+ nombreCampo + ", linea=" + linea + ", columna=" + columna
+				+ "]";
 	}
-	
-	
+
 }

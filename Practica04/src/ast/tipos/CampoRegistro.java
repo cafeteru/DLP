@@ -12,8 +12,8 @@ public class CampoRegistro {
 
 	@Override
 	public String toString() {
-		return "CampoRegistro [nombre=" + nombre + ", OFFSET=" + OFFSET + ", tipo=" + tipo + "]";
+		return "CampoRegistro [nombre=" + nombre + ", OFFSET=" + OFFSET
+				+ ", tipo=" + tipo + "]";
 	}
-	
-	
+
 }

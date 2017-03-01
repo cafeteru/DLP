@@ -1,8 +1,8 @@
 package ast.expresiones;
 
-import ast.util.NodoPosicion;
+import ast.expresiones.util.ExpresionAbstracta;
 
-public class AccesoArray extends NodoPosicion implements Expresion {
+public class AccesoArray extends ExpresionAbstracta {
 	private Expresion izq;
 	private Expresion der;
 
@@ -14,8 +14,8 @@ public class AccesoArray extends NodoPosicion implements Expresion {
 
 	@Override
 	public String toString() {
-		return "AccesoArray [izq=" + izq + ", der=" + der + ", linea=" + linea + ", columna=" + columna + "]";
+		return "AccesoArray [izq=" + izq + ", der=" + der + ", linea=" + linea
+				+ ", columna=" + columna + "]";
 	}
-	
-	
+
 }

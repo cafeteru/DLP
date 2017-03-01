@@ -1,9 +1,9 @@
 package ast.expresiones;
 
+import ast.expresiones.util.ExpresionAbstracta;
 import ast.tipos.Tipo;
-import ast.util.NodoPosicion;
 
-public class Cast extends NodoPosicion implements Expresion {
+public class Cast extends ExpresionAbstracta {
 	private Tipo tipoCast;
 	private Expresion expresion;
 
@@ -15,9 +15,8 @@ public class Cast extends NodoPosicion implements Expresion {
 
 	@Override
 	public String toString() {
-		return "Cast [tipoCast=" + tipoCast + ", expresion=" + expresion + ", linea=" + linea + ", columna=" + columna
-				+ "]";
+		return "Cast [tipoCast=" + tipoCast + ", expresion=" + expresion
+				+ ", linea=" + linea + ", columna=" + columna + "]";
 	}
-	
-	
+
 }

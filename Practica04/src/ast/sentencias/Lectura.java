@@ -3,7 +3,7 @@ package ast.sentencias;
 import java.util.List;
 
 import ast.expresiones.Expresion;
-import ast.util.CompositeExpresiones;
+import ast.sentencias.util.CompositeExpresiones;
 
 /**
  * Clase que simula en el análizador léxico un token que es una lectura.
@@ -11,7 +11,7 @@ import ast.util.CompositeExpresiones;
  * @author Iván González Mahagamage
  *
  */
-public class Lectura extends CompositeExpresiones implements Sentencia {
+public class Lectura extends CompositeExpresiones {
 
 	/**
 	 * Constructor con parámetros.
@@ -30,7 +30,7 @@ public class Lectura extends CompositeExpresiones implements Sentencia {
 
 	@Override
 	public String toString() {
-		return "Lectura [expresiones=" + expresiones + ", linea=" + linea + ", columna=" + columna + "]";
+		return "Lectura [expresiones=" + expresiones + ", linea=" + linea
+				+ ", columna=" + columna + "]";
 	}
-
 }

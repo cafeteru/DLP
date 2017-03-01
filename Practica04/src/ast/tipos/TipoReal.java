@@ -13,6 +13,5 @@ public class TipoReal implements Tipo {
 	public String toString() {
 		return "TipoReal []";
 	}
-	
-	
+
 }
