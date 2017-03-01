@@ -34,7 +34,13 @@ public class Main {
 		Lexico lexico = new Lexico(fr);
 		
 		Parser parser = new Parser(lexico);
-		
+	  int token;
+	  while ((token=lexico.yylex())!=0) {
+	      System.out.println("Linea: "+lexico.getLine()+
+	              ", columna: "+lexico.getColumn()+
+	              ", token: "+token+
+	              ", valor semántico: "+lexico.getYylval()+".");
+	  }
 		// * "Parseamos"
 		parser.run();
 

@@ -87,7 +87,7 @@ return   				{ this.yylval = yytext();
          			  		return Parser.CTE_ENTERA; }							
 { ConstanteReal }	    { this.yylval = new Double(yytext());
          			  		return Parser.CTE_REAL; }
-{ Identificador }		{ this.yylval = yytext();
+{ Identificador }		{ this.yylval = new String(yytext());
 							return Parser.ID; }	
 { Caracter }			{ String aux = yytext().substring(1, yytext().length() - 1);
 						  if (aux.length() > 2)
