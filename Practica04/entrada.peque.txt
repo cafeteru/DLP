@@ -1,23 +1,5 @@
- // * Record
-  struct {
-     int integer,dfs;
-     int[1][1]vector, vector;
-     
-      // * Record
-   struct {
-     int dia,mes,anio;
-     char character;
-   } pair, asdas;
-   
-  } pair, adsads;
-  
-
-  
-  void f(int a){}
-  
-
-  
-  
+int [1][2][3] vector;
+int a,b,c;
   void main(){
    
    while(a == 0){
