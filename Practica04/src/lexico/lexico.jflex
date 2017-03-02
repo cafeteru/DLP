@@ -41,7 +41,7 @@ ConstanteReal = ([0-9]+\.[0-9]+|[0-9]*\.[0-9]+|[0-9]+\.[0-9]*|[0-9]+)(e|E)?("+"|
 Identificador = [a-zA-Z·ÈÌÛ˙Ò¡…Õ”⁄—]+ [a-zA-Z0-9Z·ÈÌÛ˙Ò¡…Õ”⁄—_]*
 Operador = ("<"|">"|";"|":"|"("|")"|"["|"]"|"{"|"}"|","|"="|"+"|"-"|"*"|"/"|"."|"!"|"?"|"%")
 CaracterASCII = '"\\"[0-9]+' 
-CaracterBarra = '"\\".' 
+Salto = "'\\n'"
 %%
 // ************  Acciones ********************
 "//" .*			        { } 
@@ -90,13 +90,15 @@ return   				{ this.yylval = yytext();
          			  		return Parser.CTE_REAL; }
 { Identificador }		{ this.yylval = new String(yytext());
 							return Parser.ID; }	
-'.'						{ this.yylval = new String(yytext());
+'.'						{this.yylval = new Character(yytext().charAt(1));
 							return Parser.CTE_CARACTER; }	
-{ CaracterBarra }		{ this.yylval = yytext();
-						  	return Parser.CTE_CARACTER; }							
+"'\\n'"					{ this.yylval = new Character('\n');
+						  	return Parser.CTE_CARACTER; }
+"'\\t'"					{ this.yylval = new Character('\t');
+						  	return Parser.CTE_CARACTER; }							  						  								
 { CaracterASCII }		{ this.yylval = (char) Integer.parseInt(yytext().substring(2, yytext().length() - 1));
 						  	return Parser.CTE_CARACTER; }											 	
-[\n \r \t]		    	{ }				
+[\n \r \t ]		    { }				
 .						{ System.err.println("Ha fallado el token " + yytext()
 							+ " en la linea " + getLine() + ", en la columna "
 							+ getColumn()); }

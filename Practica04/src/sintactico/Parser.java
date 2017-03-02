@@ -963,7 +963,7 @@ case 36:
 break;
 case 37:
 //#line 160 "../../src/sintactico/sintactico.y"
-{ 	yyval = new LiteralCaracter(lexico.getLine(), lexico.getColumn(), (char) ((String) val_peek(0)).charAt(1));		}
+{ 	yyval = new LiteralCaracter(lexico.getLine(), lexico.getColumn(), (Character)val_peek(0));		}
 break;
 case 38:
 //#line 161 "../../src/sintactico/sintactico.y"
