@@ -40,12 +40,13 @@ ConstanteEntera = [0-9]+
 ConstanteReal = ([0-9]+\.[0-9]+|[0-9]*\.[0-9]+|[0-9]+\.[0-9]*|[0-9]+)(e|E)?("+"|"-")?[0-9]*
 Identificador = [a-zA-ZáéíóúñÁÉÍÓÚÑ]+ [a-zA-Z0-9ZáéíóúñÁÉÍÓÚÑ_]*
 Operador = ("<"|">"|";"|":"|"("|")"|"["|"]"|"{"|"}"|","|"="|"+"|"-"|"*"|"/"|"."|"!"|"?"|"%")
-Caracter = "'"([0-9]|[a-zA-ZáéíóúñÁÉÍÓÚÑ]|"\\"([0-9]+|"n"|"t"))"'" 
+CaracterASCII = '"\\"[0-9]+' 
+CaracterBarra = '"\\".' 
 %%
 // ************  Acciones ********************
-"//" ~ "\n"				{ } 
+"//" .*			        { } 
 "/*" ~ "*/"        		{ }	
-{ Operador }			{ this.yylval = yytext().charAt(0); 
+{ Operador }			{ this.yylval = new Character(yytext().charAt(0)); 
 							return yytext().charAt(0); }		
 "=="					{ this.yylval = yytext();
 							return Parser.IGUALDAD; }								
@@ -87,14 +88,14 @@ return   				{ this.yylval = yytext();
          			  		return Parser.CTE_ENTERA; }							
 { ConstanteReal }	    { this.yylval = new Double(yytext());
          			  		return Parser.CTE_REAL; }
-{ Identificador }		{ this.yylval = yytext();
+{ Identificador }		{ this.yylval = new String(yytext());
 							return Parser.ID; }	
-{ Caracter }			{ String aux = yytext().substring(1, yytext().length() - 1);
-						  if (aux.length() > 2)
-						  	this.yylval = (char) Integer.parseInt(aux.substring(1));
-						  else
-						  	this.yylval = aux;
-						  return Parser.CTE_CARACTER; }											 	
+'.'						{ this.yylval = new String(yytext());
+							return Parser.CTE_CARACTER; }	
+{ CaracterBarra }		{ this.yylval = yytext();
+						  	return Parser.CTE_CARACTER; }							
+{ CaracterASCII }		{ this.yylval = (char) Integer.parseInt(yytext().substring(2, yytext().length() - 1));
+						  	return Parser.CTE_CARACTER; }											 	
 [\n \r \t]		    	{ }				
 .						{ System.err.println("Ha fallado el token " + yytext()
 							+ " en la linea " + getLine() + ", en la columna "
