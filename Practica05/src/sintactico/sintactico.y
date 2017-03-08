@@ -61,7 +61,7 @@ definiciones: definiciones definicion     																{	$$ = $1;
 																													if (!nombres.contains(elemento.getNombre()))
 																														lista.add(elemento);
 																													else
-																														new TipoError(lexico.getLine(), lexico.getColumn(),"Definición duplicado -> "+ elemento.getNombre());
+																														new TipoError(lexico.getLine(), lexico.getColumn(),"Variable duplicado -> "+ elemento.getNombre());
 																												} else {
 																													int posicion = nombres.indexOf(elemento.getNombre());
 																													Definicion aux = lista.get(posicion);

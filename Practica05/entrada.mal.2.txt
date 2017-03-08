@@ -3,12 +3,17 @@
 	DLP 16/17
 */
 int j;
+double j;
 int a(){}
 int a(int b){}
 struct { 
 	int key;	
 	int value;	
-	//double key; // Error: campo duplicado
+	double key; // Error: campo duplicado
+} tuple;
+
+struct { 
+	int key;	
 } tuple;
 
 // Programa principal
