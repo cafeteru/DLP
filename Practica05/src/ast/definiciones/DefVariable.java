@@ -17,5 +17,7 @@ public class DefVariable extends DefinicionAbstracta {
 				+ ", linea=" + linea + ", columna=" + columna + ", getTipo()="
 				+ getTipo() + ", getNombre()=" + getNombre() + "]";
 	}
+	
+	
 
 }

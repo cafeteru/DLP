@@ -48,9 +48,24 @@ programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'							
 																										} ;
 definiciones: definiciones definicion     																{	$$ = $1; 
 																											List<Definicion> lista = (List<Definicion>)$$;
-																											for(Definicion elemento : (List<Definicion>)$2) 
-																												if(!lista.contains(elemento))
-																													((List<Definicion>)$$).add(elemento); 
+																											List<String> nombres = new ArrayList();
+																											for(Definicion nombre : lista){
+																												nombres.add(nombre.getNombre());
+																											}
+																											List<Definicion> listaDefiniciones = (List<Definicion>)$2;
+																											for(int i = 0; i < listaDefiniciones.size(); i++){
+																												Definicion elemento = listaDefiniciones.get(i);
+																												if(!nombres.contains(elemento.getNombre()))
+																													lista.add(elemento);
+																												else {
+																													int posicion = nombres.indexOf(elemento.getNombre());
+																													Definicion aux = lista.get(posicion);
+																													if(!aux.equals(elemento))
+																														lista.add(elemento);
+																													else
+																														new TipoError(lexico.getLine(), lexico.getColumn(),"Definición duplicado -> " + elemento.getNombre());																													
+																												}
+																											}
 																										}
        |/*vacio*/																						{	$$ = new ArrayList(); }
        ;
@@ -72,17 +87,30 @@ definicion: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoDefinicion 
 	  
 declaraciones: declaraciones declaracionVariable ';'													{ 	$$ = $1;
 																											List<DefVariable> lista = (List<DefVariable>)$$;
+																											List<String> nombres = new ArrayList();
+																											for(Definicion nombre : lista){
+																												nombres.add(nombre.getNombre());
+																											}
 																											for(DefVariable elemento : (List<DefVariable>)$2)
-																												if(!lista.contains(elemento))
-																													lista.add(elemento); }
+																												if(!nombres.contains(elemento.getNombre()))
+																													lista.add(elemento); 
+																												else
+																													new TipoError(lexico.getLine(), lexico.getColumn(),"Variable duplicado -> " + elemento);
+																										}
 			| /*vacio*/																					{ 	$$ = new ArrayList<DefVariable>();}
 			;
 	   
 parametros: parametros ',' definicionVariable															{	$$ = $1; 
 																											List<DefVariable> lista = (List<DefVariable>)$$;
+																											List<String> nombres = new ArrayList();																											
+																											for(Definicion nombre : lista)
+																												nombres.add(nombre.getNombre());
+																												
 																											for(DefVariable elemento : (List<DefVariable>) $3){
-																												if(!lista.contains(elemento))
-																													lista.add(elemento); 
+																												if(!nombres.contains(elemento.getNombre()))
+																													lista.add(elemento);
+																												else
+																													new TipoError(lexico.getLine(), lexico.getColumn(),"Variable duplicado -> ");																													
 																											}
 																										}
 		  | definicionVariable																			{ 	$$ = $1; }
@@ -152,17 +180,24 @@ declaracionVariable: tipoSimple identificador															{ 	List<DefVariable>
 				  
 campos: campos declaracionVariable ';'																	{ 	$$ = $1;
 																											List<DefVariable> lista = (List<DefVariable>)$$;
-																											for(DefVariable elemento : (List<DefVariable>)$2) 
-																											if(!lista.contains(elemento))
-																												(lista).add(elemento); }
+																											List<String> nombres = new ArrayList();																											
+																											for(DefVariable nombre : lista)
+																												nombres.add(nombre.getNombre());																											
+																											for(DefVariable elemento : (List<DefVariable>)$2){ 
+																											if(!nombres.contains(elemento.getNombre()))
+																												(lista).add(elemento); 
+																											else
+																												new TipoError(lexico.getLine(), lexico.getColumn(),"Campo duplicado -> " + elemento.getNombre());
+																											}
+																										}
 	  | declaracionVariable ';'																			{ $$ = $1;  }
       ;
 
 expresiones: expresiones ',' expresion																	{ 	$$ = $1; 
 																											List<Expresion> lista = (List<Expresion>)$$;
 																											Expresion elemento = (Expresion)$3;
-																											if(!lista.contains(elemento))
-																												lista.add(elemento); 	}
+																											lista.add(elemento);																																																								
+																										}
 		   | expresion																					{ 	$$ = new ArrayList<Expresion>(); ((List<Expresion>)$$).add((Expresion)$1);  	}
 		   ;	   
 	  		     
@@ -204,7 +239,10 @@ indices: '[' CTE_ENTERA ']'	indices																		{ 	$$ = $4;
 																											List<Integer> lista = (List<Integer>)$$;
 																											Integer elemento = (Integer)$2;
 																											if(!lista.contains(elemento))
-																												lista.add(elemento); 	}
+																												lista.add(elemento);
+																											else
+																												new TipoError(lexico.getLine(), lexico.getColumn(),"Identificador duplicado -> " + elemento);	
+																										}
 	   | '[' CTE_ENTERA ']'                 															{ 	$$ = new ArrayList<Integer>(); ((List<Integer>)$$).add((Integer)$2); 	}
 	   ;
          
@@ -212,7 +250,10 @@ identificador: identificador ',' ID 																	{ 	$$ = $1;
 																											List<String> lista = (List<String>)$$;
 																											String elemento = (String)$3;
 																											if(!lista.contains(elemento))
-																												lista.add(elemento); 	}
+																												lista.add(elemento);
+																											else
+																												new TipoError(lexico.getLine(), lexico.getColumn(),"Identificador duplicado -> " + elemento);																																																							
+																										}
 		     | ID																						{ 	$$ = new ArrayList(); ((List<String>)$$).add(((String) $1)); 	}	
 		     ;
 	

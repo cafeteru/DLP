@@ -34,4 +34,5 @@ public class NodoPosicion implements NodoAST {
 	public int getColumna() {
 		return columna;
 	}
+
 }

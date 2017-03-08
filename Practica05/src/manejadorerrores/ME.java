@@ -22,7 +22,7 @@ public class ME {
 
 	public void mostrarErrores(PrintStream stream) {
 		for (TipoError error : errores)
-			stream.println(error.getMensaje());
+			stream.println(error);
 	}
 
 	public static ME getME() {

@@ -24,4 +24,5 @@ public class DefFuncion extends DefinicionAbstracta {
 				+ ", getTipo()=" + getTipo() + ", getNombre()=" + getNombre()
 				+ "]";
 	}
+	
 }

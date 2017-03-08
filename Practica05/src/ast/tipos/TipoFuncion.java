@@ -33,4 +33,37 @@ public class TipoFuncion implements Tipo {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((parametros == null) ? 0 : parametros.hashCode());
+		result = prime * result + ((retorno == null) ? 0 : retorno.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TipoFuncion other = (TipoFuncion) obj;
+		if (parametros == null) {
+			if (other.parametros != null)
+				return false;
+		} else if (!parametros.equals(other.parametros))
+			return false;
+		if (retorno == null) {
+			if (other.retorno != null)
+				return false;
+		} else if (!retorno.equals(other.retorno))
+			return false;
+		return true;
+	}
+
 }
