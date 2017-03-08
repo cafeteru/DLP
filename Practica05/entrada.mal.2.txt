@@ -1,0 +1,15 @@
+/*
+	Manejador de errores
+	DLP 16/17
+*/
+
+struct { 
+	int key;	
+	int value;	
+	double key; // Error: campo duplicado
+} tuple;
+
+// Programa principal
+void main() {
+	tuple.key = 0;
+}

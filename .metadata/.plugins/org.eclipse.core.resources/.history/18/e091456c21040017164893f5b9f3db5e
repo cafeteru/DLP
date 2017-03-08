@@ -1,0 +1,20 @@
+package ast.tipos;
+
+import ast.util.NodoPosicion;
+
+public class TipoArray extends NodoPosicion implements Tipo {
+	private int tamaño;
+	private Tipo tipo;
+
+	public TipoArray(int linea, int columna, int tamaño, Tipo tipo) {
+		super(linea, columna);
+		this.tamaño = tamaño;
+		this.tipo = tipo;
+	}
+
+	@Override
+	public String toString() {
+		return "TipoArray [tamaño=" + tamaño + ", tipo=" + tipo + "]";
+	}
+
+}

@@ -2,7 +2,7 @@ package ast.tipos;
 
 public class CampoRegistro {
 	private String nombre;
-	private int OFFSET;
+	private int offset;
 	private Tipo tipo;
 
 	public CampoRegistro(String nombre, Tipo tipo) {
@@ -12,7 +12,7 @@ public class CampoRegistro {
 
 	@Override
 	public String toString() {
-		return "CampoRegistro [nombre=" + nombre + ", OFFSET=" + OFFSET
+		return "CampoRegistro [nombre=" + nombre + ", OFFSET=" + offset
 				+ ", tipo=" + tipo + "]";
 	}
 

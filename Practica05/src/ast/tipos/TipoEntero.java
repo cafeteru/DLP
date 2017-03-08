@@ -14,4 +14,16 @@ public class TipoEntero implements Tipo {
 		return "TipoEntero []";
 	}
 
+	@Override
+	public int getLinea() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getColumna() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -14,4 +14,16 @@ public class TipoCaracter implements Tipo {
 		return "TipoCaracter []";
 	}
 
+	@Override
+	public int getLinea() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getColumna() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

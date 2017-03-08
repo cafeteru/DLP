@@ -1,0 +1,26 @@
+package ast.tipos;
+
+import ast.util.NodoPosicion;
+
+public class TipoError extends NodoPosicion implements Tipo {
+	private String mensaje;
+
+	public TipoError(int linea, int columna, String mensaje) {
+		super(linea, columna);
+		this.setMensaje(mensaje);
+	}
+
+	public TipoError(NodoPosicion ast, String mensaje) {
+		super(ast.getLinea(), ast.getLinea());
+		this.setMensaje(mensaje);
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+}

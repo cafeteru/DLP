@@ -1,0 +1,15 @@
+package ast.ManejadorDeErrores;
+
+public class MH {
+	private static MH instancia;
+
+	public static MH getInstancia() {
+		if (instancia == null)
+			instancia = new MH();
+		return instancia;
+	}
+
+	public boolean huboErrores() {
+
+	}
+}

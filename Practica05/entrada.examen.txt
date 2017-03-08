@@ -16,6 +16,8 @@ void setValue(int row, int columnn, int value){
 	if (row >= 0 && row < MATRIXSIZE && columnn >= 0 && columnn < MATRIXSIZE) {
 		matrix[row][column] = value;
 	}
+	while(true)
+		a = 0;
 }
 int getValue(int row, int columnn) {
 	if ((row < 0 || row >= MATRIXSIZE) || (columnn < 0 && columnn >= MATRIXSIZE)){

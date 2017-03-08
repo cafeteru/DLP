@@ -21,4 +21,16 @@ public class TipoFuncion implements Tipo {
 		return "TipoFuncion [parametros=" + parametros + ", retorno=" + retorno
 				+ "]";
 	}
+
+	@Override
+	public int getLinea() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getColumna() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

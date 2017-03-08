@@ -25,7 +25,7 @@
   16             | sentencia
 
   17  sentencia : expresion '=' expresion ';'
-  18            | WHILE '(' expresion ')' '{' sentencias '}'
+  18            | WHILE '(' expresion ')' cuerpoCondicional
   19            | IF '(' expresion ')' cuerpoCondicional
   20            | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional
   21            | WRITE expresiones ';'
@@ -36,12 +36,12 @@
   25  cuerpoCondicional : '{' sentencias '}'
   26                    | sentencia
 
-  27  campos : campos declaracionVariable ';'
-  28         | declaracionVariable ';'
+  27  declaracionVariable : tipoSimple identificador
+  28                      | tipoSimple indices identificador
+  29                      | STRUCT '{' campos '}' identificador
 
-  29  declaracionVariable : tipoSimple identificador
-  30                      | tipoSimple indices identificador
-  31                      | STRUCT '{' campos '}' identificador
+  30  campos : campos declaracionVariable ';'
+  31         | declaracionVariable ';'
 
   32  expresiones : expresiones ',' expresion
   33              | expresion
@@ -137,7 +137,7 @@ state 5
 
 
 state 6
-	declaracionVariable : STRUCT . '{' campos '}' identificador  (31)
+	declaracionVariable : STRUCT . '{' campos '}' identificador  (29)
 
 	'{'  shift 11
 	.  error
@@ -160,8 +160,8 @@ state 8
 
 state 9
 	definicion : tipoSimple . ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}'  (4)
-	declaracionVariable : tipoSimple . identificador  (29)
-	declaracionVariable : tipoSimple . indices identificador  (30)
+	declaracionVariable : tipoSimple . identificador  (27)
+	declaracionVariable : tipoSimple . indices identificador  (28)
 
 	ID  shift 14
 	'['  shift 15
@@ -179,7 +179,7 @@ state 10
 
 
 state 11
-	declaracionVariable : STRUCT '{' . campos '}' identificador  (31)
+	declaracionVariable : STRUCT '{' . campos '}' identificador  (29)
 
 	INT  shift 3
 	DOUBLE  shift 4
@@ -224,15 +224,15 @@ state 15
 
 
 state 16
-	declaracionVariable : tipoSimple identificador .  (29)
+	declaracionVariable : tipoSimple identificador .  (27)
 	identificador : identificador . ',' ID  (63)
 
 	','  shift 26
-	';'  reduce 29
+	';'  reduce 27
 
 
 state 17
-	declaracionVariable : tipoSimple indices . identificador  (30)
+	declaracionVariable : tipoSimple indices . identificador  (28)
 
 	ID  shift 27
 	.  error
@@ -247,8 +247,8 @@ state 18
 
 
 state 19
-	declaracionVariable : tipoSimple . identificador  (29)
-	declaracionVariable : tipoSimple . indices identificador  (30)
+	declaracionVariable : tipoSimple . identificador  (27)
+	declaracionVariable : tipoSimple . indices identificador  (28)
 
 	ID  shift 27
 	'['  shift 15
@@ -259,15 +259,15 @@ state 19
 
 
 state 20
-	campos : declaracionVariable . ';'  (28)
+	campos : declaracionVariable . ';'  (31)
 
 	';'  shift 29
 	.  error
 
 
 state 21
-	campos : campos . declaracionVariable ';'  (27)
-	declaracionVariable : STRUCT '{' campos . '}' identificador  (31)
+	declaracionVariable : STRUCT '{' campos . '}' identificador  (29)
+	campos : campos . declaracionVariable ';'  (30)
 
 	INT  shift 3
 	DOUBLE  shift 4
@@ -339,21 +339,21 @@ state 27
 
 
 state 28
-	declaracionVariable : tipoSimple indices identificador .  (30)
+	declaracionVariable : tipoSimple indices identificador .  (28)
 	identificador : identificador . ',' ID  (63)
 
 	','  shift 26
-	';'  reduce 30
+	';'  reduce 28
 
 
 state 29
-	campos : declaracionVariable ';' .  (28)
+	campos : declaracionVariable ';' .  (31)
 
-	.  reduce 28
+	.  reduce 31
 
 
 state 30
-	declaracionVariable : STRUCT '{' campos '}' . identificador  (31)
+	declaracionVariable : STRUCT '{' campos '}' . identificador  (29)
 
 	ID  shift 27
 	.  error
@@ -362,7 +362,7 @@ state 30
 
 
 state 31
-	campos : campos declaracionVariable . ';'  (27)
+	campos : campos declaracionVariable . ';'  (30)
 
 	';'  shift 40
 	.  error
@@ -423,17 +423,17 @@ state 38
 
 
 state 39
-	declaracionVariable : STRUCT '{' campos '}' identificador .  (31)
+	declaracionVariable : STRUCT '{' campos '}' identificador .  (29)
 	identificador : identificador . ',' ID  (63)
 
 	','  shift 26
-	';'  reduce 31
+	';'  reduce 29
 
 
 state 40
-	campos : campos declaracionVariable ';' .  (27)
+	campos : campos declaracionVariable ';' .  (30)
 
-	.  reduce 27
+	.  reduce 30
 
 
 state 41
@@ -590,7 +590,7 @@ state 55
 
 
 state 56
-	sentencia : WHILE . '(' expresion ')' '{' sentencias '}'  (18)
+	sentencia : WHILE . '(' expresion ')' cuerpoCondicional  (18)
 
 	'('  shift 74
 	.  error
@@ -920,7 +920,7 @@ state 73
 
 
 state 74
-	sentencia : WHILE '(' . expresion ')' '{' sentencias '}'  (18)
+	sentencia : WHILE '(' . expresion ')' cuerpoCondicional  (18)
 
 	CTE_ENTERA  shift 51
 	CTE_REAL  shift 52
@@ -1470,7 +1470,7 @@ state 107
 
 
 state 108
-	sentencia : WHILE '(' expresion . ')' '{' sentencias '}'  (18)
+	sentencia : WHILE '(' expresion . ')' cuerpoCondicional  (18)
 	expresion : expresion . '+' expresion  (38)
 	expresion : expresion . '*' expresion  (39)
 	expresion : expresion . '/' expresion  (40)
@@ -2216,10 +2216,27 @@ state 133
 
 
 state 134
-	sentencia : WHILE '(' expresion ')' . '{' sentencias '}'  (18)
+	sentencia : WHILE '(' expresion ')' . cuerpoCondicional  (18)
 
+	CTE_ENTERA  shift 51
+	CTE_REAL  shift 52
+	CTE_CARACTER  shift 53
+	READ  shift 54
+	WRITE  shift 55
+	WHILE  shift 56
+	IF  shift 57
+	RETURN  shift 58
+	ID  shift 59
+	'-'  shift 60
+	'('  shift 61
 	'{'  shift 140
+	'!'  shift 62
 	.  error
+
+	sentencia  goto 141
+	expresion  goto 66
+	cuerpoCondicional  goto 142
+	invocacion  goto 67
 
 
 state 135
@@ -2237,11 +2254,11 @@ state 135
 	ID  shift 59
 	'-'  shift 60
 	'('  shift 61
-	'{'  shift 141
+	'{'  shift 140
 	'!'  shift 62
 	.  error
 
-	sentencia  goto 142
+	sentencia  goto 141
 	expresion  goto 66
 	cuerpoCondicional  goto 143
 	invocacion  goto 67
@@ -2286,7 +2303,7 @@ state 139
 
 
 state 140
-	sentencia : WHILE '(' expresion ')' '{' . sentencias '}'  (18)
+	cuerpoCondicional : '{' . sentencias '}'  (25)
 
 	CTE_ENTERA  shift 51
 	CTE_REAL  shift 52
@@ -2309,39 +2326,22 @@ state 140
 
 
 state 141
-	cuerpoCondicional : '{' . sentencias '}'  (25)
-
-	CTE_ENTERA  shift 51
-	CTE_REAL  shift 52
-	CTE_CARACTER  shift 53
-	READ  shift 54
-	WRITE  shift 55
-	WHILE  shift 56
-	IF  shift 57
-	RETURN  shift 58
-	ID  shift 59
-	'-'  shift 60
-	'('  shift 61
-	'!'  shift 62
-	.  error
-
-	sentencias  goto 145
-	sentencia  goto 65
-	expresion  goto 66
-	invocacion  goto 67
-
-
-state 142
 	cuerpoCondicional : sentencia .  (26)
 
 	.  reduce 26
+
+
+state 142
+	sentencia : WHILE '(' expresion ')' cuerpoCondicional .  (18)
+
+	.  reduce 18
 
 
 state 143
 	sentencia : IF '(' expresion ')' cuerpoCondicional .  (19)
 	sentencia : IF '(' expresion ')' cuerpoCondicional . ELSE cuerpoCondicional  (20)
 
-	ELSE  shift 146
+	ELSE  shift 145
 	CTE_ENTERA  reduce 19
 	CTE_REAL  reduce 19
 	CTE_CARACTER  reduce 19
@@ -2359,30 +2359,6 @@ state 143
 
 state 144
 	sentencias : sentencias . sentencia  (15)
-	sentencia : WHILE '(' expresion ')' '{' sentencias . '}'  (18)
-
-	CTE_ENTERA  shift 51
-	CTE_REAL  shift 52
-	CTE_CARACTER  shift 53
-	READ  shift 54
-	WRITE  shift 55
-	WHILE  shift 56
-	IF  shift 57
-	RETURN  shift 58
-	ID  shift 59
-	'-'  shift 60
-	'('  shift 61
-	'}'  shift 147
-	'!'  shift 62
-	.  error
-
-	sentencia  goto 84
-	expresion  goto 66
-	invocacion  goto 67
-
-
-state 145
-	sentencias : sentencias . sentencia  (15)
 	cuerpoCondicional : '{' sentencias . '}'  (25)
 
 	CTE_ENTERA  shift 51
@@ -2396,7 +2372,7 @@ state 145
 	ID  shift 59
 	'-'  shift 60
 	'('  shift 61
-	'}'  shift 148
+	'}'  shift 146
 	'!'  shift 62
 	.  error
 
@@ -2405,7 +2381,7 @@ state 145
 	invocacion  goto 67
 
 
-state 146
+state 145
 	sentencia : IF '(' expresion ')' cuerpoCondicional ELSE . cuerpoCondicional  (20)
 
 	CTE_ENTERA  shift 51
@@ -2419,33 +2395,27 @@ state 146
 	ID  shift 59
 	'-'  shift 60
 	'('  shift 61
-	'{'  shift 141
+	'{'  shift 140
 	'!'  shift 62
 	.  error
 
-	sentencia  goto 142
+	sentencia  goto 141
 	expresion  goto 66
-	cuerpoCondicional  goto 149
+	cuerpoCondicional  goto 147
 	invocacion  goto 67
 
 
-state 147
-	sentencia : WHILE '(' expresion ')' '{' sentencias '}' .  (18)
-
-	.  reduce 18
-
-
-state 148
+state 146
 	cuerpoCondicional : '{' sentencias '}' .  (25)
 
 	.  reduce 25
 
 
-state 149
+state 147
 	sentencia : IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional .  (20)
 
 	.  reduce 20
 
 
 45 terminals, 20 nonterminals
-68 grammar rules, 150 states
+68 grammar rules, 148 states

@@ -14,4 +14,16 @@ public class TipoReal implements Tipo {
 		return "TipoReal []";
 	}
 
+	@Override
+	public int getLinea() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getColumna() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

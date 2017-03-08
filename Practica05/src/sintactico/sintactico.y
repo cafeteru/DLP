@@ -46,8 +46,11 @@ programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'							
 																																												
 																											this.ast = new Programa(lexico.getLine(), lexico.getColumn(), definiciones); 
 																										} ;
-definiciones: definiciones definicion     																{	$$ = $1; for(Definicion aux : (List<Definicion>)$2) 
-																											((List<Definicion>)$$).add(aux); 
+definiciones: definiciones definicion     																{	$$ = $1; 
+																											List<Definicion> lista = (List<Definicion>)$$;
+																											for(Definicion elemento : (List<Definicion>)$2) 
+																												if(!lista.contains(elemento))
+																													((List<Definicion>)$$).add(elemento); 
 																										}
        |/*vacio*/																						{	$$ = new ArrayList(); }
        ;
@@ -68,14 +71,18 @@ definicion: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoDefinicion 
 	  ;	
 	  
 declaraciones: declaraciones declaracionVariable ';'													{ 	$$ = $1;
-																											for(DefVariable aux : (List<DefVariable>)$2) 
-																												((List<DefVariable>)$$).add(aux); }
+																											List<DefVariable> lista = (List<DefVariable>)$$;
+																											for(DefVariable elemento : (List<DefVariable>)$2)
+																												if(!lista.contains(elemento))
+																													lista.add(elemento); }
 			| /*vacio*/																					{ 	$$ = new ArrayList<DefVariable>();}
 			;
 	   
 parametros: parametros ',' definicionVariable															{	$$ = $1; 
-																											for(DefVariable aux : (List<DefVariable>) $3){
-																												((List<DefVariable>)$$).add(aux); 
+																											List<DefVariable> lista = (List<DefVariable>)$$;
+																											for(DefVariable elemento : (List<DefVariable>) $3){
+																												if(!lista.contains(elemento))
+																													lista.add(elemento); 
 																											}
 																										}
 		  | definicionVariable																			{ 	$$ = $1; }
@@ -97,7 +104,7 @@ sentencias: sentencias sentencia 																		{ 	$$ = $1;((List<Sentencia>)
 		 ;
 		 	
 sentencia: expresion '=' expresion ';' 							                						{ 	$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$3); }			
-		 | WHILE '(' expresion ')' '{' sentencias '}'													{ 	$$ = new SentenciaWhile(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$6);}
+		 | WHILE '(' expresion ')' cuerpoCondicional													{ 	$$ = new SentenciaWhile(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5);}
 		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE									{ 	$$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, new ArrayList()); }
 		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 								{ 	$$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, (List<Sentencia>)$7);}
 		 | WRITE expresiones ';'																		{ 	$$ = new Escritura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2);}
@@ -109,13 +116,6 @@ sentencia: expresion '=' expresion ';' 							                						{ 	$$ = new 
 cuerpoCondicional: '{' sentencias '}'																	{ 	$$ = $2;	}
 		         | sentencia 																			{ 	$$ = new ArrayList<Sentencia>(); ((List<Sentencia>)$$).add((Sentencia)$1);  }
 		         ;
-		           
-// Campos dentro de un Struct		   
-campos: campos declaracionVariable ';'																	{ 	$$ = $1;
-																											for(DefVariable aux : (List<DefVariable>)$2) 
-																												((List<DefVariable>)$$).add(aux); }
-	  | declaracionVariable ';'																			{ $$ = $1;  }
-      ;
       
 declaracionVariable: tipoSimple identificador															{ 	List<DefVariable> variables = new ArrayList();
 																											for(String aux: (List<String>)$2){
@@ -149,8 +149,20 @@ declaracionVariable: tipoSimple identificador															{ 	List<DefVariable>
 																											$$ = variables; 															 
 																										}
 		           ;
+				  
+campos: campos declaracionVariable ';'																	{ 	$$ = $1;
+																											List<DefVariable> lista = (List<DefVariable>)$$;
+																											for(DefVariable elemento : (List<DefVariable>)$2) 
+																											if(!lista.contains(elemento))
+																												(lista).add(elemento); }
+	  | declaracionVariable ';'																			{ $$ = $1;  }
+      ;
 
-expresiones: expresiones ',' expresion																	{ 	$$ = $1; ((List<Expresion>)$$).add((Expresion)$3); 	}
+expresiones: expresiones ',' expresion																	{ 	$$ = $1; 
+																											List<Expresion> lista = (List<Expresion>)$$;
+																											Expresion elemento = (Expresion)$3;
+																											if(!lista.contains(elemento))
+																												lista.add(elemento); 	}
 		   | expresion																					{ 	$$ = new ArrayList<Expresion>(); ((List<Expresion>)$$).add((Expresion)$1);  	}
 		   ;	   
 	  		     
@@ -188,11 +200,19 @@ argumentosLlamada: expresiones 																			{ 	$$ = $1;}
 				 ;							  
 				
          
-indices: '[' CTE_ENTERA ']'	indices																		{ 	$$ = $4; ((List<Integer>)$$).add((Integer)$2); 	}
+indices: '[' CTE_ENTERA ']'	indices																		{ 	$$ = $4; 
+																											List<Integer> lista = (List<Integer>)$$;
+																											Integer elemento = (Integer)$2;
+																											if(!lista.contains(elemento))
+																												lista.add(elemento); 	}
 	   | '[' CTE_ENTERA ']'                 															{ 	$$ = new ArrayList<Integer>(); ((List<Integer>)$$).add((Integer)$2); 	}
 	   ;
          
-identificador: identificador ',' ID 																	{ 	$$ = $1; ((List<String>)$$).add((String)$3); 	}
+identificador: identificador ',' ID 																	{ 	$$ = $1; 
+																											List<String> lista = (List<String>)$$;
+																											String elemento = (String)$3;
+																											if(!lista.contains(elemento))
+																												lista.add(elemento); 	}
 		     | ID																						{ 	$$ = new ArrayList(); ((List<String>)$$).add(((String) $1)); 	}	
 		     ;
 	

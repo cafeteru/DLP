@@ -14,4 +14,16 @@ public class TipoVoid implements Tipo {
 		return "TipoVoid []";
 	}
 
+	@Override
+	public int getLinea() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getColumna() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
