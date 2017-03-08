@@ -2,6 +2,9 @@
 	Manejador de errores
 	DLP 16/17
 */
+int j;
+int a(){}
+int a(int b){}
 struct { 
 	int key;	
 	int value;	
@@ -10,5 +13,6 @@ struct {
 
 // Programa principal
 void main() {
+	int j;
 	tuple.key = 0;
 }

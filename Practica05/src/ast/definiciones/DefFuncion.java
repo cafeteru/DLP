@@ -23,6 +23,5 @@ public class DefFuncion extends DefinicionAbstracta {
 				+ cuerpo + ", linea=" + linea + ", columna=" + columna
 				+ ", getTipo()=" + getTipo() + ", getNombre()=" + getNombre()
 				+ "]";
-	}
-	
+	}	
 }

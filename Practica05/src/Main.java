@@ -7,6 +7,7 @@ import sintactico.Parser;
 import manejadorerrores.ME;
 
 public class Main {
+	
 	public static void main(String args[]) throws IOException {
 		if (args.length < 1) {
 			System.err.println("Necesito el archivo de entrada.");
