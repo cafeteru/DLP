@@ -1,11 +1,14 @@
 package ast.tipos;
 
-public class CampoRegistro {
+import ast.util.NodoPosicion;
+
+public class CampoRegistro extends NodoPosicion {
 	private String nombre;
 	private int offset;
 	private Tipo tipo;
 
-	public CampoRegistro(String nombre, Tipo tipo) {
+	public CampoRegistro(int linea, int columna, String nombre, Tipo tipo) {
+		super(linea, columna);
 		this.nombre = nombre;
 		this.tipo = tipo;
 	}

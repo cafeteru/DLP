@@ -14,7 +14,6 @@ public class Aritmetica extends OperacionBinaria {
 	public Aritmetica(int linea, int columna, Expresion izq, String operador,
 			Expresion der) {
 		super(linea, columna, izq, operador, der);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

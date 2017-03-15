@@ -170,7 +170,7 @@ declaracionVariable: tipoSimple identificador															{ 	List<DefVariable>
 																										}
 		           | STRUCT '{' campos '}' identificador    											{ 	List<CampoRegistro> registrosStruct = new ArrayList();
 		           																							for(DefVariable var : (List<DefVariable>) $3){
-		           																								registrosStruct.add(new CampoRegistro(var.getNombre(), var.getTipo()));
+		           																								registrosStruct.add(new CampoRegistro(lexico.getLine(), lexico.getColumn(), var.getNombre(), var.getTipo()));
 																											}
 		           												
 																											TipoRegistro registro = new TipoRegistro(registrosStruct);
