@@ -56,20 +56,10 @@ definiciones: definiciones definicion     																{	$$ = $1;
 																											for(int i = 0; i < listaDefiniciones.size(); i++){
 																												Definicion elemento = listaDefiniciones.get(i);
 																												if(!nombres.contains(elemento.getNombre()))
-																													lista.add(elemento);
-																												else if (elemento instanceof DefVariable) {
-																													if (!nombres.contains(elemento.getNombre()))
-																														lista.add(elemento);
-																													else
-																														new TipoError(lexico.getLine(), lexico.getColumn(),"Variable duplicado -> "+ elemento.getNombre());
-																												} else {
-																													int posicion = nombres.indexOf(elemento.getNombre());
-																													Definicion aux = lista.get(posicion);
-																													if(!aux.equals(elemento))
-																														lista.add(elemento);
-																													else
-																														new TipoError(lexico.getLine(), lexico.getColumn(),"Definición duplicado -> " + elemento.getNombre());																													
-																												}
+																													lista.add(elemento);																												
+																												else
+																													new TipoError(lexico.getLine(), lexico.getColumn(),"Variable duplicado -> "+ elemento.getNombre());
+																												
 																											}
 																										}
        |/*vacio*/																						{	$$ = new ArrayList(); }
