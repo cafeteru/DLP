@@ -90,7 +90,7 @@ declaraciones: declaraciones declaracionVariable ';'													{ 	$$ = $1;
 																												if(!nombres.contains(elemento.getNombre()))
 																													lista.add(elemento); 
 																												else
-																													new TipoError(lexico.getLine(), lexico.getColumn(),"Variable duplicado -> " + elemento);
+																													new TipoError(lexico.getLine(), lexico.getColumn(),"Definicion duplicado -> " + elemento);
 																										}
 			| /*vacio*/																					{ 	$$ = new ArrayList<DefVariable>();}
 			;

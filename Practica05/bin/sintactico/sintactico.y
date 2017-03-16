@@ -58,7 +58,7 @@ definiciones: definiciones definicion     																{	$$ = $1;
 																												if(!nombres.contains(elemento.getNombre()))
 																													lista.add(elemento);																												
 																												else
-																													new TipoError(lexico.getLine(), lexico.getColumn(),"Variable duplicado -> "+ elemento.getNombre());
+																													new TipoError(lexico.getLine(), lexico.getColumn(),"Definicion duplicado -> "+ elemento.getNombre());
 																												
 																											}
 																										}
