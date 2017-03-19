@@ -1,5 +1,7 @@
 package ast.tipos;
 
+import visitor.Visitor;
+
 public class TipoVoid implements Tipo {
 	private static TipoVoid instancia;
 
@@ -26,4 +28,8 @@ public class TipoVoid implements Tipo {
 		return 0;
 	}
 
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

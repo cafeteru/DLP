@@ -8,10 +8,10 @@ import ast.NodoAST;
  * @author Iván González Mahagamage
  *
  */
-public class NodoPosicion implements NodoAST {
+public abstract class NodoPosicion implements NodoAST {
 	protected int linea;
 	protected int columna;
-	protected Object lValue;
+	protected boolean lValue;
 
 	/**
 	 * Constructor con parámetros.
@@ -35,7 +35,5 @@ public class NodoPosicion implements NodoAST {
 	public int getColumna() {
 		return columna;
 	}
-	
-	
 
 }

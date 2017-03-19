@@ -1,5 +1,7 @@
 package ast.tipos;
 
+import visitor.Visitor;
+
 public class TipoReal implements Tipo {
 	private static TipoReal instancia;
 
@@ -25,5 +27,8 @@ public class TipoReal implements Tipo {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

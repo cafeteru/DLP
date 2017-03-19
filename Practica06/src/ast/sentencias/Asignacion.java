@@ -2,6 +2,7 @@ package ast.sentencias;
 
 import ast.expresiones.Expresion;
 import ast.sentencias.util.SentenciaAbstracta;
+import visitor.Visitor;
 
 /**
  * Clase que simula en el análizador léxico un token que es una asignación.
@@ -56,4 +57,8 @@ public class Asignacion extends SentenciaAbstracta {
 				+ ", linea=" + linea + ", columna=" + columna + "]";
 	}
 
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

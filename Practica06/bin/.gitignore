@@ -1,9 +1,12 @@
+/IntrospectorDemo.class
+/Main.class
+/Nodo.class
+/NodoRaiz.class
 /ast/
 /lexico/
 /manejadorerrores/
 /sintactico/
 /visitor/
-/Main.class
-/IntrospectorDemo.class
-/Nodo.class
-/NodoRaiz.class
+/entrada.mal.1.txt
+/entrada.mal.2.txt
+/entrada.txt

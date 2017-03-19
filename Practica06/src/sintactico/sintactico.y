@@ -40,7 +40,7 @@ import ast.tipos.*;
 // * Gramática y acciones Yacc
 programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'								{ 	List<Definicion> definiciones = (List<Definicion>)$1;																						
 																											Definicion main = new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
-																												new TipoFuncion(new ArrayList(), TipoVoid.getInstancia()), 
+																												new TipoFuncion(new ArrayList<DefVariable>(), TipoVoid.getInstancia()), 
 																												(List<DefVariable>)$7, (List<Sentencia>)$8);
 																											definiciones.add(main);
 																																												

@@ -1,6 +1,7 @@
 package ast.expresiones;
 
 import ast.expresiones.util.ExpresionAbstracta;
+import visitor.Visitor;
 
 public class AccesoArray extends ExpresionAbstracta {
 	private Expresion izq;
@@ -16,6 +17,19 @@ public class AccesoArray extends ExpresionAbstracta {
 	public String toString() {
 		return "AccesoArray [izq=" + izq + ", der=" + der + ", linea=" + linea
 				+ ", columna=" + columna + "]";
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+
+	public Expresion getIzq() {
+		return izq;
+	}
+
+	public Expresion getDer() {
+		return der;
 	}
 
 }

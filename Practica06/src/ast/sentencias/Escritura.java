@@ -4,6 +4,7 @@ import java.util.List;
 
 import ast.expresiones.Expresion;
 import ast.sentencias.util.CompositeExpresiones;
+import visitor.Visitor;
 
 /**
  * Clase que simula en el análizador léxico un token que es una escritura.
@@ -32,6 +33,11 @@ public class Escritura extends CompositeExpresiones {
 	public String toString() {
 		return "Escritura [expresiones=" + expresiones + ", linea=" + linea
 				+ ", columna=" + columna + "]";
+	}
+
+	@Override
+	protected Object accept2(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

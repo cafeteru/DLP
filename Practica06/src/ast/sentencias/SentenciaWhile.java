@@ -4,6 +4,7 @@ import java.util.List;
 
 import ast.expresiones.Expresion;
 import ast.sentencias.util.SentenciaAbstracta;
+import visitor.Visitor;
 
 public class SentenciaWhile extends SentenciaAbstracta {
 	private Expresion condicion;
@@ -21,6 +22,19 @@ public class SentenciaWhile extends SentenciaAbstracta {
 		return "SentenciaWhile [condicion=" + condicion + ", sentencias="
 				+ sentencias + ", linea=" + linea + ", columna=" + columna
 				+ "]";
+	}
+
+	public Expresion getCondicion() {
+		return condicion;
+	}
+
+	public List<Sentencia> getSentencias() {
+		return sentencias;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

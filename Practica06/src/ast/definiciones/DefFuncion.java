@@ -5,6 +5,7 @@ import java.util.List;
 import ast.definiciones.util.DefinicionAbstracta;
 import ast.sentencias.Sentencia;
 import ast.tipos.TipoFuncion;
+import visitor.Visitor;
 
 public class DefFuncion extends DefinicionAbstracta {
 	private List<DefVariable> variablesLocales;
@@ -23,5 +24,19 @@ public class DefFuncion extends DefinicionAbstracta {
 				+ cuerpo + ", linea=" + linea + ", columna=" + columna
 				+ ", getTipo()=" + getTipo() + ", getNombre()=" + getNombre()
 				+ "]";
-	}	
+	}
+
+	public List<DefVariable> getVariablesLocales() {
+		return variablesLocales;
+	}
+
+	public List<Sentencia> getCuerpo() {
+		return cuerpo;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+
 }

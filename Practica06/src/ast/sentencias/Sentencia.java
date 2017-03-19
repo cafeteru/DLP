@@ -1,6 +1,7 @@
 package ast.sentencias;
 
 import ast.NodoAST;
+import visitor.Visitor;
 
 /**
  * Interfaz para definir el tipo "Sentencia" del análizador lexico.

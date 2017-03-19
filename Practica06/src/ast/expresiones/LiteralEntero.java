@@ -1,6 +1,7 @@
 package ast.expresiones;
 
 import ast.expresiones.util.ExpresionAbstracta;
+import visitor.Visitor;
 
 /**
  * Clase que simula en el análizador léxico un token que es un literal entero.
@@ -42,4 +43,8 @@ public class LiteralEntero extends ExpresionAbstracta {
 				+ ", columna=" + columna + "]";
 	}
 
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

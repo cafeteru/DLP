@@ -1,8 +1,9 @@
 package ast.definiciones;
 
+import ast.NodoAST;
 import ast.tipos.Tipo;
 
-public interface Definicion {
+public interface Definicion extends NodoAST {
 
 	public Tipo getTipo();
 

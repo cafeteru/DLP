@@ -1,6 +1,7 @@
 package ast.expresiones;
 
 import ast.expresiones.util.OperacionBinaria;
+import visitor.Visitor;
 
 public class Logica extends OperacionBinaria {
 
@@ -16,4 +17,8 @@ public class Logica extends OperacionBinaria {
 				+ ", getDer()=" + getDer() + "]";
 	}
 
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

@@ -4,7 +4,8 @@ import ast.definiciones.Definicion;
 import ast.tipos.Tipo;
 import ast.util.NodoPosicion;
 
-public class DefinicionAbstracta extends NodoPosicion implements Definicion {
+public abstract class DefinicionAbstracta extends NodoPosicion
+		implements Definicion {
 	private String nombre;
 	private Tipo tipo;
 

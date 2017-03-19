@@ -1,6 +1,7 @@
 package ast.expresiones;
 
 import ast.expresiones.util.OperacionUnaria;
+import visitor.Visitor;
 
 /**
  * Clase que simula en el análizador léxico un token que es un menos unario.
@@ -17,10 +18,7 @@ public class MenosUnario extends OperacionUnaria {
 	}
 
 	@Override
-	public String toString() {
-		return "MenosUnario [operador=" + operador + ", sentencias="
-				+ sentencias + ", linea=" + linea + ", columna=" + columna
-				+ "]";
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
-
 }

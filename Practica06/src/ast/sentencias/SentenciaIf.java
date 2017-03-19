@@ -5,6 +5,7 @@ import java.util.List;
 
 import ast.expresiones.Expresion;
 import ast.sentencias.util.SentenciaAbstracta;
+import visitor.Visitor;
 
 public class SentenciaIf extends SentenciaAbstracta {
 	private Expresion condicion;
@@ -26,4 +27,20 @@ public class SentenciaIf extends SentenciaAbstracta {
 				+ ", columna=" + columna + "]";
 	}
 
+	public Expresion getCondicion() {
+		return condicion;
+	}
+
+	public List<Sentencia> getCuerpoIf() {
+		return cuerpoIf;
+	}
+
+	public List<Sentencia> getCuerpoElse() {
+		return cuerpoElse;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }
