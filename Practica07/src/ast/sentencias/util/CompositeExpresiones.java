@@ -6,8 +6,10 @@ import java.util.List;
 import ast.expresiones.Expresion;
 import ast.sentencias.Sentencia;
 import ast.util.NodoPosicion;
+import visitor.Visitor;
 
-public class CompositeExpresiones extends NodoPosicion implements Sentencia {
+public abstract class CompositeExpresiones extends NodoPosicion
+		implements Sentencia {
 	protected List<Expresion> expresiones;
 
 	/**
@@ -31,4 +33,11 @@ public class CompositeExpresiones extends NodoPosicion implements Sentencia {
 	public List<Expresion> getExpresiones() {
 		return expresiones;
 	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return accept2(v, o);
+	}
+
+	protected abstract Object accept2(Visitor v, Object o);
 }

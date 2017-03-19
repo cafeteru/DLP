@@ -4,9 +4,11 @@ import ast.definiciones.Definicion;
 import ast.tipos.Tipo;
 import ast.util.NodoPosicion;
 
-public class DefinicionAbstracta extends NodoPosicion implements Definicion {
+public abstract class DefinicionAbstracta extends NodoPosicion
+		implements Definicion {
 	private String nombre;
 	private Tipo tipo;
+	private int ambito;
 
 	public DefinicionAbstracta(int linea, int columna, String nombre,
 			Tipo tipo) {
@@ -54,6 +56,16 @@ public class DefinicionAbstracta extends NodoPosicion implements Definicion {
 		} else if (!tipo.equals(other.tipo))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int getAmbito() {
+		return ambito;
+	}
+
+	@Override
+	public void setAmbito(int ambito) {
+		this.ambito = ambito;
 	}
 
 }

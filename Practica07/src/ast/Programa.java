@@ -4,6 +4,7 @@ import java.util.List;
 
 import ast.definiciones.Definicion;
 import ast.util.NodoPosicion;
+import visitor.Visitor;
 
 /**
  * Clase que simula en el análizador léxico un token que es un programa
@@ -33,6 +34,15 @@ public class Programa extends NodoPosicion implements NodoAST {
 	public String toString() {
 		return "Programa [definiciones=" + definiciones + ", linea=" + linea
 				+ ", columna=" + columna + "]";
+	}
+
+	public List<Definicion> getDefiniciones() {
+		return definiciones;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

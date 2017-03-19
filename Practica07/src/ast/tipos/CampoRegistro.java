@@ -1,6 +1,7 @@
 package ast.tipos;
 
 import ast.util.NodoPosicion;
+import visitor.Visitor;
 
 public class CampoRegistro extends NodoPosicion {
 	private String nombre;
@@ -51,6 +52,23 @@ public class CampoRegistro extends NodoPosicion {
 		} else if (!tipo.equals(other.tipo))
 			return false;
 		return true;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public int getOffset() {
+		return offset;
+	}
+
+	public Tipo getTipo() {
+		return tipo;
 	}
 
 }

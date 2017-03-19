@@ -1,6 +1,7 @@
 package ast.expresiones;
 
 import ast.expresiones.util.OperacionBinaria;
+import visitor.Visitor;
 
 /**
  * Clase que simula en el análizador léxico un token que es una operación
@@ -23,4 +24,8 @@ public class Aritmetica extends OperacionBinaria {
 				+ ", getDer()=" + getDer() + "]";
 	}
 
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

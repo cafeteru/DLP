@@ -40,7 +40,7 @@ import ast.tipos.*;
 // * Gramática y acciones Yacc
 programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'								{ 	List<Definicion> definiciones = (List<Definicion>)$1;																						
 																											Definicion main = new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
-																												new TipoFuncion(new ArrayList(), TipoVoid.getInstancia()), 
+																												new TipoFuncion(new ArrayList<DefVariable>(), TipoVoid.getInstancia()), 
 																												(List<DefVariable>)$7, (List<Sentencia>)$8);
 																											definiciones.add(main);
 																																												
@@ -55,21 +55,8 @@ definiciones: definiciones definicion     																{	$$ = $1;
 																											List<Definicion> listaDefiniciones = (List<Definicion>)$2;
 																											for(int i = 0; i < listaDefiniciones.size(); i++){
 																												Definicion elemento = listaDefiniciones.get(i);
-																												if(!nombres.contains(elemento.getNombre()))
-																													lista.add(elemento);
-																												else if (elemento instanceof DefVariable) {
-																													if (!nombres.contains(elemento.getNombre()))
-																														lista.add(elemento);
-																													else
-																														new TipoError(lexico.getLine(), lexico.getColumn(),"Variable duplicado -> "+ elemento.getNombre());
-																												} else {
-																													int posicion = nombres.indexOf(elemento.getNombre());
-																													Definicion aux = lista.get(posicion);
-																													if(!aux.equals(elemento))
-																														lista.add(elemento);
-																													else
-																														new TipoError(lexico.getLine(), lexico.getColumn(),"Definición duplicado -> " + elemento.getNombre());																													
-																												}
+																											    lista.add(elemento);																				
+																												
 																											}
 																										}
        |/*vacio*/																						{	$$ = new ArrayList(); }
@@ -97,10 +84,7 @@ declaraciones: declaraciones declaracionVariable ';'													{ 	$$ = $1;
 																												nombres.add(nombre.getNombre());
 																											}
 																											for(DefVariable elemento : (List<DefVariable>)$2)
-																												if(!nombres.contains(elemento.getNombre()))
 																													lista.add(elemento); 
-																												else
-																													new TipoError(lexico.getLine(), lexico.getColumn(),"Variable duplicado -> " + elemento);
 																										}
 			| /*vacio*/																					{ 	$$ = new ArrayList<DefVariable>();}
 			;
@@ -112,10 +96,7 @@ parametros: parametros ',' definicionVariable															{	$$ = $1;
 																												nombres.add(nombre.getNombre());
 																												
 																											for(DefVariable elemento : (List<DefVariable>) $3){
-																												if(!nombres.contains(elemento.getNombre()))
-																													lista.add(elemento);
-																												else
-																													new TipoError(lexico.getLine(), lexico.getColumn(),"Variable duplicado -> ");																													
+																												lista.add(elemento);																												
 																											}
 																										}
 		  | definicionVariable																			{ 	$$ = $1; }
@@ -243,10 +224,7 @@ argumentosLlamada: expresiones 																			{ 	$$ = $1;}
 indices: '[' CTE_ENTERA ']'	indices																		{ 	$$ = $4; 
 																											List<Integer> lista = (List<Integer>)$$;
 																											Integer elemento = (Integer)$2;
-																											if(!lista.contains(elemento))
-																												lista.add(elemento);
-																											else
-																												new TipoError(lexico.getLine(), lexico.getColumn(),"Identificador duplicado -> " + elemento);	
+																											lista.add(elemento);
 																										}
 	   | '[' CTE_ENTERA ']'                 															{ 	$$ = new ArrayList<Integer>(); ((List<Integer>)$$).add((Integer)$2); 	}
 	   ;

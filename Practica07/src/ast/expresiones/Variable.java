@@ -2,6 +2,7 @@ package ast.expresiones;
 
 import ast.expresiones.util.ExpresionAbstracta;
 import ast.sentencias.Sentencia;
+import visitor.Visitor;
 
 /**
  * Clase que simula en el análizador léxico un token que es una variable.
@@ -42,4 +43,8 @@ public class Variable extends ExpresionAbstracta implements Sentencia {
 				+ columna + "]";
 	}
 
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

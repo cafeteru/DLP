@@ -1,5 +1,7 @@
 package ast;
 
+import visitor.Visitor;
+
 /**
  * Interfaz para definir el tipo "NodoAST" del análizador lexico.
  */
@@ -18,4 +20,6 @@ public interface NodoAST {
 	 * @return Columna en la que se encuentra el token.
 	 */
 	public int getColumna();
+
+	public Object accept(Visitor v, Object o);
 }

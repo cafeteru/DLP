@@ -2,6 +2,7 @@ package ast.tipos;
 
 import ast.util.NodoPosicion;
 import manejadorerrores.ME;
+import visitor.Visitor;
 
 public class TipoError extends NodoPosicion implements Tipo {
 	private String mensaje;
@@ -15,6 +16,7 @@ public class TipoError extends NodoPosicion implements Tipo {
 	public TipoError(NodoPosicion ast, String mensaje) {
 		super(ast.getLinea(), ast.getLinea());
 		this.mensaje = mensaje;
+		ME.getME().addError(this);
 	}
 
 	public String getMensaje() {
@@ -25,6 +27,11 @@ public class TipoError extends NodoPosicion implements Tipo {
 	public String toString() {
 		return "TipoError [mensaje=" + mensaje + ", linea=" + linea
 				+ ", columna=" + columna + "]";
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 }

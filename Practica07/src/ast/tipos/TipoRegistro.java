@@ -3,6 +3,8 @@ package ast.tipos;
 import java.util.ArrayList;
 import java.util.List;
 
+import visitor.Visitor;
+
 public class TipoRegistro implements Tipo {
 	private List<CampoRegistro> campos = new ArrayList<>();
 
@@ -52,6 +54,15 @@ public class TipoRegistro implements Tipo {
 	public int getColumna() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+
+	public List<CampoRegistro> getCampos() {
+		return campos;
 	}
 
 }

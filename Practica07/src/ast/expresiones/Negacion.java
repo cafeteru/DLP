@@ -1,6 +1,7 @@
 package ast.expresiones;
 
 import ast.expresiones.util.OperacionUnaria;
+import visitor.Visitor;
 
 public class Negacion extends OperacionUnaria {
 
@@ -10,9 +11,7 @@ public class Negacion extends OperacionUnaria {
 	}
 
 	@Override
-	public String toString() {
-		return "Negacion [operador=" + operador + ", sentencias=" + sentencias
-				+ ", linea=" + linea + ", columna=" + columna + "]";
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
-
 }

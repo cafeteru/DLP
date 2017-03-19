@@ -1,5 +1,7 @@
 package ast.tipos;
 
+import visitor.Visitor;
+
 public class TipoArray implements Tipo {
 	private int tamaño;
 	private Tipo tipo;
@@ -24,6 +26,19 @@ public class TipoArray implements Tipo {
 	public int getColumna() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+
+	public int getTamaño() {
+		return tamaño;
+	}
+
+	public Tipo getTipo() {
+		return tipo;
 	}
 
 }

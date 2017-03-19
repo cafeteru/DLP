@@ -1,9 +1,8 @@
 package ast.expresiones.util;
 
 import ast.expresiones.Expresion;
-import ast.util.NodoPosicion;
 
-public class OperacionBinaria extends NodoPosicion implements Expresion {
+public abstract class OperacionBinaria extends ExpresionAbstracta {
 	protected String operador;
 	private Expresion izq;
 	private Expresion der;

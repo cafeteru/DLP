@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ast.definiciones.DefVariable;
+import visitor.Visitor;
 
 public class TipoFuncion implements Tipo {
 	private List<DefVariable> parametros = new ArrayList<>();
@@ -64,6 +65,19 @@ public class TipoFuncion implements Tipo {
 		} else if (!retorno.equals(other.retorno))
 			return false;
 		return true;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+
+	public List<DefVariable> getParametros() {
+		return parametros;
+	}
+
+	public Tipo getRetorno() {
+		return retorno;
 	}
 
 }

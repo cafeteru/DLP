@@ -2,10 +2,11 @@ package ast.definiciones;
 
 import ast.definiciones.util.DefinicionAbstracta;
 import ast.tipos.Tipo;
+import visitor.Visitor;
 
 public class DefVariable extends DefinicionAbstracta {
 	private int ambito;
-	private int OFFSET;
+	private int offset;
 
 	public DefVariable(int linea, int columna, String nombre, Tipo tipo) {
 		super(linea, columna, nombre, tipo);
@@ -13,17 +14,19 @@ public class DefVariable extends DefinicionAbstracta {
 
 	@Override
 	public String toString() {
-		return "DefVariable [ambito=" + ambito + ", OFFSET=" + OFFSET
+		return "DefVariable [ambito=" + ambito + ", OFFSET=" + offset
 				+ ", linea=" + linea + ", columna=" + columna + ", getTipo()="
 				+ getTipo() + ", getNombre()=" + getNombre() + "]";
 	}
 
-	public int getAmbito() {
-		return ambito;
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
-	public int getOFFSET() {
-		return OFFSET;
+	public int getOffset() {
+		return offset;
 	}
+
 
 }

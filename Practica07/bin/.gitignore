@@ -1,4 +1,9 @@
+/Main.class
 /TablaSimbolosTest.class
-/tablasimbolos/
 /ast/
+/lexico/
+/manejadorerrores/
+/sintactico/
+/tablasimbolos/
 /visitor/
+/snippet/

@@ -10,6 +10,8 @@ public class TablaSimbolos {
 	private List<Map<String, Definicion>> tabla;
 
 	public TablaSimbolos() {
+		tabla = new ArrayList<>();
+		tabla.add(new HashMap<>());
 	}
 
 	/*
@@ -17,12 +19,16 @@ public class TablaSimbolos {
 	 * la lista
 	 */
 	public void set() {
+		tabla.add(new HashMap<>());
+		ambito++;
 	}
 
 	/*
 	 * Lo contrario a set Decrementa el ambito y borra la ultima el ultimo map
 	 */
 	public void reset() {
+		ambito--;
+		tabla.remove(tabla.size() - 1);
 	}
 
 	// Meter en la tabla que diga el ambito de la lista de maps
@@ -36,6 +42,12 @@ public class TablaSimbolos {
 	// informacion
 	//
 	public boolean insertar(Definicion simbolo) {
+		Map<String, Definicion> aux = tabla.get(ambito);
+		if (!aux.containsKey(simbolo.getNombre())) {
+			aux.put(simbolo.getNombre(), simbolo);
+			simbolo.setAmbito(ambito);
+			return true;
+		}
 		return false;
 	}
 
@@ -44,10 +56,16 @@ public class TablaSimbolos {
 	 * devuelve null. Lanzas el error
 	 */
 	public Definicion buscar(String id) {
+		for (int i = ambito; i >= 0; i--) {
+			if (tabla.get(i).containsKey(id))
+				return tabla.get(i).get(id);
+		}
 		return null;
 	}
 
 	public Definicion buscarAmbitoActual(String id) {
+		if (tabla.get(ambito).containsKey(id))
+			return tabla.get(ambito).get(id);
 		return null;
 	}
 }

@@ -2,6 +2,7 @@ package ast.sentencias;
 
 import ast.expresiones.Expresion;
 import ast.sentencias.util.SentenciaAbstracta;
+import visitor.Visitor;
 
 public class Return extends SentenciaAbstracta {
 	private Expresion expresion;
@@ -17,4 +18,12 @@ public class Return extends SentenciaAbstracta {
 				+ ", columna=" + columna + "]";
 	}
 
+	public Expresion getExpresion() {
+		return expresion;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }

@@ -1,6 +1,7 @@
 package ast.expresiones;
 
 import ast.expresiones.util.ExpresionAbstracta;
+import visitor.Visitor;
 
 public class LiteralReal extends ExpresionAbstracta {
 	private double valor;
@@ -26,4 +27,8 @@ public class LiteralReal extends ExpresionAbstracta {
 				+ columna + "]";
 	}
 
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
 }
