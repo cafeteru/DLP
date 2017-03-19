@@ -1,0 +1,28 @@
+package ast.expresiones;
+
+import ast.expresiones.util.ExpresionAbstracta;
+import visitor.Visitor;
+
+public class AccesoCampo extends ExpresionAbstracta {
+	private Expresion expresion;
+	private String nombreCampo;
+
+	public AccesoCampo(int linea, int columna, String nombreCampo,
+			Expresion expresion) {
+		super(linea, columna);
+		this.nombreCampo = nombreCampo;
+		this.expresion = expresion;
+	}
+
+	@Override
+	public String toString() {
+		return "AccesoCampo [expresion=" + expresion + ", nombreCampo="
+				+ nombreCampo + ", linea=" + linea + ", columna=" + columna
+				+ "]";
+	}
+
+	public Object accept(Visitor v, Object o) {
+		v.visit(this, o);
+		return null;
+	}
+}

@@ -1,0 +1,4 @@
+	@Override
+	public Object visit(Visitor v, Object o) {
+		return v.visit(this, o);
+	}

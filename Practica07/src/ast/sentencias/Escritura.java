@@ -3,7 +3,7 @@ package ast.sentencias;
 import java.util.List;
 
 import ast.expresiones.Expresion;
-import ast.sentencias.util.CompositeExpresiones;
+import ast.sentencias.util.SentenciaAbstracta;
 import visitor.Visitor;
 
 /**
@@ -12,7 +12,8 @@ import visitor.Visitor;
  * @author Iván González Mahagamage
  *
  */
-public class Escritura extends CompositeExpresiones {
+public class Escritura extends SentenciaAbstracta {
+	private List<Expresion> expresiones;
 
 	/**
 	 * Constructor con parámetros.
@@ -36,8 +37,12 @@ public class Escritura extends CompositeExpresiones {
 	}
 
 	@Override
-	protected Object accept2(Visitor v, Object o) {
+	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
+	}
+
+	public List<Expresion> getExpresiones() {
+		return expresiones;
 	}
 
 }

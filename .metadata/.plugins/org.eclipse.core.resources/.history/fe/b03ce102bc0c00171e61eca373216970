@@ -1,0 +1,14 @@
+package ast.definiciones;
+
+import ast.tipos.Tipo;
+import visitor.Visitor;
+
+public interface Definicion {
+
+	public Tipo getTipo();
+
+	public String getNombre();
+
+	public void accept(Visitor v);
+
+}

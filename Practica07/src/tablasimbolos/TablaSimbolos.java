@@ -7,10 +7,9 @@ import ast.definiciones.Definicion;
 public class TablaSimbolos {
 
 	private int ambito = 0;
-	private List<Map<String, Definicion>> tabla;
+	private List<Map<String, Definicion>> tabla = new ArrayList<>();
 
 	public TablaSimbolos() {
-		tabla = new ArrayList<>();
 		tabla.add(new HashMap<>());
 	}
 
@@ -27,8 +26,8 @@ public class TablaSimbolos {
 	 * Lo contrario a set Decrementa el ambito y borra la ultima el ultimo map
 	 */
 	public void reset() {
+		tabla.remove(ambito);
 		ambito--;
-		tabla.remove(tabla.size() - 1);
 	}
 
 	// Meter en la tabla que diga el ambito de la lista de maps

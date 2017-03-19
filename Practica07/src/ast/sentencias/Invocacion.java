@@ -39,8 +39,7 @@ public class Invocacion extends SentenciaAbstracta implements Expresion {
 
 	@Override
 	public Object accept(Visitor v, Object o) {
-		v.visit(this, o);
-		return null;
+		return v.visit(this, o);
 	}
 
 	public List<Expresion> getExpresiones() {
