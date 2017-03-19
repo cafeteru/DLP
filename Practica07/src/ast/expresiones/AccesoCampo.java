@@ -7,8 +7,8 @@ public class AccesoCampo extends ExpresionAbstracta {
 	private Expresion expresion;
 	private String nombreCampo;
 
-	public AccesoCampo(int linea, int columna, String nombreCampo,
-			Expresion expresion) {
+	public AccesoCampo(int linea, int columna, Expresion expresion,
+			String nombreCampo) {
 		super(linea, columna);
 		this.nombreCampo = nombreCampo;
 		this.expresion = expresion;
