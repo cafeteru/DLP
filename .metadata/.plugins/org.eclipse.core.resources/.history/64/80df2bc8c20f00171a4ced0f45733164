@@ -1,0 +1,68 @@
+package ast.tipos;
+
+import visitor.Visitor;
+
+public class TipoCaracter implements Tipo {
+	private static TipoCaracter instancia;
+
+	public static TipoCaracter getInstancia() {
+		if (instancia == null)
+			instancia = new TipoCaracter();
+		return instancia;
+	}
+
+	@Override
+	public String toString() {
+		return "TipoCaracter []";
+	}
+
+	@Override
+	public int getLinea() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getColumna() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+
+	@Override
+	public boolean esLogico() {
+		return true;
+	}
+
+	@Override
+	public Tipo aritmetica(Tipo tipo) {
+		if (tipo instanceof TipoReal || tipo instanceof TipoEntero)
+			return tipo;
+		if (tipo instanceof TipoCaracter)
+			return TipoEntero.getInstancia();
+		return null;
+	}
+
+	@Override
+	public Tipo comparacion(Tipo tipo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Tipo logica(Tipo tipo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// En los demas return null
+	@Override
+	public Tipo aritmetica() {
+		// TODO Auto-generated method stub
+		return TipoEntero.getInstancia();
+	}
+}

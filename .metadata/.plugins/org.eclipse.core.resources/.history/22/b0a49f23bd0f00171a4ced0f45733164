@@ -1,0 +1,32 @@
+package ast.tipos.util;
+
+import ast.tipos.Tipo;
+import visitor.Visitor;
+
+public class TipoAbstracto implements Tipo {
+
+	@Override
+	public int getLinea() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getColumna() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean esLogico() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

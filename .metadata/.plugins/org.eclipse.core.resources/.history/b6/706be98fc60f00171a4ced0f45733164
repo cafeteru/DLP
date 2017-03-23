@@ -1,0 +1,22 @@
+package ast.tipos;
+
+import ast.NodoAST;
+
+public interface Tipo extends NodoAST {
+	public boolean esLogico();
+
+	public Tipo aritmetica(Tipo tipo);
+
+	public Tipo comparacion(Tipo tipo);
+
+	public Tipo logica(Tipo tipo);
+
+	public Tipo aritmetica();
+
+	public Tipo logica();
+
+	public Tipo promocionaA(Tipo tipo);
+
+	// Solo usa funcion
+	public Tipo parentesis(List<Tipo> tipos);
+}

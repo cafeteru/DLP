@@ -1,0 +1,11 @@
+package ast.tipos.util;
+
+import ast.tipos.Tipo;
+
+public abstract class TipoAbstracto implements Tipo {
+
+	@Override
+	public boolean esLogico() {
+		return false;
+	}
+}

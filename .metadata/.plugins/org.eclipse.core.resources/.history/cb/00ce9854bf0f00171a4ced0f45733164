@@ -1,0 +1,9 @@
+package ast.tipos;
+
+import ast.NodoAST;
+
+public interface Tipo extends NodoAST {
+	public boolean esLogico();
+
+	public boolean aritmetica(Tipo tipo);
+}
