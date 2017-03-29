@@ -47,13 +47,11 @@ public class TipoRegistro extends TipoAbstracto implements Tipo {
 
 	@Override
 	public int getLinea() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getColumna() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

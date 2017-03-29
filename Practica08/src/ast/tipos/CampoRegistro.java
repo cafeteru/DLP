@@ -1,23 +1,26 @@
 package ast.tipos;
 
-import ast.util.NodoPosicion;
+import ast.tipos.util.TipoAbstracto;
 import visitor.Visitor;
 
-public class CampoRegistro extends NodoPosicion {
+public class CampoRegistro extends TipoAbstracto {
 	private String nombre;
 	private int offset;
 	private Tipo tipo;
+	private int linea, columna;
 
 	public CampoRegistro(int linea, int columna, String nombre, Tipo tipo) {
-		super(linea, columna);
+		this.linea = linea;
+		this.columna = columna;
 		this.nombre = nombre;
 		this.tipo = tipo;
 	}
 
 	@Override
 	public String toString() {
-		return "CampoRegistro [nombre=" + nombre + ", OFFSET=" + offset
-				+ ", tipo=" + tipo + "]";
+		return "CampoRegistro [nombre=" + nombre + ", offset=" + offset
+				+ ", tipo=" + tipo + ", linea=" + linea + ", columna=" + columna
+				+ "]";
 	}
 
 	@Override

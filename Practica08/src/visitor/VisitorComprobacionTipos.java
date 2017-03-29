@@ -22,9 +22,13 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 	}
 
 	@Override
-	public Object visit(Aritmetica aritmetica, Object o) {
-		super.visit(aritmetica, o);
-		aritmetica.setLValue(false);
+	public Object visit(Aritmetica a, Object o) {
+		super.visit(a, o);
+		a.setLValue(false);
+		a.setTipo(a.getIzq().getTipo().aritmetica(a.getDer().getTipo()));
+		if (a.getTipo() == null)
+			a.setTipo(new TipoError(a,
+					"No son compatibles los tipos de los operandos"));
 		return null;
 	}
 
@@ -36,9 +40,15 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 	}
 
 	@Override
-	public Object visit(Comparacion comparacion, Object o) {
-		super.visit(comparacion, o);
-		comparacion.setLValue(false);
+	public Object visit(Comparacion c, Object o) {
+		super.visit(c, o);
+		c.setLValue(false);
+		c.setTipo(c.getIzq().getTipo().comparacion(c.getDer().getTipo()));
+		if (c.getTipo() == null)
+			c.setTipo(new TipoError(c,
+					"No se puede comparar " + c.getIzq().getTipo()
+							+ " con el tipo " + c.getDer().getTipo()
+							));
 		return null;
 	}
 

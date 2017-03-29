@@ -638,6 +638,7 @@ String yys;    //current token string
 //###############################################################
 // method: yyparse : parse input and execute indicated items
 //###############################################################
+@SuppressWarnings("unchecked")
 int yyparse()
 {
 boolean doaction;
@@ -768,7 +769,8 @@ case 1:
 { 	List<Definicion> definiciones = (List<Definicion>)val_peek(8);																						
 																											Definicion main = new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
 																												new TipoFuncion(new ArrayList<DefVariable>(), TipoVoid.getInstancia()), 
-																												(List<DefVariable>)val_peek(2), (List<Sentencia>)val_peek(1));
+						(List<DefVariable>) val_peek(2),
+						(List<Sentencia>) val_peek(1));
 																											definiciones.add(main);
 																																												
 																											this.ast = new Programa(lexico.getLine(), lexico.getColumn(), definiciones); 
@@ -778,7 +780,7 @@ case 2:
 //#line 49 "../../src/sintactico/sintactico.y"
 {	yyval = val_peek(1); 
 																											List<Definicion> lista = (List<Definicion>)yyval;
-																											List<String> nombres = new ArrayList();
+																											List<String> nombres = new ArrayList<String>();
 																											for(Definicion nombre : lista){
 																												nombres.add(nombre.getNombre());
 																											}
@@ -792,11 +794,11 @@ case 2:
 break;
 case 3:
 //#line 62 "../../src/sintactico/sintactico.y"
-{	yyval = new ArrayList(); }
+{	yyval = new ArrayList<Object>(); }
 break;
 case 4:
 //#line 65 "../../src/sintactico/sintactico.y"
-{ 	List<Definicion> lista = new ArrayList();
+{ 	List<Definicion> lista = new ArrayList<Definicion>();
 																											lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(), (String) val_peek(7),
 																												new TipoFuncion((List<DefVariable>)val_peek(5), (Tipo)val_peek(8)), 
 																												(List<DefVariable>)val_peek(2), (List<Sentencia>)val_peek(1)));
@@ -805,7 +807,7 @@ case 4:
 break;
 case 5:
 //#line 71 "../../src/sintactico/sintactico.y"
-{	List<Definicion> lista = new ArrayList();
+{	List<Definicion> lista = new ArrayList<Definicion>();
 																											lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(),  (String) val_peek(7),
 																											new TipoFuncion((List<DefVariable>)val_peek(5), TipoVoid.getInstancia()), 
 																											(List<DefVariable>)val_peek(2), (List<Sentencia>)val_peek(1)));
@@ -820,7 +822,7 @@ case 7:
 //#line 80 "../../src/sintactico/sintactico.y"
 { 	yyval = val_peek(2);
 																											List<DefVariable> lista = (List<DefVariable>)yyval;
-																											List<String> nombres = new ArrayList();
+																											List<String> nombres = new ArrayList<String>();
 																											for(Definicion nombre : lista){
 																												nombres.add(nombre.getNombre());
 																											}
@@ -836,7 +838,7 @@ case 9:
 //#line 92 "../../src/sintactico/sintactico.y"
 {	yyval = val_peek(2); 
 																											List<DefVariable> lista = (List<DefVariable>)yyval;
-																											List<String> nombres = new ArrayList();																											
+																											List<String> nombres = new ArrayList<String>();																											
 																											for(Definicion nombre : lista)
 																												nombres.add(nombre.getNombre());
 																												
@@ -886,7 +888,7 @@ case 18:
 break;
 case 19:
 //#line 122 "../../src/sintactico/sintactico.y"
-{ 	yyval = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)val_peek(2), (List<Sentencia>)val_peek(0), new ArrayList()); }
+{ 	yyval = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)val_peek(2), (List<Sentencia>)val_peek(0), new ArrayList<Sentencia>()); }
 break;
 case 20:
 //#line 123 "../../src/sintactico/sintactico.y"
@@ -918,7 +920,7 @@ case 26:
 break;
 case 27:
 //#line 134 "../../src/sintactico/sintactico.y"
-{ 	List<DefVariable> variables = new ArrayList();
+{ 	List<DefVariable> variables = new ArrayList<DefVariable>();
 																											for(String aux: (List<String>)val_peek(0)){
 																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), aux, (Tipo)val_peek(1)));
 																											}	 
@@ -933,7 +935,7 @@ case 28:
 																												tipo = new TipoArray(indices.get(i), tipo);
 																											}	           												
 		           												
-																											List<DefVariable> variables = new ArrayList();
+																											List<DefVariable> variables = new ArrayList<DefVariable>();
 																											for(String id: (List<String>)val_peek(0)){
 																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), id, tipo));
 																											}	 
@@ -942,14 +944,14 @@ case 28:
 break;
 case 29:
 //#line 152 "../../src/sintactico/sintactico.y"
-{ 	List<CampoRegistro> registrosStruct = new ArrayList();
+{ 	List<CampoRegistro> registrosStruct = new ArrayList<CampoRegistro>();
 		           																							for(DefVariable var : (List<DefVariable>) val_peek(2)){
 		           																								registrosStruct.add(new CampoRegistro(lexico.getLine(), lexico.getColumn(), var.getNombre(), var.getTipo()));
 																											}
 		           												
 																											TipoRegistro registro = new TipoRegistro(registrosStruct);
 		           												          												
-																											List<DefVariable> variables = new ArrayList();
+																											List<DefVariable> variables = new ArrayList<DefVariable>();
 																											for(String aux: (List<String>)val_peek(0)){
 																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), aux, registro));
 																											}	 
@@ -960,7 +962,7 @@ case 30:
 //#line 167 "../../src/sintactico/sintactico.y"
 { 	yyval = val_peek(2);
 																											List<DefVariable> lista = (List<DefVariable>)yyval;
-																											List<String> nombres = new ArrayList();																											
+																											List<String> nombres = new ArrayList<String>();																											
 																											for(DefVariable nombre : lista)
 																												nombres.add(nombre.getNombre());																											
 																											for(DefVariable elemento : (List<DefVariable>)val_peek(1)){ 
@@ -1120,7 +1122,7 @@ case 63:
 break;
 case 64:
 //#line 240 "../../src/sintactico/sintactico.y"
-{ 	yyval = new ArrayList(); ((List<String>)yyval).add(((String) val_peek(0))); 	}
+{ 	yyval = new ArrayList<Object>(); ((List<String>)yyval).add(((String) val_peek(0))); 	}
 break;
 case 65:
 //#line 243 "../../src/sintactico/sintactico.y"

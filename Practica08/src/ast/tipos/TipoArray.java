@@ -3,7 +3,7 @@ package ast.tipos;
 import ast.tipos.util.TipoAbstracto;
 import visitor.Visitor;
 
-public class TipoArray extends TipoAbstracto implements Tipo {
+public class TipoArray extends TipoAbstracto {
 	private int tamaño;
 	private Tipo tipo;
 
@@ -15,18 +15,6 @@ public class TipoArray extends TipoAbstracto implements Tipo {
 	@Override
 	public String toString() {
 		return "TipoArray [tamaño=" + tamaño + ", tipo=" + tipo + "]";
-	}
-
-	@Override
-	public int getLinea() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getColumna() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -44,8 +32,8 @@ public class TipoArray extends TipoAbstracto implements Tipo {
 
 	@Override
 	public Tipo corchetes(Tipo tipo) {
-		if (tipo.promocionaA(TipoEntero.getInstancia()))
-			return null;
+		if (tipo.promocionaA(TipoEntero.getInstancia()) != null)
+			return tipo;
 		return null;
 	}
 

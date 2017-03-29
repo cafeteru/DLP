@@ -49,11 +49,6 @@ public class VisitorTemplate implements Visitor {
 	public Object visit(Aritmetica a, Object o) {
 		a.getIzq().accept(this, o);
 		a.getDer().accept(this, o);
-		// a.setTipo(a.getIzq().getTipo().aritmetica(a.getDer().getTipo()));
-		// if (a.getTipo() == null) {
-		// a.setTipo(new TipoError(a,
-		// "No son compatibles los tipos de los operandos"));
-		// }
 		return null;
 	}
 
@@ -68,9 +63,6 @@ public class VisitorTemplate implements Visitor {
 	public Object visit(Comparacion c, Object o) {
 		c.getIzq().accept(this, o);
 		c.getDer().accept(this, o);
-		// c.setTipo(c.getIzq().getTipo().comparacion(c.getDer().getTipo()));
-		// if (c.getTipo() == null)
-		// c.setTipo(new TipoError(c, "adasdsad"));
 		return null;
 	}
 

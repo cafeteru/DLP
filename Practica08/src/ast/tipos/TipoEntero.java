@@ -1,8 +1,9 @@
 package ast.tipos;
 
+import ast.tipos.util.TipoAbstracto;
 import visitor.Visitor;
 
-public class TipoEntero implements Tipo {
+public class TipoEntero extends TipoAbstracto {
 	private static TipoEntero instancia;
 
 	public static TipoEntero getInstancia() {
@@ -14,16 +15,6 @@ public class TipoEntero implements Tipo {
 	@Override
 	public String toString() {
 		return "TipoEntero []";
-	}
-
-	@Override
-	public int getLinea() {
-		return 0;
-	}
-
-	@Override
-	public int getColumna() {
-		return 0;
 	}
 
 	@Override
@@ -68,11 +59,5 @@ public class TipoEntero implements Tipo {
 	@Override
 	public Tipo logica() {
 		return this;
-	}
-
-	@Override
-	public Tipo promocionaA(Tipo tipo) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

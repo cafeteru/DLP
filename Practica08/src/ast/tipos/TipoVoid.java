@@ -3,7 +3,7 @@ package ast.tipos;
 import ast.tipos.util.TipoAbstracto;
 import visitor.Visitor;
 
-public class TipoVoid extends TipoAbstracto implements Tipo {
+public class TipoVoid extends TipoAbstracto {
 	private static TipoVoid instancia;
 
 	public static TipoVoid getInstancia() {
@@ -15,18 +15,6 @@ public class TipoVoid extends TipoAbstracto implements Tipo {
 	@Override
 	public String toString() {
 		return "TipoVoid []";
-	}
-
-	@Override
-	public int getLinea() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getColumna() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override

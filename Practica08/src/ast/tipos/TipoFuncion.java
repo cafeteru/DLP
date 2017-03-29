@@ -7,7 +7,7 @@ import ast.definiciones.DefVariable;
 import ast.tipos.util.TipoAbstracto;
 import visitor.Visitor;
 
-public class TipoFuncion extends TipoAbstracto implements Tipo {
+public class TipoFuncion extends TipoAbstracto {
 	private List<DefVariable> parametros = new ArrayList<>();
 	private Tipo retorno;
 
@@ -22,18 +22,6 @@ public class TipoFuncion extends TipoAbstracto implements Tipo {
 	public String toString() {
 		return "TipoFuncion [parametros=" + parametros + ", retorno=" + retorno
 				+ "]";
-	}
-
-	@Override
-	public int getLinea() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getColumna() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -92,5 +80,4 @@ public class TipoFuncion extends TipoAbstracto implements Tipo {
 		}
 		return this.getRetorno();
 	}
-
 }

@@ -19,10 +19,8 @@ public interface Tipo extends NodoAST {
 
 	public Tipo promocionaA(Tipo tipo);
 
-	// Solo usa funcion
 	public Tipo parentesis(List<Tipo> tipos);
 
-	// solo array
 	public Tipo corchetes(Tipo tipo);
 
 	// solo accesocampo

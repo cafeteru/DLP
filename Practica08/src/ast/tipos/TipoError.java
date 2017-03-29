@@ -5,17 +5,20 @@ import ast.util.NodoPosicion;
 import manejadorerrores.ME;
 import visitor.Visitor;
 
-public class TipoError extends TipoAbstracto implements Tipo {
+public class TipoError extends TipoAbstracto {
 	private String mensaje;
+	private int linea, columna;
 
 	public TipoError(int linea, int columna, String mensaje) {
-		super(linea, columna);
+		this.linea = linea;
+		this.columna = columna;
 		this.mensaje = mensaje;
 		ME.getME().addError(this);
 	}
 
 	public TipoError(NodoPosicion ast, String mensaje) {
-		super(ast.getLinea(), ast.getLinea());
+		this.linea = ast.getLinea();
+		this.columna = ast.getLinea();
 		this.mensaje = mensaje;
 		ME.getME().addError(this);
 	}

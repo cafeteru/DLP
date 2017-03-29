@@ -1,8 +1,9 @@
 package ast.tipos;
 
+import ast.tipos.util.TipoAbstracto;
 import visitor.Visitor;
 
-public class TipoCaracter implements Tipo {
+public class TipoCaracter extends TipoAbstracto {
 	private static TipoCaracter instancia;
 
 	public static TipoCaracter getInstancia() {
@@ -14,18 +15,6 @@ public class TipoCaracter implements Tipo {
 	@Override
 	public String toString() {
 		return "TipoCaracter []";
-	}
-
-	@Override
-	public int getLinea() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getColumna() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -49,15 +38,12 @@ public class TipoCaracter implements Tipo {
 
 	@Override
 	public Tipo comparacion(Tipo tipo) {
-		// TODO Auto-generated method stub
+		if (tipo instanceof TipoReal || tipo instanceof TipoEntero
+				|| tipo instanceof TipoCaracter)
+			return this;
 		return null;
 	}
 
-	@Override
-	public Tipo logica(Tipo tipo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	// En los demas return null
 	@Override

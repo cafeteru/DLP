@@ -18,18 +18,18 @@ public class TipoReal extends TipoAbstracto implements Tipo {
 	}
 
 	@Override
-	public int getLinea() {
-		return 0;
-	}
-
-	@Override
-	public int getColumna() {
-		return 0;
-	}
-
-	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
+	}
+
+	@Override
+	public boolean esLogico() {
+		return true;
+	}
+
+	@Override
+	public Tipo aritmetica() {
+		return this;
 	}
 
 	@Override
@@ -37,6 +37,19 @@ public class TipoReal extends TipoAbstracto implements Tipo {
 		if (tipo instanceof TipoReal || tipo instanceof TipoEntero)
 			return this;
 		if (tipo instanceof TipoCaracter)
+			return this;
+		return null;
+	}
+
+	@Override
+	public Tipo logica() {
+		return this;
+	}
+
+	@Override
+	public Tipo comparacion(Tipo tipo) {
+		if (tipo instanceof TipoReal || tipo instanceof TipoEntero
+				|| tipo instanceof TipoCaracter)
 			return this;
 		return null;
 	}
