@@ -85,9 +85,6 @@ public class VisitorTemplate implements Visitor {
 	public Object visit(Logica l, Object o) {
 		l.getIzq().accept(this, o);
 		l.getDer().accept(this, o);
-		// c.setTipo(c.getIzq().getTipo().comparacion(c.getDer().getTipo()));
-		// if (c.getTipo() == null)
-		// c.setTipo(new TipoError(c, "adasdsad"));
 		return null;
 	}
 
@@ -112,13 +109,6 @@ public class VisitorTemplate implements Visitor {
 	public Object visit(Asignacion asignacion, Object o) {
 		asignacion.getVariable().accept(this, o);
 		asignacion.getValor().accept(this, o);
-		// if (!asignacion.getVariable().getLValue())
-		// asignacion.getVariable()
-		// .setTipo(new TipoError(asignacion, "mensaje"));
-		// asignacion.getVariable().setTipo(asignacion.getValor().getTipo()
-		// .promocionaA(asignacion.getVariable().getTipo()));
-		// if (asignacion.getVariable().getTipo() == null)
-		// asignacion.getVariable().setTipo(new TipoError(ast, mensaje));
 		return null;
 	}
 
@@ -132,15 +122,9 @@ public class VisitorTemplate implements Visitor {
 	@Override
 	public Object visit(Invocacion invocacion, Object o) {
 		invocacion.getVariable().accept(this, o);
-		// List<Tipo> tipos = new ArrayList<>();
 		for (Expresion e : invocacion.getExpresiones()) {
 			e.accept(this, o);
-			// tipos.add(e.getTipo());
 		}
-		// invocacion
-		// .setTipo(invocacion.getVariable().getTipo().parentesis(tipos));
-		// if (invocacion.getTipo() == null)
-		// invocacion.setTipo(new TipoError(ast, mensaje));
 		return null;
 	}
 
@@ -171,10 +155,6 @@ public class VisitorTemplate implements Visitor {
 	@Override
 	public Object visit(SentenciaWhile sentenciaWhile, Object o) {
 		sentenciaWhile.getCondicion().accept(this, o);
-		// if (!sentenciaWhile.getCondicion().getTipo().esLogico())
-		// sentenciaWhile.getCondicion()
-		// .setTipo(new TipoError(sentenciaWhile.getLinea(),
-		// sentenciaWhile.getColumna(), "Completar clase 8"));
 		for (Sentencia e : sentenciaWhile.getSentencias())
 			e.accept(this, o);
 		return null;

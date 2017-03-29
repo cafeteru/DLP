@@ -1,0 +1,11 @@
+// Record
+date[2];
+char character;
+double real;
+
+void main() { //Comentar para probar
+	character = (char)date[0];
+	real = 4.5 + 4. * 3e+3 - 5.4E-3;
+ 
+ //int error; // Descomentar para probar
+}

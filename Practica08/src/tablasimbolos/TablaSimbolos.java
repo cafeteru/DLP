@@ -13,7 +13,7 @@ public class TablaSimbolos {
 		tabla.add(new HashMap<>());
 	}
 
-	/*
+	/**
 	 * Incrementamos el ambito y creamos un nuevo map en la ultima posicion de
 	 * la lista
 	 */
@@ -22,7 +22,7 @@ public class TablaSimbolos {
 		ambito++;
 	}
 
-	/*
+	/**
 	 * Lo contrario a set Decrementa el ambito y borra la ultima el ultimo map
 	 */
 	public void reset() {
@@ -50,7 +50,7 @@ public class TablaSimbolos {
 		return false;
 	}
 
-	/*
+	/**
 	 * Busca en todos los ambitos empezamos en el ultimo Si no encuentra
 	 * devuelve null. Lanzas el error
 	 */

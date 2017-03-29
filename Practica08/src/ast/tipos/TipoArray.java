@@ -32,8 +32,8 @@ public class TipoArray extends TipoAbstracto {
 
 	@Override
 	public Tipo corchetes(Tipo tipo) {
-		if (tipo.promocionaA(TipoEntero.getInstancia()) != null)
-			return tipo;
+		if (tipo instanceof TipoEntero)
+			return this.tipo;
 		return null;
 	}
 

@@ -2,6 +2,7 @@ package visitor;
 
 import ast.definiciones.DefFuncion;
 import ast.definiciones.DefVariable;
+import ast.definiciones.Definicion;
 import ast.expresiones.Variable;
 import ast.sentencias.Sentencia;
 import ast.tipos.TipoError;
@@ -17,8 +18,8 @@ public class VisitorIdentificacion extends VisitorTemplate {
 		if (tabla.buscar(defFuncion.getNombre()) == null)
 			tabla.insertar(defFuncion);
 		else
-			new TipoError(defFuncion,
-					"Funcion ya declarada -> " + this.getClass());
+			new TipoError(defFuncion, "Funcion ya declarada -> "
+					+ defFuncion.getNombre() + " - " + this.getClass());
 		tabla.set();
 		defFuncion.getTipo().accept(this, o);
 		for (DefVariable d : defFuncion.getVariablesLocales())
@@ -42,11 +43,15 @@ public class VisitorIdentificacion extends VisitorTemplate {
 
 	@Override
 	public Object visit(Variable variable, Object o) {
+		Definicion definicion = tabla.buscar(variable.getClave());
 		if (tabla.buscar(variable.getClave()) == null) {
-			new TipoError(variable, "Variable no declarada, Variable "
-					+ variable.getClave() + " -> " + this.getClass());
-			variable.definicio = new defvariable(..,tipoerrr);
-		}
+			TipoError error = new TipoError(variable,
+					"Variable no declarada, Variable " + variable.getClave()
+							+ " -> " + this.getClass());
+			variable.setDefinicion(new DefVariable(variable.getLinea(),
+					variable.getColumna(), variable.getClave(), error));
+		} else
+			variable.setDefinicion(definicion);
 		return null;
 	}
 }

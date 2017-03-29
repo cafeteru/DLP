@@ -1,5 +1,6 @@
 package ast.expresiones;
 
+import ast.definiciones.Definicion;
 import ast.expresiones.util.ExpresionAbstracta;
 import ast.sentencias.Sentencia;
 import visitor.Visitor;
@@ -12,6 +13,7 @@ import visitor.Visitor;
  */
 public class Variable extends ExpresionAbstracta implements Sentencia {
 	private String clave;
+	private Definicion definicion;
 
 	/**
 	 * Constructor con parámetros.
@@ -38,13 +40,21 @@ public class Variable extends ExpresionAbstracta implements Sentencia {
 	}
 
 	@Override
-	public String toString() {
-		return "Variable [clave=" + clave + ", linea=" + linea + ", columna="
-				+ columna + "]";
-	}
-
-	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
+
+	public Definicion getDefinicion() {
+		return definicion;
+	}
+
+	public void setDefinicion(Definicion definicion) {
+		this.definicion = definicion;
+	}
+
+	@Override
+	public String toString() {
+		return "Variable [clave=" + clave + ", definicion=" + definicion + "]";
+	}
+
 }

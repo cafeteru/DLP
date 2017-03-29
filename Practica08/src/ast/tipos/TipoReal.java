@@ -23,8 +23,12 @@ public class TipoReal extends TipoAbstracto implements Tipo {
 	}
 
 	@Override
-	public boolean esLogico() {
-		return true;
+	public Tipo aritmetica(Tipo tipo) {
+		if (tipo instanceof TipoReal || tipo instanceof TipoEntero)
+			return tipo;
+		if (tipo instanceof TipoCaracter)
+			return this;
+		return null;
 	}
 
 	@Override
@@ -33,23 +37,8 @@ public class TipoReal extends TipoAbstracto implements Tipo {
 	}
 
 	@Override
-	public Tipo aritmetica(Tipo tipo) {
-		if (tipo instanceof TipoReal || tipo instanceof TipoEntero)
-			return this;
-		if (tipo instanceof TipoCaracter)
-			return this;
-		return null;
-	}
-
-	@Override
-	public Tipo logica() {
-		return this;
-	}
-
-	@Override
-	public Tipo comparacion(Tipo tipo) {
-		if (tipo instanceof TipoReal || tipo instanceof TipoEntero
-				|| tipo instanceof TipoCaracter)
+	public Tipo promocionaA(Tipo tipo) {
+		if (tipo instanceof TipoReal)
 			return this;
 		return null;
 	}

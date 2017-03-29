@@ -44,16 +44,20 @@ public class TipoCaracter extends TipoAbstracto {
 		return null;
 	}
 
-
-	// En los demas return null
 	@Override
 	public Tipo aritmetica() {
 		return TipoEntero.getInstancia();
 	}
 
-	// En los demas return null
 	@Override
 	public Tipo logica() {
 		return TipoEntero.getInstancia();
+	}
+
+	@Override
+	public Tipo promocionaA(Tipo tipo) {
+		if (tipo instanceof TipoCaracter)
+			return this;
+		return null;
 	}
 }

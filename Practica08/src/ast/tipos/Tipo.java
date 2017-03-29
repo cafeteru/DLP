@@ -23,10 +23,5 @@ public interface Tipo extends NodoAST {
 
 	public Tipo corchetes(Tipo tipo);
 
-	// solo accesocampo
 	public Tipo punto(String nombreCampo);
-
-	// reutiulizar uno para el cast
-	// el tipo de unsa sentencia return es compatible con el tipo de retorno
-	// definido
 }

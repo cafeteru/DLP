@@ -1,7 +1,7 @@
 package ast.tipos;
 
+import ast.NodoAST;
 import ast.tipos.util.TipoAbstracto;
-import ast.util.NodoPosicion;
 import manejadorerrores.ME;
 import visitor.Visitor;
 
@@ -16,7 +16,7 @@ public class TipoError extends TipoAbstracto {
 		ME.getME().addError(this);
 	}
 
-	public TipoError(NodoPosicion ast, String mensaje) {
+	public TipoError(NodoAST ast, String mensaje) {
 		this.linea = ast.getLinea();
 		this.columna = ast.getLinea();
 		this.mensaje = mensaje;

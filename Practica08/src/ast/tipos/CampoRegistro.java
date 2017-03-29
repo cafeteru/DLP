@@ -57,17 +57,17 @@ public class CampoRegistro extends TipoAbstracto {
 		return true;
 	}
 
-	@Override
-	public Object accept(Visitor v, Object o) {
-		return v.visit(this, o);
-	}
-
 	public String getNombre() {
 		return nombre;
 	}
 
 	public int getOffset() {
 		return offset;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 	public Tipo getTipo() {

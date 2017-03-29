@@ -38,8 +38,6 @@ public abstract class TipoAbstracto implements Tipo {
 
 	@Override
 	public Tipo logica(Tipo tipo) {
-		if (tipo.esLogico())
-			return this;
 		return null;
 	}
 

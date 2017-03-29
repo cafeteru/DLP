@@ -5,6 +5,6 @@ struct  {
 } date;
 
 void main() {
-  read date.year; // * Error 2 -> campo no declarado
+  read date.year; // * Error 2 -> campo no declarado 
 }
 

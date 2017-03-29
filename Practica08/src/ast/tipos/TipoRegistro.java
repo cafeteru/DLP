@@ -46,22 +46,22 @@ public class TipoRegistro extends TipoAbstracto implements Tipo {
 	}
 
 	@Override
-	public int getLinea() {
-		return 0;
-	}
-
-	@Override
-	public int getColumna() {
-		return 0;
-	}
-
-	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
 
 	public List<CampoRegistro> getCampos() {
 		return campos;
+	}
+
+	@Override
+	public Tipo punto(String nombreCampo) {
+		for (int i = 0; i < campos.size(); i++) {
+			if (campos.get(i).getNombre().equals(nombreCampo)) {
+				return campos.get(i).getTipo();
+			}
+		}
+		return null;
 	}
 
 }

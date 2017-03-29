@@ -36,11 +36,11 @@ public class Main {
 		parser.run();
 
 		NodoAST root = parser.getAST();
-		Visitor vTipos = new VisitorComprobacionTipos();
-		vTipos.visit((Programa) root, null);
-		
 		Visitor vIdent = new VisitorIdentificacion();
 		vIdent.visit((Programa) root, null);
+
+		Visitor vTipos = new VisitorComprobacionTipos();
+		vTipos.visit((Programa) root, null);
 
 		// * Comprobamos si hubo errores
 		if (ME.getME().huboErrores()) {

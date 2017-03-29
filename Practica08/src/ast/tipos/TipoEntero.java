@@ -60,4 +60,11 @@ public class TipoEntero extends TipoAbstracto {
 	public Tipo logica() {
 		return this;
 	}
+
+	@Override
+	public Tipo promocionaA(Tipo tipo) {
+		if (tipo instanceof TipoEntero || tipo instanceof TipoCaracter)
+			return this;
+		return null;
+	}
 }
