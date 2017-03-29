@@ -1,0 +1,21 @@
+
+int i;
+
+int f(int a) {
+  double a;       // * Error 1 -> variable duplicada
+  return 34.5;  // * Error 2 -> no se puede converit un double en int
+}
+
+void g(int b, double b) { // * Error 3 -> variable duplicada
+  return 3; // * Error 4 -> void no devuelve nada
+}
+
+void g() {	// * Error 5 -> funcion duplicada
+}
+
+void main() {
+  f();       // * Error 6 -> funcion con prametros incorrectos
+  f(3.2);    // * Error 7 -> funcion con prametros incorrectos
+  i=g();     // * Error 8 -> no se puede asignar void a una variable
+}
+

@@ -1,8 +1,0 @@
-int integer;
-char character;
-//double real, integer; // * Error 1
-
-void main() {
-  double character;
-  int character;
-}
