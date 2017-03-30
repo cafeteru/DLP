@@ -8,9 +8,9 @@ import ast.definiciones.DefVariable;
 import ast.expresiones.*;
 import ast.sentencias.*;
 import ast.tipos.*;
-import visitor.util.VisitorTemplate;
+import visitor.util.VisitorAbstract;
 
-public class VisitorComprobacionTipos extends VisitorTemplate {
+public class VisitorComprobacionTipos extends VisitorAbstract {
 
 	@Override
 	public Object visit(AccesoArray a, Object o) {
@@ -164,10 +164,13 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 		for (Sentencia s : defFuncion.getCuerpo()) {
 			Object tipoRetorno = s.accept(this, o);
 			if (tipoRetorno != null)
+				// Con un atributo heredado; lo pasamos para abajo
+				// Lo que me pasaron
+				// expre.prociomociona()
 				if (!((TipoFuncion) defFuncion.getTipo()).getRetorno()
 						.equals(tipoRetorno))
 					new TipoError(defFuncion,
-							"Error tipo lógico " + this.getClass());
+							"Error tipo definion " + this.getClass());
 		}
 		return null;
 	}
