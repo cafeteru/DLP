@@ -1,7 +1,0 @@
-package visitor;
-
-import visitor.util.VisitorAbstract;
-
-public class VisitorOffset extends VisitorAbstract {
-
-}

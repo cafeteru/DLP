@@ -1,7 +1,0 @@
-package visitor;
-
-import visitor.util.VisitorTemplate;
-
-public class VisitorOffset extends VisitorTemplate {
-
-}

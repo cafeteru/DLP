@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename local variable &apos;comparacion&apos; in &apos;visitor.util.VisitorTemplate.visit(...)&apos; to &apos;c&apos;&#x0D;&#x0A;- Original project: &apos;Practica08&apos;&#x0D;&#x0A;- Original element: &apos;visitor.util.VisitorTemplate.visit(Comparacion, Object).comparacion&apos;&#x0D;&#x0A;- Renamed element: &apos;comparacion&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;comparacion&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;visitor.util{VisitorTemplate.java[VisitorTemplate~visit~QComparacion;~QObject;@comparacion!1649!1671!1661!1671!QComparacion;!0!true" name="c" references="true" stamp="1490270921376" version="1.0"/>
-</session>
