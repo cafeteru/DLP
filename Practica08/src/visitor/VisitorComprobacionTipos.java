@@ -18,7 +18,8 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 		a.setLValue(true);
 		a.setTipo(a.getIzq().getTipo().corchetes(a.getDer().getTipo()));
 		if (a.getTipo() == null)
-			a.setTipo(new TipoError(a, "Error tipo AccesoArray"));
+			a.setTipo(new TipoError(a, "Error tipo AccesoArray -> " + a.getIzq()
+					+ " - " + a.getDer()));
 		return null;
 	}
 
@@ -28,7 +29,8 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 		a.setLValue(true);
 		a.setTipo(a.getExpresion().getTipo().punto(a.getNombreCampo()));
 		if (a.getTipo() == null)
-			a.setTipo(new TipoError(a, "Error tipo AccesoCampo"));
+			a.setTipo(new TipoError(a, "Error tipo AccesoCampo -> "
+					+ a.getExpresion().getTipo() + " - " + a.getNombreCampo()));
 		return null;
 	}
 
@@ -49,7 +51,9 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 		cast.setTipo(
 				cast.getExpresion().getTipo().promocionaA(cast.getTipoCast()));
 		if (cast.getTipo() == null)
-			cast.setTipo(new TipoError(cast, "Error tipo Cast"));
+			cast.setTipo(new TipoError(cast,
+					"Error tipo Cast -> " + cast.getExpresion().getTipo()
+							+ " - " + cast.getTipoCast()));
 		cast.setLValue(false);
 		return null;
 	}
@@ -94,7 +98,8 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 		l.setLValue(false);
 		l.setTipo(l.getIzq().getTipo().logica(l.getDer().getTipo()));
 		if (l.getTipo() == null)
-			l.setTipo(new TipoError(l, "Error tipo lógico"));
+			l.setTipo(new TipoError(l,
+					"Error tipo lógico -> " + l.getIzq() + " - " + l.getDer()));
 		return null;
 	}
 
@@ -153,7 +158,11 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 	@Override
 	public Object visit(Return r, Object o) {
 		super.visit(r, o);
-		return r.getExpresion().getTipo();
+		if (r.getExpresion().getTipo().promocionaA((TipoFuncion) o) == null)
+			r.getExpresion()
+					.setTipo(new TipoError(r, "No coincide el tipo de retorno "
+							+ r.getExpresion().getTipo()));
+		return null;
 	}
 
 	@Override
@@ -162,7 +171,7 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 		for (DefVariable d : defFuncion.getVariablesLocales())
 			d.accept(this, o);
 		for (Sentencia s : defFuncion.getCuerpo()) {
-			Object tipoRetorno = s.accept(this, o);
+			Object tipoRetorno = s.accept(this, defFuncion.getTipo());
 			if (tipoRetorno != null)
 				if (!((TipoFuncion) defFuncion.getTipo()).getRetorno()
 						.equals(tipoRetorno))

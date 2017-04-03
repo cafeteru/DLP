@@ -36,5 +36,4 @@ public class TipoArray extends TipoAbstracto {
 			return this.tipo;
 		return null;
 	}
-
 }

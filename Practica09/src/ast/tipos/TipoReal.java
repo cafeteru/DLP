@@ -42,4 +42,9 @@ public class TipoReal extends TipoAbstracto implements Tipo {
 			return this;
 		return null;
 	}
+
+	@Override
+	public Tipo cast(Tipo tipo) {
+		return this;
+	}
 }

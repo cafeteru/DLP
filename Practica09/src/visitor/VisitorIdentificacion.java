@@ -7,9 +7,9 @@ import ast.expresiones.Variable;
 import ast.sentencias.Sentencia;
 import ast.tipos.TipoError;
 import tablasimbolos.TablaSimbolos;
-import visitor.util.VisitorAbstract;
+import visitor.util.VisitorTemplate;
 
-public class VisitorIdentificacion extends VisitorAbstract {
+public class VisitorIdentificacion extends VisitorTemplate {
 
 	private TablaSimbolos tabla = new TablaSimbolos();
 

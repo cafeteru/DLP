@@ -24,10 +24,6 @@ public interface Tipo extends NodoAST {
 	public Tipo corchetes(Tipo tipo);
 
 	public Tipo punto(String nombreCampo);
-	
-	// Se puede hacer con tipos basicos
-	// Perdemos informacion
-	// Si el tipo que me pasa es basico devuelve el tipo que me pasan
-	// Que no se puede devvolvemos tipoError
+
 	public Tipo cast(Tipo tipo);
 }

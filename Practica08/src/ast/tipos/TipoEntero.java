@@ -67,4 +67,9 @@ public class TipoEntero extends TipoAbstracto {
 			return this;
 		return null;
 	}
+
+	@Override
+	public Tipo cast(Tipo tipo) {
+		return this;
+	}
 }
