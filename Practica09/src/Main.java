@@ -30,7 +30,7 @@ public class Main {
 			return;
 		}
 
-		// * Creamos l�xico y sint�ctico
+		// * Creamos léxico y sintáctico
 		Lexico lexico = new Lexico(fr);
 		Parser parser = new Parser(lexico);
 		// * "Parseamos"

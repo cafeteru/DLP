@@ -3,17 +3,17 @@ package ast.tipos;
 import visitor.Visitor;
 
 public class TipoArray implements Tipo {
-	private int tamaño;
+	private int tamaÃ±o;
 	private Tipo tipo;
 
-	public TipoArray(int tamaño, Tipo tipo) {
-		this.tamaño = tamaño;
+	public TipoArray(int tamaÃ±o, Tipo tipo) {
+		this.tamaÃ±o = tamaÃ±o;
 		this.tipo = tipo;
 	}
 
 	@Override
 	public String toString() {
-		return "TipoArray [tamaño=" + tamaño + ", tipo=" + tipo + "]";
+		return "TipoArray [tamaÃ±o=" + tamaÃ±o + ", tipo=" + tipo + "]";
 	}
 
 	@Override
@@ -33,8 +33,8 @@ public class TipoArray implements Tipo {
 		return v.visit(this, o);
 	}
 
-	public int getTamaño() {
-		return tamaño;
+	public int getTamaÃ±o() {
+		return tamaÃ±o;
 	}
 
 	public Tipo getTipo() {

@@ -1,7 +1,7 @@
 %{
-// * Declaraciones de c�digo Java
-// * Se sit�an al comienzo del archivo generado
-// * El package lo a�ade yacc si utilizamos la opci�n -Jpackage
+// * Declaraciones de código Java
+// * Se sitúan al comienzo del archivo generado
+// * El package lo añade yacc si utilizamos la opción -Jpackage
 import lexico.Lexico;
 import java.io.Reader;
 import java.util.*;
@@ -20,7 +20,7 @@ import ast.tipos.*;
 %token RETURN VOID MAIN ID 
 %token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD
 
-// M�s arriba, menos precedencia
+// Más arriba, menos precedencia
 %right '='
 %left Y O 
 %left '>' MAYORIGUALQUE MENORIGUALQUE '<' DISTINTO IGUALDAD
@@ -39,7 +39,7 @@ import ast.tipos.*;
 
 
 %%
-// * Gram�tica y acciones Yacc
+// * Gramática y acciones Yacc
 programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'								{ 	List<Definicion> definiciones = (List<Definicion>)$1;																						
 																											Definicion main = new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
 																												new TipoFuncion(new ArrayList<DefVariable>(), TipoVoid.getInstancia()), 
@@ -248,10 +248,10 @@ tipoSimple: INT																							{ 	$$ = TipoEntero.getInstancia(); 	}
 	      ;
 %%
 
-// * C�digo Java
-// * Se crea una clase "Parser", lo que aqu� ubiquemos ser�:
+// * Código Java
+// * Se crea una clase "Parser", lo que aquí ubiquemos será:
 //	- Atributos, si son variables
-//	- M�todos, si son funciones
+//	- Métodos, si son funciones
 //   de la clase "Parser"
 
 private NodoAST ast;
@@ -261,29 +261,29 @@ public NodoAST getAST(){ return this.ast; }
 //	int yylex()
 //	void yyerror(String)
 
-// * Referencia al analizador l�xico
+// * Referencia al analizador léxico
 private Lexico lexico;
 
-// * Llamada al analizador l�xico
+// * Llamada al analizador léxico
 private int yylex () {
     int token=0;
     try { 
 	token=lexico.yylex();
 	this.yylval = lexico.getYylval(); 
     } catch(Throwable e) {
-	    System.err.println ("Error L�xico en l�nea " + lexico.getLine()+
+	    System.err.println ("Error Léxico en línea " + lexico.getLine()+
 		" y columna "+lexico.getColumn()+":\n\t"+e); 
     }
     return token;
 }
 
-// * Manejo de Errores Sint�cticos
+// * Manejo de Errores Sintácticos
 public void yyerror (String error) {
-    System.err.println ("Error Sint�ctico en l�nea " + lexico.getLine()+
+    System.err.println ("Error Sintáctico en línea " + lexico.getLine()+
 		" y columna "+lexico.getColumn()+":\n\t"+error);
 }
 
-// * Constructor del Sint�ctico
+// * Constructor del Sintáctico
 public Parser(Lexico lexico) {
 	this.lexico = lexico;
 }
