@@ -8,9 +8,9 @@ import ast.definiciones.DefVariable;
 import ast.expresiones.*;
 import ast.sentencias.*;
 import ast.tipos.*;
-import visitor.util.VisitorTemplate;
+import visitor.util.VisitorAbstract;
 
-public class VisitorComprobacionTipos extends VisitorTemplate {
+public class VisitorComprobacionTipos extends VisitorAbstract {
 
 	@Override
 	public Object visit(AccesoArray a, Object o) {
@@ -48,8 +48,7 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 	@Override
 	public Object visit(Cast cast, Object o) {
 		super.visit(cast, o);
-		cast.setTipo(
-				cast.getExpresion().getTipo().promocionaA(cast.getTipoCast()));
+		cast.setTipo(cast.getExpresion().getTipo().cast(cast.getTipoCast()));
 		if (cast.getTipo() == null)
 			cast.setTipo(new TipoError(cast,
 					"Error tipo Cast -> " + cast.getExpresion().getTipo()
@@ -99,7 +98,7 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 		l.setTipo(l.getIzq().getTipo().logica(l.getDer().getTipo()));
 		if (l.getTipo() == null)
 			l.setTipo(new TipoError(l,
-					"Error tipo lógico -> " + l.getIzq() + " - " + l.getDer()));
+					"Error tipo lï¿½gico -> " + l.getIzq() + " - " + l.getDer()));
 		return null;
 	}
 
@@ -135,7 +134,7 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 		super.visit(asignacion, o);
 		if (!asignacion.getVariable().getLValue())
 			new TipoError(asignacion,
-					"Se esperaba LValue, asignación -> " + this.getClass());
+					"Se esperaba LValue, asignaciï¿½n -> " + this.getClass());
 		asignacion.getVariable().setTipo(asignacion.getValor().getTipo()
 				.promocionaA(asignacion.getVariable().getTipo()));
 		if (asignacion.getVariable().getTipo() == null)
@@ -176,7 +175,7 @@ public class VisitorComprobacionTipos extends VisitorTemplate {
 				if (!((TipoFuncion) defFuncion.getTipo()).getRetorno()
 						.equals(tipoRetorno))
 					new TipoError(defFuncion,
-							"Error tipo lógico " + this.getClass());
+							"Error tipo lï¿½gico " + this.getClass());
 		}
 		return null;
 	}

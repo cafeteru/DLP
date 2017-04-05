@@ -7,7 +7,7 @@ import ast.sentencias.*;
 import ast.tipos.*;
 import visitor.Visitor;
 
-public class VisitorTemplate implements Visitor {
+public class VisitorAbstract implements Visitor {
 
 	@Override
 	public Object visit(Programa programa, Object o) {
