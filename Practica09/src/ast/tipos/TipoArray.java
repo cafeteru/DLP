@@ -4,17 +4,17 @@ import ast.tipos.util.TipoAbstracto;
 import visitor.Visitor;
 
 public class TipoArray extends TipoAbstracto {
-	private int tamaÃ±o;
+	private int tamaño;
 	private Tipo tipo;
 
-	public TipoArray(int tamaÃ±o, Tipo tipo) {
-		this.tamaÃ±o = tamaÃ±o;
+	public TipoArray(int tamaño, Tipo tipo) {
+		this.tamaño = tamaño;
 		this.tipo = tipo;
 	}
 
 	@Override
 	public String toString() {
-		return "TipoArray [tamaï¿½o=" + tamaÃ±o + ", tipo=" + tipo + "]";
+		return "TipoArray [tamaño=" + tamaño + ", tipo=" + tipo + "]";
 	}
 
 	@Override
@@ -22,8 +22,8 @@ public class TipoArray extends TipoAbstracto {
 		return v.visit(this, o);
 	}
 
-	public int getTamaÃ±o() {
-		return tamaÃ±o;
+	public int getTamaño() {
+		return tamaño;
 	}
 
 	public Tipo getTipo() {
@@ -39,6 +39,6 @@ public class TipoArray extends TipoAbstracto {
 
 	@Override
 	public int nBytes() {
-		return tipo.nBytes() * tamaÃ±o;
+		return tipo.nBytes() * tamaño;
 	}
 }
