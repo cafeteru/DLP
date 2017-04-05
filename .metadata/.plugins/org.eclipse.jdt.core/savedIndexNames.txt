@@ -1,4 +1,0 @@
-INDEX VERSION 1.130+C:\Users\igm1990\Documents\GitHub\DLP\.metadata\.plugins\org.eclipse.jdt.core
-605000065.index
-1009350819.index
-3797190485.index
