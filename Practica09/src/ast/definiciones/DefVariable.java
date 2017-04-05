@@ -28,5 +28,8 @@ public class DefVariable extends DefinicionAbstracta {
 		return offset;
 	}
 
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
 
 }

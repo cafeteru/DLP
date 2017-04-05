@@ -26,4 +26,6 @@ public interface Tipo extends NodoAST {
 	public Tipo punto(String nombreCampo);
 
 	public Tipo cast(Tipo tipo);
+
+	public int nBytes();
 }

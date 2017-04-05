@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import ast.NodoAST;
 import ast.Programa;
+import generacioncodigo.VisitorOffset;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 import lexico.Lexico;
@@ -29,7 +30,7 @@ public class Main {
 			return;
 		}
 
-		// * Creamos léxico y sintáctico
+		// * Creamos lï¿½xico y sintï¿½ctico
 		Lexico lexico = new Lexico(fr);
 		Parser parser = new Parser(lexico);
 		// * "Parseamos"
@@ -48,6 +49,8 @@ public class Main {
 			ME.getME().mostrarErrores(System.err);
 		} else {
 			// * Mostramos el AST
+			Visitor vOffset = new VisitorOffset();
+			vOffset.visit((Programa) root, null);
 			IntrospectorModel modelo = new IntrospectorModel("Programa",
 					parser.getAST());
 			new IntrospectorTree("Introspector", modelo);

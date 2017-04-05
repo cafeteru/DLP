@@ -1,7 +1,7 @@
 %{
-// * Declaraciones de código Java
-// * Se sitúan al comienzo del archivo generado
-// * El package lo añade yacc si utilizamos la opción -Jpackage
+// * Declaraciones de cï¿½digo Java
+// * Se sitï¿½an al comienzo del archivo generado
+// * El package lo aï¿½ade yacc si utilizamos la opciï¿½n -Jpackage
 import lexico.Lexico;
 import java.io.Reader;
 import java.util.*;
@@ -20,7 +20,7 @@ import ast.tipos.*;
 %token RETURN VOID MAIN ID 
 %token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD
 
-// Más arriba, menos precedencia
+// Mï¿½s arriba, menos precedencia
 %right '='
 %left Y O 
 %left '>' MAYORIGUALQUE MENORIGUALQUE '<' DISTINTO IGUALDAD
@@ -28,6 +28,7 @@ import ast.tipos.*;
 %left '*' '/' '%'
 %right MENOS_UNARIO
 %right NEGACION
+%nonassoc CASTP
 %nonassoc '[' ']'
 %left '.'
 %nonassoc MENORQUEELSE
@@ -38,7 +39,7 @@ import ast.tipos.*;
 
 
 %%
-// * Gramática y acciones Yacc
+// * Gramï¿½tica y acciones Yacc
 programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'								{ 	List<Definicion> definiciones = (List<Definicion>)$1;																						
 																											Definicion main = new DefFuncion(lexico.getLine(), lexico.getColumn(), "main",
 																												new TipoFuncion(new ArrayList<DefVariable>(), TipoVoid.getInstancia()), 
@@ -209,7 +210,7 @@ expresion: ID																							{ 	$$ = new Variable(lexico.getLine(), lexic
          | '-' expresion %prec MENOS_UNARIO  															{ 	$$ = new MenosUnario(lexico.getLine(), lexico.getColumn(),  "-",(Expresion) $2);	}
          | expresion '.' ID					    													    { 	$$ = new AccesoCampo(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (String) $3);	}
          | '(' expresion ')' 																			{ 	$$ = $2;}
-         | '(' tipoSimple ')' expresion														            { 	$$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);	}
+         | '(' tipoSimple ')' expresion	%prec CASTP													            { 	$$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);	}
          | invocacion						 															{ 	$$ = $1;}
          | expresion '[' expresion ']'																	{ 	$$ = new AccesoArray(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3); }			   
          ;
@@ -247,10 +248,10 @@ tipoSimple: INT																							{ 	$$ = TipoEntero.getInstancia(); 	}
 	      ;
 %%
 
-// * Código Java
-// * Se crea una clase "Parser", lo que aquí ubiquemos será:
+// * Cï¿½digo Java
+// * Se crea una clase "Parser", lo que aquï¿½ ubiquemos serï¿½:
 //	- Atributos, si son variables
-//	- Métodos, si son funciones
+//	- Mï¿½todos, si son funciones
 //   de la clase "Parser"
 
 private NodoAST ast;
@@ -260,29 +261,29 @@ public NodoAST getAST(){ return this.ast; }
 //	int yylex()
 //	void yyerror(String)
 
-// * Referencia al analizador léxico
+// * Referencia al analizador lï¿½xico
 private Lexico lexico;
 
-// * Llamada al analizador léxico
+// * Llamada al analizador lï¿½xico
 private int yylex () {
     int token=0;
     try { 
 	token=lexico.yylex();
 	this.yylval = lexico.getYylval(); 
     } catch(Throwable e) {
-	    System.err.println ("Error Léxico en línea " + lexico.getLine()+
+	    System.err.println ("Error Lï¿½xico en lï¿½nea " + lexico.getLine()+
 		" y columna "+lexico.getColumn()+":\n\t"+e); 
     }
     return token;
 }
 
-// * Manejo de Errores Sintácticos
+// * Manejo de Errores Sintï¿½cticos
 public void yyerror (String error) {
-    System.err.println ("Error Sintáctico en línea " + lexico.getLine()+
+    System.err.println ("Error Sintï¿½ctico en lï¿½nea " + lexico.getLine()+
 		" y columna "+lexico.getColumn()+":\n\t"+error);
 }
 
-// * Constructor del Sintáctico
+// * Constructor del Sintï¿½ctico
 public Parser(Lexico lexico) {
 	this.lexico = lexico;
 }

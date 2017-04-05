@@ -80,4 +80,9 @@ public class TipoFuncion extends TipoAbstracto {
 		}
 		return this.getRetorno();
 	}
+
+	@Override
+	public int nBytes() {
+		return retorno.nBytes();
+	}
 }

@@ -139,7 +139,7 @@ public class VisitorAbstract implements Visitor {
 	@Override
 	public Object visit(Return return1, Object o) {
 		return1.getExpresion().accept(this, o);
-		return o;
+		return null;
 	}
 
 	@Override

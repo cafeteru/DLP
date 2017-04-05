@@ -21,4 +21,9 @@ public class TipoVoid extends TipoAbstracto {
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
+
+	@Override
+	public int nBytes() {
+		return 0;
+	}
 }

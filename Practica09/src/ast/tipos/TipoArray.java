@@ -36,4 +36,9 @@ public class TipoArray extends TipoAbstracto {
 			return this.tipo;
 		return null;
 	}
+
+	@Override
+	public int nBytes() {
+		return tipo.nBytes() * tamaño;
+	}
 }

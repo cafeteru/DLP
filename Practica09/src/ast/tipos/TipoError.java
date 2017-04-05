@@ -38,4 +38,9 @@ public class TipoError extends TipoAbstracto {
 		return v.visit(this, o);
 	}
 
+	@Override
+	public int nBytes() {
+		return 0;
+	}
+
 }

@@ -157,10 +157,13 @@ public class VisitorComprobacionTipos extends VisitorAbstract {
 	@Override
 	public Object visit(Return r, Object o) {
 		super.visit(r, o);
-		if (r.getExpresion().getTipo().promocionaA((TipoFuncion) o) == null)
-			r.getExpresion()
-					.setTipo(new TipoError(r, "No coincide el tipo de retorno "
-							+ r.getExpresion().getTipo()));
+		r.getExpresion()
+				.setTipo(r.getExpresion().getTipo().promocionaA((Tipo) o));
+		if (r.getExpresion().getTipo() == null)
+			new TipoError(r,
+					"No coincide el tipo de retorno "
+							+ r.getExpresion().getTipo()
+							+ " con el tipo de la funcion " + ((Tipo) o));
 		return null;
 	}
 
@@ -169,14 +172,8 @@ public class VisitorComprobacionTipos extends VisitorAbstract {
 		defFuncion.getTipo().accept(this, o);
 		for (DefVariable d : defFuncion.getVariablesLocales())
 			d.accept(this, o);
-		for (Sentencia s : defFuncion.getCuerpo()) {
-			Object tipoRetorno = s.accept(this, defFuncion.getTipo());
-			if (tipoRetorno != null)
-				if (!((TipoFuncion) defFuncion.getTipo()).getRetorno()
-						.equals(tipoRetorno))
-					new TipoError(defFuncion,
-							"Error tipo l�gico " + this.getClass());
-		}
+		for (Sentencia s : defFuncion.getCuerpo())
+			s.accept(this, ((TipoFuncion) defFuncion.getTipo()).getRetorno());
 		return null;
 	}
 

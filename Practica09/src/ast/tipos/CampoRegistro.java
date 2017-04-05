@@ -1,17 +1,16 @@
 package ast.tipos;
 
-import ast.tipos.util.TipoAbstracto;
+import ast.util.NodoPosicion;
 import visitor.Visitor;
 
-public class CampoRegistro extends TipoAbstracto {
+public class CampoRegistro extends NodoPosicion {
 	private String nombre;
 	private int offset;
 	private Tipo tipo;
 	private int linea, columna;
 
 	public CampoRegistro(int linea, int columna, String nombre, Tipo tipo) {
-		this.linea = linea;
-		this.columna = columna;
+		super(linea, columna);
 		this.nombre = nombre;
 		this.tipo = tipo;
 	}
@@ -65,6 +64,10 @@ public class CampoRegistro extends TipoAbstracto {
 		return offset;
 	}
 
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
@@ -73,5 +76,4 @@ public class CampoRegistro extends TipoAbstracto {
 	public Tipo getTipo() {
 		return tipo;
 	}
-
 }

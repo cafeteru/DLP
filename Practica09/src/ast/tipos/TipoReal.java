@@ -45,6 +45,11 @@ public class TipoReal extends TipoAbstracto implements Tipo {
 
 	@Override
 	public Tipo cast(Tipo tipo) {
-		return this;
+		return tipo;
+	}
+
+	@Override
+	public int nBytes() {
+		return 4;
 	}
 }

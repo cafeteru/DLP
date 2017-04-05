@@ -2313,7 +2313,26 @@ state 137
 	expresion : '(' tipoSimple ')' expresion .  (55)
 	expresion : expresion . '[' expresion ']'  (57)
 
-	.  reduce 55
+	'['  shift 99
+	'.'  shift 100
+	Y  reduce 55
+	O  reduce 55
+	MAYORIGUALQUE  reduce 55
+	MENORIGUALQUE  reduce 55
+	DISTINTO  reduce 55
+	IGUALDAD  reduce 55
+	'='  reduce 55
+	'>'  reduce 55
+	'<'  reduce 55
+	'+'  reduce 55
+	'-'  reduce 55
+	'*'  reduce 55
+	'/'  reduce 55
+	'%'  reduce 55
+	']'  reduce 55
+	')'  reduce 55
+	';'  reduce 55
+	','  reduce 55
 
 
 state 138
@@ -2443,5 +2462,5 @@ state 147
 	.  reduce 20
 
 
-45 terminals, 20 nonterminals
+46 terminals, 20 nonterminals
 68 grammar rules, 148 states

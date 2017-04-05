@@ -63,6 +63,11 @@ public class TipoCaracter extends TipoAbstracto {
 
 	@Override
 	public Tipo cast(Tipo tipo) {
-		return this;
+		return tipo;
+	}
+
+	@Override
+	public int nBytes() {
+		return 1;
 	}
 }

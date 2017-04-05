@@ -64,4 +64,12 @@ public class TipoRegistro extends TipoAbstracto implements Tipo {
 		return null;
 	}
 
+	@Override
+	public int nBytes() {
+		int suma = 0;
+		for (CampoRegistro c : campos)
+			suma += c.getTipo().nBytes();
+		return suma;
+	}
+
 }

@@ -3,7 +3,6 @@ package ast.tipos.util;
 import java.util.List;
 
 import ast.tipos.Tipo;
-import ast.tipos.TipoError;
 
 public abstract class TipoAbstracto implements Tipo {
 
@@ -69,8 +68,7 @@ public abstract class TipoAbstracto implements Tipo {
 
 	@Override
 	public Tipo cast(Tipo tipo) {
-		return new TipoError(this, "No se puede convertir " + tipo.getClass()
-				+ " a " + this.getClass());
+		return null;
 	}
 
 }
