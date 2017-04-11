@@ -28,7 +28,7 @@ import ast.tipos.*;
 %left '*' '/' '%'
 %right MENOS_UNARIO
 %right NEGACION
-%nonassoc CASTP
+%left CASTP
 %nonassoc '[' ']'
 %left '.'
 %nonassoc MENORQUEELSE
