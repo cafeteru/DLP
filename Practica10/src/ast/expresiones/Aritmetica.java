@@ -4,10 +4,10 @@ import ast.expresiones.util.OperacionBinaria;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el an·lizador lÈxico un token que es una operaciÛn
- * aritmÈtica.
+ * Clase que simula en el an√°lizador l√©xico un token que es una operaci√≥n
+ * aritm√©tica.
  * 
- * @author Iv·n Gonz·lez Mahagamage
+ * @author Iv√°n Gonz√°lez Mahagamage
  *
  */
 public class Aritmetica extends OperacionBinaria {

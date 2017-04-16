@@ -5,9 +5,9 @@ import java.io.IOException;
 import lexico.Lexico;
 
 /**
- * Prueba del analizador léxico.<br/>
- * Diseño de Lenguajes de Programación.<br/>
- * Escuela de Ingeniería Informática.<br/>
+ * Prueba del analizador lï¿½xico.<br/>
+ * Diseï¿½o de Lenguajes de Programaciï¿½n.<br/>
+ * Escuela de Ingenierï¿½a Informï¿½tica.<br/>
  * Universidad de Oviedo <br/>
  * 
  * @author Francisco Ortin
@@ -35,7 +35,7 @@ public class Main {
 		while ((token = lexico.yylex()) != 0) {
 			System.out.println("Linea: " + lexico.getLine() + ", columna: "
 					+ lexico.getColumn() + ", token: " + token
-					+ ", valor semántico: " + lexico.getYylval() + ".");
+					+ ", valor semÃ¡ntico: " + lexico.getYylval() + ".");
 		}
 	}
 

@@ -28,6 +28,16 @@ public abstract class DefinicionAbstracta extends NodoPosicion
 	}
 
 	@Override
+	public int getAmbito() {
+		return ambito;
+	}
+
+	@Override
+	public void setAmbito(int ambito) {
+		this.ambito = ambito;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -56,16 +66,6 @@ public abstract class DefinicionAbstracta extends NodoPosicion
 		} else if (!tipo.equals(other.tipo))
 			return false;
 		return true;
-	}
-
-	@Override
-	public int getAmbito() {
-		return ambito;
-	}
-
-	@Override
-	public void setAmbito(int ambito) {
-		this.ambito = ambito;
 	}
 
 }

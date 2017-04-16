@@ -6,9 +6,9 @@ import lexico.Lexico;
 import sintactico.Parser;
 
 /**
- * Prueba del analizador léxico.<br/>
- * Diseño de Lenguajes de Programación.<br/>
- * Escuela de Ingeniería Informática.<br/>
+ * Prueba del analizador lï¿½xico.<br/>
+ * Diseï¿½o de Lenguajes de Programaciï¿½n.<br/>
+ * Escuela de Ingenierï¿½a Informï¿½tica.<br/>
  * Universidad de Oviedo <br/>
  * 
  * @author Francisco Ortin
@@ -30,7 +30,7 @@ public class Main {
 			return;
 		}
 
-		// * Creamos léxico y sintáctico
+		// * Creamos lÃ©xico y sintÃ¡ctico
 		Lexico lexico = new Lexico(fr);
 
 		Parser parser = new Parser(lexico);

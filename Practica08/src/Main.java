@@ -29,7 +29,7 @@ public class Main {
 			return;
 		}
 
-		// * Creamos lÈxico y sint·ctico
+		// * Creamos l√©xico y sint√°ctico
 		Lexico lexico = new Lexico(fr);
 		Parser parser = new Parser(lexico);
 		// * "Parseamos"

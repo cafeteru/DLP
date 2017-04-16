@@ -1,11 +1,11 @@
-// ************  CÛdigo a incluir ********************
+// ************  C√≥digo a incluir ********************
 
 package lexico;
 import sintactico.Parser;
 
 %%
 // ************  Opciones ********************
-//% debug // * OpciÛn para depurar
+//% debug // * Opci√≥n para depurar
 %byaccj
 %class Lexico
 %public
@@ -14,14 +14,14 @@ import sintactico.Parser;
 %column
 
 %{
-// ************  Atributos y mÈtodos ********************
-// * Para acceder al n˙mero de lÌnea (yyline es package)
+// ************  Atributos y m√©todos ********************
+// * Para acceder al n√∫mero de l√≠nea (yyline es package)
 public int getLine() { 
 	// * Flex empieza en cero
 	return yyline+1;
 }
 
-// * Para acceder al n˙mero de columna (yycolumn es package)
+// * Para acceder al n√∫mero de columna (yycolumn es package)
 public int getColumn() { 
 	// * Flex empieza en cero
 	return yycolumn+1;
@@ -37,11 +37,10 @@ public Object getYylval() {
 
 // ************  Patrones (macros) ********************
 ConstanteEntera = [0-9]+
-ConstanteReal = ([0-9]+\.[0-9]+|[0-9]*\.[0-9]+|[0-9]+\.[0-9]*|[0-9]+)(e|E)?("+"|"-")?[0-9]*
-Identificador = [a-zA-Z·ÈÌÛ˙Ò¡…Õ”⁄—]+ [a-zA-Z0-9Z·ÈÌÛ˙Ò¡…Õ”⁄—_]*
+ConstanteReal = ([0-9]+\.[0-9]+| [0-9]*\.[0-9]+| [0-9]+\.[0-9]*| [0-9]+)((e|E)("+"|"-")?[0-9]+)?
+Identificador = [a-zA-Z√°√©√≠√≥√∫√±√Å√â√ç√ì√ö√ë]+ [a-zA-Z0-9Z√°√©√≠√≥√∫√±√Å√â√ç√ì√ö√ë_]*
 Operador = ("<"|">"|";"|":"|"("|")"|"["|"]"|"{"|"}"|","|"="|"+"|"-"|"*"|"/"|"."|"!"|"?"|"%")
 CaracterASCII = '"\\"[0-9]+' 
-Salto = "'\\n'"
 %%
 // ************  Acciones ********************
 "//" .*			        { } 
@@ -102,7 +101,3 @@ return   				{ this.yylval = yytext();
 .						{ System.err.println("Ha fallado el token " + yytext()
 							+ " en la linea " + getLine() + ", en la columna "
 							+ getColumn()); }
-
-
-			
-

@@ -1,11 +1,11 @@
-// ************  Código a incluir ********************
+// ************  CÃ³digo a incluir ********************
 
 package lexico;
 import sintactico.Parser;
 
 %%
 // ************  Opciones ********************
-//% debug // * Opción para depurar
+//% debug // * OpciÃ³n para depurar
 %byaccj
 %class Lexico
 %public
@@ -14,14 +14,14 @@ import sintactico.Parser;
 %column
 
 %{
-// ************  Atributos y métodos ********************
-// * Para acceder al número de línea (yyline es package)
+// ************  Atributos y mÃ©todos ********************
+// * Para acceder al nÃºmero de lÃ­nea (yyline es package)
 public int getLine() { 
 	// * Flex empieza en cero
 	return yyline+1;
 }
 
-// * Para acceder al número de columna (yycolumn es package)
+// * Para acceder al nÃºmero de columna (yycolumn es package)
 public int getColumn() { 
 	// * Flex empieza en cero
 	return yycolumn+1;
@@ -38,7 +38,7 @@ public Object getYylval() {
 // ************  Patrones (macros) ********************
 ConstanteEntera = [0-9]+
 ConstanteReal = ([0-9]+\.[0-9]+| [0-9]*\.[0-9]+| [0-9]+\.[0-9]*| [0-9]+)((e|E)("+"|"-")?[0-9]+)?
-Identificador = [a-zA-ZáéíóúñÁÉÍÓÚÑ]+ [a-zA-Z0-9ZáéíóúñÁÉÍÓÚÑ_]*
+Identificador = [a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃ±ÃÃ‰ÃÃ“ÃšÃ‘]+ [a-zA-Z0-9ZÃ¡Ã©Ã­Ã³ÃºÃ±ÃÃ‰ÃÃ“ÃšÃ‘_]*
 Operador = ("<"|">"|";"|":"|"("|")"|"["|"]"|"{"|"}"|","|"="|"+"|"-"|"*"|"/"|"."|"!"|"?"|"%")
 CaracterASCII = '"\\"[0-9]+' 
 %%
@@ -101,7 +101,3 @@ return   				{ this.yylval = yytext();
 .						{ System.err.println("Ha fallado el token " + yytext()
 							+ " en la linea " + getLine() + ", en la columna "
 							+ getColumn()); }
-
-
-			
-
