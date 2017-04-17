@@ -85,4 +85,9 @@ public class TipoFuncion extends TipoAbstracto {
 	public int nBytes() {
 		return retorno.nBytes();
 	}
+
+	@Override
+	public String sufijo() {
+		return "ret";
+	}
 }

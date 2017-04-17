@@ -77,4 +77,17 @@ public class TipoEntero extends TipoAbstracto {
 	public int nBytes() {
 		return 2;
 	}
+
+	@Override
+	public String sufijo() {
+		return "i";
+	}
+
+	@Override
+	public Tipo Mayor(Tipo tipo) {
+		if (tipo instanceof TipoReal)
+			return TipoReal.getInstancia();
+		else
+			return this;
+	}
 }

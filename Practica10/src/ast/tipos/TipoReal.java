@@ -52,4 +52,14 @@ public class TipoReal extends TipoAbstracto implements Tipo {
 	public int nBytes() {
 		return 4;
 	}
+
+	@Override
+	public String sufijo() {
+		return "f";
+	}
+
+	@Override
+	public Tipo Mayor(Tipo tipo) {
+		return this;
+	}
 }

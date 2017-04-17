@@ -71,4 +71,13 @@ public abstract class TipoAbstracto implements Tipo {
 		return null;
 	}
 
+	@Override
+	public String sufijo() {
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public Tipo Mayor(Tipo tipo) {
+		throw new IllegalStateException();
+	}
 }

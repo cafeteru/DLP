@@ -70,4 +70,14 @@ public class TipoCaracter extends TipoAbstracto {
 	public int nBytes() {
 		return 1;
 	}
+
+	@Override
+	public String sufijo() {
+		return "b";
+	}
+
+	@Override
+	public Tipo Mayor(Tipo tipo) {
+		return tipo;
+	}
 }

@@ -10,6 +10,7 @@ import visitor.Visitor;
 public class DefFuncion extends DefinicionAbstracta {
 	private List<DefVariable> variablesLocales;
 	private List<Sentencia> cuerpo;
+	private int numBytesLocal;
 
 	public DefFuncion(int linea, int columna, String nombre, TipoFuncion tipo,
 			List<DefVariable> variablesLocales, List<Sentencia> cuerpo) {
@@ -37,6 +38,14 @@ public class DefFuncion extends DefinicionAbstracta {
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
+	}
+
+	public int getNumBytesLocal() {
+		return numBytesLocal;
+	}
+
+	public void setNumBytesLocal(int numBytesLocal) {
+		this.numBytesLocal = numBytesLocal;
 	}
 
 }

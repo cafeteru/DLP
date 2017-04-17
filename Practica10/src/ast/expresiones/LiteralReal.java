@@ -7,10 +7,10 @@ public class LiteralReal extends ExpresionAbstracta {
 	private double valor;
 
 	/**
-	 * Constructor con parámetros.
+	 * Constructor con parï¿½metros.
 	 * 
 	 * @param linea
-	 *            Línea en la que se encuentra el lexema.
+	 *            Lï¿½nea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 * @param valor
@@ -31,4 +31,9 @@ public class LiteralReal extends ExpresionAbstracta {
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
+
+	public double getValor() {
+		return valor;
+	}
+
 }

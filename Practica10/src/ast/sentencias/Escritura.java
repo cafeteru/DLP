@@ -7,31 +7,33 @@ import ast.sentencias.util.SentenciaAbstracta;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el anï¿½lizador lï¿½xico un token que es una escritura.
+ * Clase que simula en el análizador léxico un token que es una escritura.
  * 
- * @author Ivï¿½n Gonzï¿½lez Mahagamage
+ * @author Iván González Mahagamage
  *
  */
 public class Escritura extends SentenciaAbstracta {
 	private List<Expresion> expresiones;
 
 	/**
-	 * Constructor con parï¿½metros.
+	 * Constructor con parámetros.
 	 * 
 	 * @param linea
-	 *            Lï¿½nea en la que se encuentra el lexema.
+	 *            Línea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 * @param expresion
-	 *            Expresiï¿½n que queremos escribir.
+	 *            Expresión que queremos escribir.
 	 */
 	public Escritura(int linea, int columna, List<Expresion> expresiones) {
 		super(linea, columna);
 		this.expresiones = expresiones;
 	}
 
-	public List<Expresion> getExpresiones() {
-		return expresiones;
+	@Override
+	public String toString() {
+		return "Escritura [expresiones=" + expresiones + ", linea=" + linea
+				+ ", columna=" + columna + "]";
 	}
 
 	@Override
@@ -39,10 +41,8 @@ public class Escritura extends SentenciaAbstracta {
 		return v.visit(this, o);
 	}
 
-	@Override
-	public String toString() {
-		return "Escritura [expresiones=" + expresiones + ", linea=" + linea
-				+ ", columna=" + columna + "]";
+	public List<Expresion> getExpresiones() {
+		return expresiones;
 	}
 
 }

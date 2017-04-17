@@ -22,6 +22,12 @@ public class Invocacion extends SentenciaAbstracta implements Expresion {
 	}
 
 	@Override
+	public String toString() {
+		return "Invocacion [expresiones=" + expresiones + ", variable="
+				+ variable + ", linea=" + linea + ", columna=" + columna + "]";
+	}
+
+	@Override
 	public boolean getLValue() {
 		return lValue;
 	}
@@ -29,6 +35,11 @@ public class Invocacion extends SentenciaAbstracta implements Expresion {
 	@Override
 	public void setLValue(boolean lValue) {
 		this.lValue = lValue;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
 	}
 
 	public List<Expresion> getExpresiones() {
@@ -47,17 +58,6 @@ public class Invocacion extends SentenciaAbstracta implements Expresion {
 	@Override
 	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
-	}
-
-	@Override
-	public Object accept(Visitor v, Object o) {
-		return v.visit(this, o);
-	}
-
-	@Override
-	public String toString() {
-		return "Invocacion [expresiones=" + expresiones + ", variable="
-				+ variable + ", linea=" + linea + ", columna=" + columna + "]";
 	}
 
 }

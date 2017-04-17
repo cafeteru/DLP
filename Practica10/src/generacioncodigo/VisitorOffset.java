@@ -21,6 +21,7 @@ public class VisitorOffset extends VisitorAbstract {
 	public Object visit(DefFuncion defFuncion, Object o) {
 		desplazamientoLocal = 0;
 		super.visit(defFuncion, o);
+		defFuncion.setNumBytesLocal(-desplazamientoLocal);
 		return null;
 	}
 

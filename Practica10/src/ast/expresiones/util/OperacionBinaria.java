@@ -8,19 +8,19 @@ public abstract class OperacionBinaria extends ExpresionAbstracta {
 	private Expresion der;
 
 	/**
-	 * Constructor con parámetros.
+	 * Constructor con parï¿½metros.
 	 * 
 	 * @param linea
-	 *            Línea en la que se encuentra el lexema.
+	 *            Lï¿½nea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 * @param izq
-	 *            Expresión que se encuentra a la izquierda del operando.
+	 *            Expresiï¿½n que se encuentra a la izquierda del operando.
 	 * @param operador
-	 *            Operando de la operación.
+	 *            Operando de la operaciï¿½n.
 	 * 
 	 * @param der
-	 *            Expresión que se encuentra a la derecha del operando.
+	 *            Expresiï¿½n que se encuentra a la derecha del operando.
 	 * 
 	 */
 	public OperacionBinaria(int linea, int columna, Expresion izq,
@@ -32,18 +32,18 @@ public abstract class OperacionBinaria extends ExpresionAbstracta {
 	}
 
 	/**
-	 * Método que devuelve el parámetro izq.
+	 * Mï¿½todo que devuelve el parï¿½metro izq.
 	 * 
-	 * @return Expresión que se encuentra a la izquierda del operando.
+	 * @return Expresiï¿½n que se encuentra a la izquierda del operando.
 	 */
 	public Expresion getIzq() {
 		return izq;
 	}
 
 	/**
-	 * Método que devuelve el parámetro der.
+	 * Mï¿½todo que devuelve el parï¿½metro der.
 	 * 
-	 * @return Expresión que se encuentra a la derecha del operando.
+	 * @return Expresiï¿½n que se encuentra a la derecha del operando.
 	 */
 	public Expresion getDer() {
 		return der;
@@ -54,6 +54,10 @@ public abstract class OperacionBinaria extends ExpresionAbstracta {
 		return "OperacionBinaria [operador=" + operador + ", izq=" + izq
 				+ ", der=" + der + ", linea=" + linea + ", columna=" + columna
 				+ "]";
+	}
+
+	public String getOperador() {
+		return operador;
 	}
 
 }

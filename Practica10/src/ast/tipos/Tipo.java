@@ -28,4 +28,8 @@ public interface Tipo extends NodoAST {
 	public Tipo cast(Tipo tipo);
 
 	public int nBytes();
+
+	public String sufijo();
+
+	public Tipo Mayor(Tipo tipo);
 }
