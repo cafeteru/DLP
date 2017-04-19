@@ -6,9 +6,9 @@ import ast.sentencias.Sentencia;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el an·lizador lÈxico un token que es una variable.
+ * Clase que simula en el an√°lizador l√©xico un token que es una variable.
  * 
- * @author Iv·n Gonz·lez Mahagamage
+ * @author Iv√°n Gonz√°lez Mahagamage
  *
  */
 public class Variable extends ExpresionAbstracta implements Sentencia {
@@ -16,10 +16,10 @@ public class Variable extends ExpresionAbstracta implements Sentencia {
 	private Definicion definicion;
 
 	/**
-	 * Constructor con par·metros.
+	 * Constructor con par√°metros.
 	 * 
 	 * @param linea
-	 *            LÌnea en la que se encuentra el lexema.
+	 *            L√≠nea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 * @param clave
@@ -31,7 +31,7 @@ public class Variable extends ExpresionAbstracta implements Sentencia {
 	}
 
 	/**
-	 * MÈtodo que devuelve el par·metro clase.
+	 * M√©todo que devuelve el par√°metro clase.
 	 * 
 	 * @return Clave de la variable.
 	 */

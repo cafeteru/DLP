@@ -29,27 +29,27 @@ public class GeneradorCodigo {
 	}
 
 	public void push(char c) {
-		out.println("\tpushb " + (int) c);
+		out.println("\tpushb\t" + (int) c);
 		out.flush();
 	}
 
 	public void push(int c) {
-		out.println("\tpushi " + c);
+		out.println("\tpushi\t" + c);
 		out.flush();
 	}
 
 	public void push(double c) {
-		out.println("\tpushf " + c);
+		out.println("\tpushf\t" + c);
 		out.flush();
 	}
 
 	public void pusha(int c) {
-		out.println("\tpusha " + c);
+		out.println("\tpusha\t" + c);
 		out.flush();
 	}
 
 	public void pushBP() {
-		out.println("\tpush bp ");
+		out.println("\tpush\tbp");
 		out.flush();
 	}
 
@@ -189,14 +189,14 @@ public class GeneradorCodigo {
 	}
 
 	public void enter(int nBytes) {
-		out.println("\tenter " + nBytes);
+		out.println("\tenter\t" + nBytes);
 		out.flush();
 	}
 
 	public void ret(int nBytesRetorno, int nBytesVariablesLocales,
 			int nBytesParametros) {
-		out.println("ret " + nBytesRetorno + ", " + nBytesVariablesLocales + ","
-				+ nBytesParametros);
+		out.println("\tret " + nBytesRetorno + ", " + nBytesVariablesLocales
+				+ ", " + nBytesParametros);
 		out.flush();
 	}
 
@@ -284,6 +284,11 @@ public class GeneradorCodigo {
 
 	public void comentario(String comentario) {
 		out.println("' " + comentario);
+		out.flush();
+	}
+
+	public void comentarioSentencia(String comentario) {
+		out.println("\t' " + comentario);
 		out.flush();
 	}
 

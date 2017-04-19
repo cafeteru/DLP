@@ -12,14 +12,20 @@ import ast.expresiones.Variable;
 import ast.tipos.Tipo;
 
 public class VisitorGCValor extends AbstractVisitorGC {
+	private static VisitorGCValor valor;
 
-	private static GeneradorCodigo GC;
+	private GeneradorCodigo GC;
 	private VisitorGCDireccion direccion;
 
-	public VisitorGCValor(String entrada, String salida,
-			VisitorGCDireccion direccion) {
+	public static VisitorGCValor getInstance(String entrada, String salida) {
+		if (valor == null)
+			valor = new VisitorGCValor(entrada, salida);
+		return valor;
+	}
+
+	public VisitorGCValor(String entrada, String salida) {
 		GC = GeneradorCodigo.getInstancia(entrada, salida);
-		this.direccion = direccion;
+		direccion = VisitorGCDireccion.getInstance(entrada, salida);
 	}
 
 	@Override

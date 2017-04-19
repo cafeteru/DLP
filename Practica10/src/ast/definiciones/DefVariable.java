@@ -5,7 +5,6 @@ import ast.tipos.Tipo;
 import visitor.Visitor;
 
 public class DefVariable extends DefinicionAbstracta {
-	private int ambito;
 	private int offset;
 
 	public DefVariable(int linea, int columna, String nombre, Tipo tipo) {
@@ -14,7 +13,7 @@ public class DefVariable extends DefinicionAbstracta {
 
 	@Override
 	public String toString() {
-		return "DefVariable [ambito=" + ambito + ", OFFSET=" + offset
+		return "DefVariable [ambito=" + getAmbito() + ", OFFSET=" + offset
 				+ ", linea=" + linea + ", columna=" + columna + ", getTipo()="
 				+ getTipo() + ", getNombre()=" + getNombre() + "]";
 	}

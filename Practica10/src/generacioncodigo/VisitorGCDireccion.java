@@ -6,8 +6,16 @@ import ast.expresiones.Variable;
 public class VisitorGCDireccion extends AbstractVisitorGC {
 
 	private GeneradorCodigo GC;
+	private static VisitorGCDireccion direccion;
 
-	public VisitorGCDireccion(String entrada, String salida) {
+	public static VisitorGCDireccion getInstance(String entrada,
+			String salida) {
+		if (direccion == null)
+			direccion = new VisitorGCDireccion(entrada, salida);
+		return direccion;
+	}
+
+	private VisitorGCDireccion(String entrada, String salida) {
 		GC = GeneradorCodigo.getInstancia(entrada, salida);
 	}
 

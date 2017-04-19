@@ -3,9 +3,7 @@ import java.io.IOException;
 
 import ast.NodoAST;
 import ast.Programa;
-import generacioncodigo.VisitorGCDireccion;
 import generacioncodigo.VisitorGCEjecutar;
-import generacioncodigo.VisitorGCValor;
 import generacioncodigo.VisitorOffset;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
@@ -54,16 +52,12 @@ public class Main {
 			// * Mostramos el AST
 			Visitor vOffset = new VisitorOffset();
 			vOffset.visit((Programa) root, null);
-			VisitorGCDireccion direccion = new VisitorGCDireccion(args[0],
+			VisitorGCEjecutar ejecutar = new VisitorGCEjecutar(args[0],
 					args[1]);
-			VisitorGCValor valor = new VisitorGCValor(args[0], args[1],
-					direccion);
-			VisitorGCEjecutar ejecutar = new VisitorGCEjecutar(args[0], args[1],
-					direccion, valor);
 			ejecutar.visit((Programa) root, null);
-			// IntrospectorModel modelo = new IntrospectorModel("Programa",
-			// parser.getAST());
-			// new IntrospectorTree("Introspector", modelo);
+			IntrospectorModel modelo = new IntrospectorModel("Programa",
+					parser.getAST());
+			new IntrospectorTree("Introspector", modelo);
 		}
 	}
 

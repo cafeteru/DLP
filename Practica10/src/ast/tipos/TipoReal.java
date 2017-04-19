@@ -14,7 +14,7 @@ public class TipoReal extends TipoAbstracto implements Tipo {
 
 	@Override
 	public String toString() {
-		return "TipoReal []";
+		return "real";
 	}
 
 	@Override
