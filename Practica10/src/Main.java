@@ -20,6 +20,9 @@ public class Main {
 		if (args.length < 1) {
 			System.err.println("Necesito el archivo de entrada.");
 			return;
+		} else if (args.length < 2) {
+			System.err.println("Necesito el archivo de salida.");
+			return;
 		}
 
 		FileReader fr = null;
