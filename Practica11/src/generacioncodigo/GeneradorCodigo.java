@@ -12,6 +12,7 @@ import ast.tipos.TipoReal;
 public class GeneradorCodigo {
 	private static GeneradorCodigo instance;
 	private static PrintWriter out;
+	private int numLables = 0;
 
 	public static GeneradorCodigo getInstancia(String entrada, String salida) {
 		if (instance == null)
@@ -26,6 +27,12 @@ public class GeneradorCodigo {
 			e.printStackTrace();
 		}
 		source(entrada);
+	}
+
+	public int getLabels(int numLabels) {
+		int aux = this.numLables;
+		this.numLables += numLabels;
+		return aux;
 	}
 
 	public void push(char c) {
@@ -183,6 +190,10 @@ public class GeneradorCodigo {
 		out.flush();
 	}
 
+	public void etiqueta(int count) {
+		id(" label" + count);
+	}
+
 	public void call(String etiqueta) {
 		out.println("call " + etiqueta);
 		out.flush();
@@ -314,5 +325,20 @@ public class GeneradorCodigo {
 			i2f();
 		else if (tipo instanceof TipoEntero && tipo2 instanceof TipoCaracter)
 			i2b();
+	}
+
+	public void jz(int count) {
+		out.println("\tjz\tlabel" + count);
+		out.flush();
+	}
+
+	public void jnz(int count) {
+		out.println("\tjnz\tlabel" + count);
+		out.flush();
+	}
+
+	public void jmp(int count) {
+		out.println("\tjmp\tlabel" + count);
+		out.flush();
 	}
 }

@@ -1,28 +1,45 @@
-char c;
-int a;
-double r;
+double[10] v;
 
+// * Main program
 void main() {
-	int a, i;
+	double value;
+	int i,j;
+	int[4][5] w;
+	struct { 
+		int day;
+		int month, year;
+	} date;
 	
-	c='a';
-	write c,'\n';
-
-	a=1;
-	i=(int)'0'*3;
-	write a, ' ', i, '\n';
+	read date.day; // * lvalue
+	date.year = (int)'a'; 
+	date.month = date.day*date.year%12+1;
+	write date.day, '\n', date.month, '\n', (double)(date.year), '\n';
+	
+	read value;
 		
-	read r;
-	write (double)2*r, '\n';
-	
-	write (double)3-4.5, ' ', 
-            (double)'0'/48.0, ' ',
-            '0'%'1', ' ',
-            '0'+'1', '\n';
-	write 1<2, ' ',
-	      4>=3, ' ',
-	      5==5, ' ',
-	      1&&2, ' ',
-	      0||3, ' ',
-	      !0, '\n';
+	i=0;	
+	while (i<10) {
+		v[i]=value; // * lvalue
+		write i,':',v[i], ' ';
+		if (i%2)
+			write 'o','d','d','\n';
+		else 
+			write 'e','v','e','n','\n';
+		i=i+1;
+	}
+	write '\n';
+
+	i=0;
+	while (i<4) {
+		j=0;
+		while (j<5) {
+			w[i][j]=i+j;
+			write w[i][j], ' ';
+			j=j+1;
+		}
+		write '\n';
+		i=i+1;
+	}
+
 }
+	

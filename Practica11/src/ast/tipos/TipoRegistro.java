@@ -72,4 +72,14 @@ public class TipoRegistro extends TipoAbstracto implements Tipo {
 		return suma;
 	}
 
+	@Override
+	public int offset(String id) {
+		for (CampoRegistro c : campos) {
+			if (c.getNombre().equals(id)) {
+				return c.getOffset();
+			}
+		}
+		throw new IllegalStateException();
+	}
+
 }

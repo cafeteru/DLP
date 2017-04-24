@@ -32,4 +32,6 @@ public interface Tipo extends NodoAST {
 	public String sufijo();
 
 	public Tipo Mayor(Tipo tipo);
+
+	public int offset(String id);
 }

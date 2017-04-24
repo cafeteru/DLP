@@ -210,7 +210,7 @@ expresion: ID																							{ 	$$ = new Variable(lexico.getLine(), lexic
          | '-' expresion %prec MENOS_UNARIO  															{ 	$$ = new MenosUnario(lexico.getLine(), lexico.getColumn(),  "-",(Expresion) $2);	}
          | expresion '.' ID					    													    { 	$$ = new AccesoCampo(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (String) $3);	}
          | '(' expresion ')' 																			{ 	$$ = $2;}
-         | '(' tipoSimple ')' expresion	%prec CASTP													    { 	$$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);	}
+         | '(' tipoSimple ')' expresion	%prec CASTP													            { 	$$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);	}
          | invocacion						 															{ 	$$ = $1;}
          | expresion '[' expresion ']'																	{ 	$$ = new AccesoArray(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3); }			   
          ;

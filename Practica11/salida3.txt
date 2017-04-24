@@ -1,0 +1,112 @@
+
+#source "entrada.peque.txt"
+
+	' * real value (offset 0)
+	' * int i (offset 4)
+	' * int j (offset 6)
+	' * [tamaño=4, tipo=[tamaño=5, tipo=int]] w (offset 8)
+	' * TipoRegistro [campos=[CampoRegistro [nombre=day, offset=0, tipo=int, linea=0, columna=0], CampoRegistro [nombre=month, offset=2, tipo=int, linea=0, columna=0], CampoRegistro [nombre=year, offset=4, tipo=int, linea=0, columna=0]]] date (offset 48)
+	' * [tamaño=10, tipo=real] v (offset 54)
+
+' Invocation to the main function
+call main
+halt
+
+
+#line	20
+main:
+	' * Parameters
+	' * Local variables
+	enter	0
+	' * While
+
+#line	19
+label0:
+	pusha	4
+	loadi
+	pushi	10
+	lti
+	jz label1
+
+#line	12
+	pusha	54
+	pusha	4
+	pushi	4
+	muli
+	addi
+	pusha	0
+	loadf
+	storef
+
+#line	13
+	' * Write
+	pusha	4
+	loadi
+	outi
+	' * Write
+	pushb	58
+	outb
+	' * Write
+	pusha	54
+	pusha	4
+	pushi	4
+	muli
+	addi
+	loadf
+	outf
+	' * Write
+	pushb	32
+	outb
+	' * If statement
+
+#line	17
+	pusha	4
+	loadi
+	pushi	2
+	modi
+	jz label2
+
+#line	15
+	' * Write
+	pushb	111
+	outb
+	' * Write
+	pushb	100
+	outb
+	' * Write
+	pushb	100
+	outb
+	' * Write
+	pushb	10
+	outb
+	jmp label3
+label3:
+
+#line	17
+	' * Write
+	pushb	101
+	outb
+	' * Write
+	pushb	118
+	outb
+	' * Write
+	pushb	101
+	outb
+	' * Write
+	pushb	110
+	outb
+	' * Write
+	pushb	10
+	outb
+label3:
+
+#line	18
+	pusha	4
+	pusha	4
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp label0
+label1:
+	ret 0, 0, 0

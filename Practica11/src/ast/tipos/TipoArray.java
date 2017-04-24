@@ -14,7 +14,7 @@ public class TipoArray extends TipoAbstracto {
 
 	@Override
 	public String toString() {
-		return "TipoArray [tamaño=" + tamaño + ", tipo=" + tipo + "]";
+		return "[" + tamaño + "," + tipo + "]";
 	}
 
 	@Override
@@ -32,9 +32,7 @@ public class TipoArray extends TipoAbstracto {
 
 	@Override
 	public Tipo corchetes(Tipo tipo) {
-		// Poner promocionaA en vez de instanceOf
-		if (tipo.promocionaA(TipoEntero.getInstancia()) != null)
-			// if (tipo instanceof TipoEntero)
+		if (tipo instanceof TipoEntero)
 			return this.tipo;
 		return null;
 	}

@@ -9,6 +9,9 @@ import ast.sentencias.Asignacion;
 import ast.sentencias.Escritura;
 import ast.sentencias.Lectura;
 import ast.sentencias.Sentencia;
+import ast.sentencias.SentenciaIf;
+import ast.sentencias.SentenciaWhile;
+import ast.tipos.TipoEntero;
 import ast.tipos.TipoFuncion;
 
 public class VisitorGCEjecutar extends AbstractVisitorGC {
@@ -17,10 +20,11 @@ public class VisitorGCEjecutar extends AbstractVisitorGC {
 	private VisitorGCDireccion direccion;
 	private VisitorGCValor valor;
 
-	public VisitorGCEjecutar(String entrada, String salida) {
+	public VisitorGCEjecutar(String entrada, String salida,
+			VisitorGCDireccion direccion, VisitorGCValor valor) {
 		GC = GeneradorCodigo.getInstancia(entrada, salida);
-		direccion = VisitorGCDireccion.getInstance(entrada, salida);
-		valor = VisitorGCValor.getInstance(entrada, salida);
+		this.direccion = direccion;
+		this.valor = valor;
 	}
 
 	@Override
@@ -97,6 +101,46 @@ public class VisitorGCEjecutar extends AbstractVisitorGC {
 			GC.in(e1.getTipo().sufijo());
 			GC.store(e1.getTipo().sufijo());
 		}
+		return null;
+	}
+
+	@Override
+	public Object visit(SentenciaWhile w, Object o) {
+		GC.comentarioSentencia("* While");
+		GC.line(w.getLinea());
+		int count = GC.getLabels(2);
+		GC.etiqueta(count);
+		w.getCondicion().accept(valor, o);
+		GC.convertirA(w.getCondicion().getTipo(), TipoEntero.getInstancia());
+		GC.jz(count + 1);
+		GC.comentarioSentencia("* Body of the while statement");
+		for (Sentencia s : w.getSentencias()) {
+			s.accept(this, o);
+		}
+		GC.jmp(count);
+		GC.etiqueta(count + 1);
+		return null;
+	}
+
+	@Override
+	public Object visit(SentenciaIf i, Object o) {
+		GC.comentarioSentencia("* If statement");
+		GC.line(i.getLinea());
+		int count = GC.getLabels(2);
+		i.getCondicion().accept(valor, o);
+		GC.convertirA(i.getCondicion().getTipo(), TipoEntero.getInstancia());
+		GC.jz(count);
+		GC.comentarioSentencia("* Body of the if branch");
+		for (Sentencia s : i.getCuerpoIf()) {
+			s.accept(this, o);
+		}
+		GC.jmp(count + 1);
+		GC.etiqueta(count);
+		GC.comentarioSentencia("* Body of the else branch");
+		for (Sentencia s : i.getCuerpoElse()) {
+			s.accept(this, o);
+		}
+		GC.etiqueta(count + 1);
 		return null;
 	}
 

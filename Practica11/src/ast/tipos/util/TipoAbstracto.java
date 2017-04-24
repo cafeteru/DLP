@@ -7,16 +7,6 @@ import ast.tipos.Tipo;
 public abstract class TipoAbstracto implements Tipo {
 
 	@Override
-	public int getLinea() {
-		return 0;
-	}
-
-	@Override
-	public int getColumna() {
-		return 0;
-	}
-
-	@Override
 	public boolean esLogico() {
 		return false;
 	}
@@ -24,6 +14,16 @@ public abstract class TipoAbstracto implements Tipo {
 	@Override
 	public Tipo parentesis(List<Tipo> tipos) {
 		return null;
+	}
+
+	@Override
+	public int getLinea() {
+		return 0;
+	}
+
+	@Override
+	public int getColumna() {
+		return 0;
 	}
 
 	@Override
@@ -78,6 +78,16 @@ public abstract class TipoAbstracto implements Tipo {
 
 	@Override
 	public Tipo Mayor(Tipo tipo) {
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public int nBytes() {
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public int offset(String id) {
 		throw new IllegalStateException();
 	}
 }
