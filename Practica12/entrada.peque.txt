@@ -1,0 +1,20 @@
+	double value;
+	int i,j;
+	int[4][5] w;
+	struct { 
+		int day;
+		int month, year;
+	} date;
+	double[10] v;
+
+void main() {
+while (i<10) {
+		v[i]=value; // * lvalue
+		write i,':',v[i], ' ';
+		if (i%2)
+			write 'o','d','d','\n';
+		else 
+			write 'e','v','e','n','\n';
+		i=i+1;
+	}
+}
