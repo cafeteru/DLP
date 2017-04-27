@@ -7,7 +7,6 @@ public class CampoRegistro extends NodoPosicion {
 	private String nombre;
 	private int offset;
 	private Tipo tipo;
-	private int linea, columna;
 
 	public CampoRegistro(int linea, int columna, String nombre, Tipo tipo) {
 		super(linea, columna);
@@ -17,9 +16,7 @@ public class CampoRegistro extends NodoPosicion {
 
 	@Override
 	public String toString() {
-		return "CampoRegistro [nombre=" + nombre + ", offset=" + offset
-				+ ", tipo=" + tipo + ", linea=" + linea + ", columna=" + columna
-				+ "]";
+		return "(" + nombre + " x " + tipo + ")";
 	}
 
 	@Override

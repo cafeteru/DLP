@@ -1,20 +1,9 @@
-	double value;
-	int i,j;
-	int[4][5] w;
-	struct { 
-		int day;
-		int month, year;
-	} date;
-	double[10] v;
+struct {
+  struct { int age; } [2] employees;
+} [2] acme;
 
+// * Main program
 void main() {
-while (i<10) {
-		v[i]=value; // * lvalue
-		write i,':',v[i], ' ';
-		if (i%2)
-			write 'o','d','d','\n';
-		else 
-			write 'e','v','e','n','\n';
-		i=i+1;
-	}
+ acme[1].employees[1].age = 56;
 }
+	

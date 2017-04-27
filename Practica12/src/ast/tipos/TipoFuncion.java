@@ -10,10 +10,14 @@ import visitor.Visitor;
 public class TipoFuncion extends TipoAbstracto {
 	private List<DefVariable> parametros = new ArrayList<>();
 	private Tipo retorno;
+	private int numBytesParam;
 
 	public TipoFuncion(List<DefVariable> parametros, Tipo retorno) {
+		setNumBytesParam(0);
 		for (DefVariable defVariable : parametros) {
 			this.parametros.add(defVariable);
+			setNumBytesParam(
+					getNumBytesParam() + defVariable.getTipo().nBytes());
 		}
 		this.retorno = retorno;
 	}
@@ -89,5 +93,13 @@ public class TipoFuncion extends TipoAbstracto {
 	@Override
 	public String sufijo() {
 		return "ret";
+	}
+
+	public int getNumBytesParam() {
+		return numBytesParam;
+	}
+
+	public void setNumBytesParam(int numBytesParam) {
+		this.numBytesParam = numBytesParam;
 	}
 }

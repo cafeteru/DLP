@@ -7,12 +7,15 @@ import ast.definiciones.Definicion;
 import ast.expresiones.Expresion;
 import ast.sentencias.Asignacion;
 import ast.sentencias.Escritura;
+import ast.sentencias.Invocacion;
 import ast.sentencias.Lectura;
+import ast.sentencias.Return;
 import ast.sentencias.Sentencia;
 import ast.sentencias.SentenciaIf;
 import ast.sentencias.SentenciaWhile;
 import ast.tipos.TipoEntero;
 import ast.tipos.TipoFuncion;
+import ast.tipos.TipoVoid;
 
 public class VisitorGCEjecutar extends AbstractVisitorGC {
 
@@ -52,7 +55,7 @@ public class VisitorGCEjecutar extends AbstractVisitorGC {
 
 	@Override
 	public Object visit(DefFuncion d, Object o) {
-		GC.line(d.getLinea());
+		GC.lineFuncion(d.getLinea());
 		GC.id(d.getNombre());
 		GC.comentarioSentencia("* Parameters");
 		for (Definicion d2 : ((TipoFuncion) d.getTipo()).getParametros()) {
@@ -64,10 +67,9 @@ public class VisitorGCEjecutar extends AbstractVisitorGC {
 		}
 		GC.enter(d.getNumBytesLocal());
 		for (Sentencia s : d.getCuerpo()) {
-			s.accept(this, o);
+			s.accept(this, d);
 		}
-		GC.ret(((TipoFuncion) d.getTipo()).getRetorno().nBytes(),
-				d.getNumBytesLocal(), 0);
+		d.crearRet(GC);
 		return null;
 	}
 
@@ -141,6 +143,26 @@ public class VisitorGCEjecutar extends AbstractVisitorGC {
 			s.accept(this, o);
 		}
 		GC.etiqueta(count + 1);
+		return null;
+	}
+
+	@Override
+	public Object visit(Invocacion i, Object o) {
+		GC.line(i.getLinea());
+		valor.visit(i, o);
+		if (!(i.getTipo() instanceof TipoVoid))
+			GC.pop(i.getTipo().sufijo());
+		return null;
+	}
+
+	@Override
+	public Object visit(Return r, Object o) {
+		DefFuncion df = (DefFuncion) o;
+		TipoFuncion tp = (TipoFuncion) df.getTipo();
+		GC.line(r.getLinea());
+		GC.comentarioSentencia("* Return");
+		r.getExpresion().accept(valor, o);
+		GC.convertirA(r.getExpresion().getTipo(), tp);
 		return null;
 	}
 

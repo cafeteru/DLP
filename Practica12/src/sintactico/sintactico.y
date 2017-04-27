@@ -151,27 +151,37 @@ declaracionVariable: tipoSimple identificador															{ 	List<DefVariable>
 																											}	 
 																											$$ = variables;  
 																										}
-		           | STRUCT '{' campos '}' indicesStruct identificador    								{ 	
-		           																							List<CampoRegistro> registrosStruct = new ArrayList();
+		           | STRUCT '{' campos '}' identificador    											{ 	List<CampoRegistro> registrosStruct = new ArrayList();
 		           																							for(DefVariable var : (List<DefVariable>) $3){
 		           																								registrosStruct.add(new CampoRegistro(lexico.getLine(), lexico.getColumn(), var.getNombre(), var.getTipo()));
 																											}
 		           												
 																											TipoRegistro registro = new TipoRegistro(registrosStruct);
-		           												          									
-		           												          									if(!$5.equals(new ArrayList())){
-		           																								List<Integer> indices = (List<Integer>)$5;
-																												TipoArray tipo = new TipoArray(indices.get(0), registro);
-																												for(int i = 1; i < indices.size(); i++){
-																													tipo = new TipoArray(indices.get(i), tipo);
-																												}
-																											}
 		           												          												
 																											List<DefVariable> variables = new ArrayList();
 																											for(String aux: (List<String>)$5){
 																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), aux, registro));
 																											}	 
 																											$$ = variables; 															 
+																										}
+					| STRUCT '{' campos '}' indices identificador 										{	List<CampoRegistro> registrosStruct = new ArrayList();
+		           																							for(DefVariable var : (List<DefVariable>) $3){
+		           																								registrosStruct.add(new CampoRegistro(lexico.getLine(), lexico.getColumn(), var.getNombre(), var.getTipo()));
+																											}
+		           												
+																											TipoRegistro registro = new TipoRegistro(registrosStruct);
+
+																											List<Integer> indices = (List<Integer>)$5;
+																											TipoArray tipo = new TipoArray(indices.get(0), registro);
+																											for(int i = 1; i < indices.size(); i++){
+																												tipo = new TipoArray(indices.get(i), tipo);
+																											}
+
+																											List<DefVariable> variables = new ArrayList();
+																											for(String aux: (List<String>)$6){
+																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), aux, registro));
+																											}	 
+																											$$ = variables; 	
 																										}
 		           ;
 				  
@@ -219,7 +229,7 @@ expresion: ID																							{ 	$$ = new Variable(lexico.getLine(), lexic
          | '-' expresion %prec MENOS_UNARIO  															{ 	$$ = new MenosUnario(lexico.getLine(), lexico.getColumn(),  "-",(Expresion) $2);	}
          | expresion '.' ID					    													    { 	$$ = new AccesoCampo(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (String) $3);	}
          | '(' expresion ')' 																			{ 	$$ = $2;}
-         | '(' tipoSimple ')' expresion	%prec CASTP													    { 	$$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);	}
+         | '(' tipoSimple ')' expresion	%prec CASTP													            { 	$$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);	}
          | invocacion						 															{ 	$$ = $1;}
          | expresion '[' expresion ']'																	{ 	$$ = new AccesoArray(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3); }			   
          ;
@@ -239,10 +249,6 @@ indices: '[' CTE_ENTERA ']'	indices																		{ 	$$ = $4;
 																										}
 	   | '[' CTE_ENTERA ']'                 															{ 	$$ = new ArrayList<Integer>(); ((List<Integer>)$$).add((Integer)$2); 	}
 	   ;
-	   
-indicesStruct: indices																					{ $$ = $1;}
-			| /*vacio*/																					{ $$ = new ArrayList<Integer>();}
-			;
          
 identificador: identificador ',' ID 																	{ 	$$ = $1; 
 																											List<String> lista = (List<String>)$$;

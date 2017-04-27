@@ -5,7 +5,7 @@ import ast.NodoAST;
 /**
  * Clase intermedia para asignar a cada token una linea y una columna.
  * 
- * @author Iván González Mahagamage
+ * @author Ivï¿½n Gonzï¿½lez Mahagamage
  *
  */
 public abstract class NodoPosicion implements NodoAST {
@@ -13,10 +13,10 @@ public abstract class NodoPosicion implements NodoAST {
 	protected int columna;
 
 	/**
-	 * Constructor con parámetros.
+	 * Constructor con parï¿½metros.
 	 * 
 	 * @param linea
-	 *            Línea en la que se encuentra el token.
+	 *            Lï¿½nea en la que se encuentra el token.
 	 * @param columna
 	 *            Columna en la que se encuentra el token.
 	 */
@@ -33,6 +33,14 @@ public abstract class NodoPosicion implements NodoAST {
 	@Override
 	public int getColumna() {
 		return columna;
+	}
+
+	public void setLinea(int linea) {
+		this.linea = linea;
+	}
+
+	public void setColumna(int columna) {
+		this.columna = columna;
 	}
 
 }

@@ -17,7 +17,11 @@ public class TipoRegistro extends TipoAbstracto implements Tipo {
 
 	@Override
 	public String toString() {
-		return "TipoRegistro [campos=" + campos + "]";
+		String aux = "record(";
+		for (CampoRegistro c : campos) {
+			aux += c.toString() + "x";
+		}
+		return aux.substring(0, aux.length() - 1) + ")";
 	}
 
 	@Override

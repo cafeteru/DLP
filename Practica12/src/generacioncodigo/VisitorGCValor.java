@@ -1,7 +1,9 @@
 package generacioncodigo;
 
 import ast.expresiones.*;
+import ast.sentencias.Invocacion;
 import ast.tipos.Tipo;
+import ast.tipos.TipoFuncion;
 
 public class VisitorGCValor extends AbstractVisitorGC {
 	private static VisitorGCValor valor;
@@ -9,7 +11,8 @@ public class VisitorGCValor extends AbstractVisitorGC {
 	private GeneradorCodigo GC;
 	private VisitorGCDireccion direccion;
 
-	public VisitorGCValor(String entrada, String salida, VisitorGCDireccion direccion) {
+	public VisitorGCValor(String entrada, String salida,
+			VisitorGCDireccion direccion) {
 		GC = GeneradorCodigo.getInstancia(entrada, salida);
 		this.direccion = direccion;
 	}
@@ -93,6 +96,19 @@ public class VisitorGCValor extends AbstractVisitorGC {
 	public Object visit(AccesoArray a, Object o) {
 		a.accept(direccion, o);
 		GC.load(a.getTipo().sufijo());
+		return null;
+	}
+
+	@Override
+	public Object visit(Invocacion i, Object o) {
+		int contador = 0;
+		for (Expresion e : i.getExpresiones()) {
+			e.accept(this, o);
+			GC.convertirA(e.getTipo(), ((TipoFuncion) i.getVariable().getTipo())
+					.getParametros().get(contador).getTipo());
+			contador++;
+		}
+		GC.call(i.getVariable().getClave());
 		return null;
 	}
 

@@ -186,7 +186,7 @@ public class GeneradorCodigo {
 	}
 
 	public void id(String etiqueta) {
-		out.println(etiqueta + ":");
+		out.println(" " + etiqueta + ":");
 		out.flush();
 	}
 
@@ -195,7 +195,7 @@ public class GeneradorCodigo {
 	}
 
 	public void call(String etiqueta) {
-		out.println("call " + etiqueta);
+		out.println("\tcall\t" + etiqueta);
 		out.flush();
 	}
 
@@ -206,7 +206,7 @@ public class GeneradorCodigo {
 
 	public void ret(int nBytesRetorno, int nBytesVariablesLocales,
 			int nBytesParametros) {
-		out.println("\tret " + nBytesRetorno + ", " + nBytesVariablesLocales
+		out.println("\tret	" + nBytesRetorno + ", " + nBytesVariablesLocales
 				+ ", " + nBytesParametros);
 		out.flush();
 	}
@@ -223,6 +223,11 @@ public class GeneradorCodigo {
 
 	public void line(int constant) {
 		out.println("\n#line\t" + constant);
+		out.flush();
+	}
+
+	public void lineFuncion(int constant) {
+		out.println("\n#line\t" + constant + "\n");
 		out.flush();
 	}
 
@@ -306,8 +311,14 @@ public class GeneradorCodigo {
 	public void llamadaMain() {
 		out.println();
 		comentario("Invocation to the main function");
-		call("main");
+		callMain();
 		halt();
+		out.flush();
+	}
+
+	public void callMain() {
+		out.println("call main");
+		out.flush();
 	}
 
 	public void convertirA(Tipo tipo, Tipo tipo2) {

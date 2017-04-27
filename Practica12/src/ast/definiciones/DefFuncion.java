@@ -5,6 +5,8 @@ import java.util.List;
 import ast.definiciones.util.DefinicionAbstracta;
 import ast.sentencias.Sentencia;
 import ast.tipos.TipoFuncion;
+import ast.tipos.TipoVoid;
+import generacioncodigo.GeneradorCodigo;
 import visitor.Visitor;
 
 public class DefFuncion extends DefinicionAbstracta {
@@ -46,6 +48,17 @@ public class DefFuncion extends DefinicionAbstracta {
 
 	public void setNumBytesLocal(int numBytesLocal) {
 		this.numBytesLocal = numBytesLocal;
+	}
+
+	public void crearRet(GeneradorCodigo GC) {
+		TipoFuncion tp = (TipoFuncion) getTipo();
+		int retorno;
+		if (getTipo() instanceof TipoVoid) {
+			retorno = 0;
+		} else {
+			retorno = tp.getRetorno().nBytes();
+		}
+		GC.ret(retorno, getNumBytesLocal(), tp.getNumBytesParam());
 	}
 
 }
