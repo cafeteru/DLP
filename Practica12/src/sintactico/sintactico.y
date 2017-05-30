@@ -49,19 +49,14 @@ programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'							
 																											this.ast = new Programa(lexico.getLine(), lexico.getColumn(), definiciones); 
 																										} ;
 definiciones: definiciones definicion     																{	$$ = $1; 
-																											List<Definicion> lista = (List<Definicion>)$$;
-																											List<String> nombres = new ArrayList();
-																											for(Definicion nombre : lista){
-																												nombres.add(nombre.getNombre());
-																											}
+																											List<Definicion> lista = (List<Definicion>)$$;																											
 																											List<Definicion> listaDefiniciones = (List<Definicion>)$2;
-																											for(int i = 0; i < listaDefiniciones.size(); i++){
+																											for(int i = 0; i < listaDefiniciones.size(); i++) {
 																												Definicion elemento = listaDefiniciones.get(i);
-																											    lista.add(elemento);																				
-																												
+																											    lista.add(elemento);																
 																											}
 																										}
-       |/*vacio*/																						{	$$ = new ArrayList(); }
+       |/*vacio*/																						{	$$ = new ArrayList<Definicion>(); }
        ;
   
 definicion: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' /*funcion*/  		{ 	List<Definicion> lista = new ArrayList();
@@ -72,47 +67,38 @@ definicion: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoDefinicion 
 																										}																										
 	  | VOID ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' /*procedimiento*/				{	List<Definicion> lista = new ArrayList();
 																											lista.add(new DefFuncion(lexico.getLine(), lexico.getColumn(),  (String) $2,
-																											new TipoFuncion((List<DefVariable>)$4, TipoVoid.getInstancia()), 
-																											(List<DefVariable>)$7, (List<Sentencia>)$8));
+																												new TipoFuncion((List<DefVariable>)$4, TipoVoid.getInstancia()), 
+																												(List<DefVariable>)$7, (List<Sentencia>)$8));
 																											$$ = lista;
 																										}																										
 	| declaracionVariable ';'																			{ 	$$ = $1;  }
 	  ;	
 	  
 declaraciones: declaraciones declaracionVariable ';'													{ 	$$ = $1;
-																											List<DefVariable> lista = (List<DefVariable>)$$;
-																											List<String> nombres = new ArrayList();
-																											for(Definicion nombre : lista){
-																												nombres.add(nombre.getNombre());
-																											}
+																											List<DefVariable> lista = (List<DefVariable>)$$;																											
 																											for(DefVariable elemento : (List<DefVariable>)$2)
-																													lista.add(elemento); 
+																												lista.add(elemento); 
 																										}
 			| /*vacio*/																					{ 	$$ = new ArrayList<DefVariable>();}
 			;
 	   
 parametros: parametros ',' definicionVariable															{	$$ = $1; 
-																											List<DefVariable> lista = (List<DefVariable>)$$;
-																											List<String> nombres = new ArrayList();																											
-																											for(Definicion nombre : lista)
-																												nombres.add(nombre.getNombre());
-																												
-																											for(DefVariable elemento : (List<DefVariable>) $3){
+																											List<DefVariable> lista = (List<DefVariable>)$$;																												
+																											for(DefVariable elemento : (List<DefVariable>) $3)
 																												lista.add(elemento);																												
-																											}
 																										}
 		  | definicionVariable																			{ 	$$ = $1; }
-		  | /*vacio*/ 																					{ 	$$ = new ArrayList<DefVariable>();}
+		  | /*vacio*/ 																					{ 	$$ = new ArrayList<DefVariable>(); }
 		  ;
 		  
-definicionVariable: tipoSimple ID																		{ 	$$ = new ArrayList<>();
+definicionVariable: tipoSimple ID																		{ 	$$ = new ArrayList<DefVariable>();
 																											((List<DefVariable>) $$).add(new DefVariable(lexico.getLine(), 
 																												lexico.getColumn(), (String)$2, (Tipo)$1));  
 																										}
 			     ;
 		 
-cuerpoDefinicion: sentencias																			{ 	$$ = $1;}
-	  | /*vacio*/																						{ 	$$ = new ArrayList<Sentencia>();}
+cuerpoDefinicion: sentencias																			{ 	$$ = $1; }
+	  | /*vacio*/																						{ 	$$ = new ArrayList<Sentencia>(); }
 	  ;
 
 sentencias: sentencias sentencia 																		{ 	$$ = $1;((List<Sentencia>)$$).add((Sentencia)$2); }
@@ -120,10 +106,10 @@ sentencias: sentencias sentencia 																		{ 	$$ = $1;((List<Sentencia>)
 		 ;
 		 	
 sentencia: expresion '=' expresion ';' 							                						{ 	$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$3); }			
-		 | WHILE '(' expresion ')' cuerpoCondicional													{ 	$$ = new SentenciaWhile(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5);}
+		 | WHILE '(' expresion ')' cuerpoCondicional													{ 	$$ = new SentenciaWhile(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5); }
 		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE									{ 	$$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, new ArrayList()); }
-		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 								{ 	$$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, (List<Sentencia>)$7);}
-		 | WRITE expresiones ';'																		{ 	$$ = new Escritura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2);}
+		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 								{ 	$$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, (List<Sentencia>)$7); }
+		 | WRITE expresiones ';'																		{ 	$$ = new Escritura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2); }
 		 | READ expresiones ';'																			{ 	$$ = new Lectura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2); }
 		 | invocacion ';'																				{ 	$$ = $1; }
 		 | RETURN expresion ';'																			{ 	$$ = new Return(lexico.getLine(), lexico.getColumn(), (Expresion)$2);}
@@ -133,56 +119,43 @@ cuerpoCondicional: '{' sentencias '}'																	{ 	$$ = $2;	}
 		         | sentencia 																			{ 	$$ = new ArrayList<Sentencia>(); ((List<Sentencia>)$$).add((Sentencia)$1);  }
 		         ;
       
-declaracionVariable: tipoSimple identificador															{ 	List<DefVariable> variables = new ArrayList();
-																											for(String aux: (List<String>)$2){
-																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), aux, (Tipo)$1));
-																											}	 
+declaracionVariable: tipoSimple identificador															{ 	List<DefVariable> variables = new ArrayList<DefVariable>();
+																											for(String aux: (List<String>)$2)
+																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), aux, (Tipo)$1));																												 
 																											$$ = variables; 
 																										}															 
 		           | tipoSimple indices identificador 													{	List<Integer> indices = (List<Integer>)$2;
 																											TipoArray tipo = new TipoArray(indices.get(0), (Tipo)$1);
-																											for(int i = 1; i < indices.size(); i++){
-																												tipo = new TipoArray(indices.get(i), tipo);
-																											}	           												
-		           												
+																											for(int i = 1; i < indices.size(); i++)
+																												tipo = new TipoArray(indices.get(i), tipo);																										           												
 																											List<DefVariable> variables = new ArrayList();
-																											for(String id: (List<String>)$3){
+																											for(String id: (List<String>)$3)
 																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), id, tipo));
-																											}	 
 																											$$ = variables;  
 																										}
 		           | STRUCT '{' campos '}' identificador    											{ 	List<CampoRegistro> registrosStruct = new ArrayList();
-		           																							for(DefVariable var : (List<DefVariable>) $3){
-		           																								registrosStruct.add(new CampoRegistro(lexico.getLine(), lexico.getColumn(), var.getNombre(), var.getTipo()));
-																											}
-		           												
-																											TipoRegistro registro = new TipoRegistro(registrosStruct);
-		           												          												
+		           																							for(DefVariable var : (List<DefVariable>) $3)
+		           																								registrosStruct.add(new CampoRegistro(lexico.getLine(), lexico.getColumn(), var.getNombre(), var.getTipo()));		           												
+																											TipoRegistro registro = new TipoRegistro(registrosStruct);		           												          												
 																											List<DefVariable> variables = new ArrayList();
-																											for(String aux: (List<String>)$5){
+																											for(String aux: (List<String>)$5)
 																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), aux, registro));
-																											}	 
 																											$$ = variables; 															 
 																										}
-					| STRUCT '{' campos '}' indices identificador 										{	List<CampoRegistro> registrosStruct = new ArrayList();
-		           																							for(DefVariable var : (List<DefVariable>) $3){
-		           																								registrosStruct.add(new CampoRegistro(lexico.getLine(), lexico.getColumn(), var.getNombre(), var.getTipo()));
-																											}
-		           												
+				   | STRUCT '{' campos '}' indices identificador 										{
+					   																						List<CampoRegistro> registrosStruct = new ArrayList();
+		           																							for(DefVariable var : (List<DefVariable>) $3)
+		           																								registrosStruct.add(new CampoRegistro(lexico.getLine(), lexico.getColumn(), var.getNombre(), var.getTipo()));		           												
 																											TipoRegistro registro = new TipoRegistro(registrosStruct);
 
 																											List<Integer> indices = (List<Integer>)$5;
 																											TipoArray tipo = new TipoArray(indices.get(0), registro);
-																											for(int i = 1; i < indices.size(); i++){
-																												tipo = new TipoArray(indices.get(i), tipo);
-																											}
 
 																											List<DefVariable> variables = new ArrayList();
-																											for(String aux: (List<String>)$6){
-																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), aux, registro));
-																											}	 
-																											$$ = variables; 	
-																										}
+																											for(String id: (List<String>)$6)
+																												variables.add(new DefVariable(lexico.getLine(), lexico.getColumn(), id, tipo));
+																											$$ = variables;
+				   																						}
 		           ;
 				  
 campos: campos declaracionVariable ';'																	{ 	$$ = $1;
@@ -197,7 +170,7 @@ campos: campos declaracionVariable ';'																	{ 	$$ = $1;
 																												new TipoError(lexico.getLine(), lexico.getColumn(),"Campo duplicado -> " + elemento.getNombre());
 																											}
 																										}
-	  | declaracionVariable ';'																			{ $$ = $1;  }
+	  | declaracionVariable ';'																			{ $$ = $1; }
       ;
 
 expresiones: expresiones ',' expresion																	{ 	$$ = $1; 
@@ -229,7 +202,7 @@ expresion: ID																							{ 	$$ = new Variable(lexico.getLine(), lexic
          | '-' expresion %prec MENOS_UNARIO  															{ 	$$ = new MenosUnario(lexico.getLine(), lexico.getColumn(),  "-",(Expresion) $2);	}
          | expresion '.' ID					    													    { 	$$ = new AccesoCampo(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (String) $3);	}
          | '(' expresion ')' 																			{ 	$$ = $2;}
-         | '(' tipoSimple ')' expresion	%prec CASTP													            { 	$$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);	}
+         | '(' tipoSimple ')' expresion	%prec CASTP													    { 	$$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);	}
          | invocacion						 															{ 	$$ = $1;}
          | expresion '[' expresion ']'																	{ 	$$ = new AccesoArray(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3); }			   
          ;

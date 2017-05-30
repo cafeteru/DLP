@@ -1,5 +1,5 @@
 
-#source	"entrada.txt"
+#source "entrada.grande.txt"
 
 	' * record((integer x int)x(character x char)) pair (offset 0)
 	' * [2,record((employees x [2,record((age x int))]))] acme (offset 3)
@@ -18,7 +18,7 @@ halt
 	enter	0
 	ret	0, 0, 0
 
-#line	16
+#line	29
 
  f:
 	' * Parameters
@@ -50,7 +50,7 @@ halt
 	storeb
 	' * If statement
 
-#line	22
+#line	27
 	push	bp
 	pushi	4
 	addi
@@ -82,7 +82,7 @@ halt
 	b2i
 	storei
 	jmp	label1
- label0:
+  label0:
 	' * Body of the else branch
 
 #line	27
@@ -95,7 +95,7 @@ halt
 	loadf
 	f2i
 	storei
- label1:
+  label1:
 
 #line	28
 	' * Return
@@ -105,7 +105,7 @@ halt
 	loadi
 	ret	2, 7, 6
 
-#line	31
+#line	43
 
  initialize:
 	' * Parameters
@@ -160,8 +160,8 @@ halt
 	storei
 	' * While
 
-#line	37
- label2:
+#line	42
+  label2:
 	push	bp
 	pushi	-2
 	addi
@@ -285,10 +285,10 @@ halt
 	addi
 	storei
 	jmp	label2
- label3:
+  label3:
 	ret	0, 2, 0
 
-#line	47
+#line	93
 
  main:
 	' * Parameters
@@ -357,8 +357,8 @@ halt
 	storei
 	' * While
 
-#line	60
- label4:
+#line	66
+  label4:
 	push	bp
 	pushi	-2
 	addi
@@ -450,7 +450,7 @@ halt
 	addi
 	storei
 	jmp	label4
- label5:
+  label5:
 
 #line	68
 	pusha	3
@@ -498,8 +498,8 @@ halt
 	storei
 	' * While
 
-#line	72
- label6:
+#line	79
+  label6:
 	push	bp
 	pushi	-2
 	addi
@@ -517,8 +517,8 @@ halt
 	storei
 	' * While
 
-#line	74
- label8:
+#line	77
+  label8:
 	push	bp
 	pushi	-4
 	addi
@@ -571,7 +571,7 @@ halt
 	addi
 	storei
 	jmp	label8
- label9:
+  label9:
 
 #line	78
 	push	bp
@@ -585,7 +585,7 @@ halt
 	addi
 	storei
 	jmp	label6
- label7:
+  label7:
 
 #line	82
 	push	bp
@@ -595,8 +595,8 @@ halt
 	storei
 	' * While
 
-#line	83
- label10:
+#line	91
+  label10:
 	push	bp
 	pushi	-2
 	addi
@@ -614,8 +614,8 @@ halt
 	storei
 	' * While
 
-#line	85
- label12:
+#line	89
+  label12:
 	push	bp
 	pushi	-4
 	addi
@@ -664,7 +664,7 @@ halt
 	addi
 	storei
 	jmp	label12
- label13:
+  label13:
 
 #line	90
 	push	bp
@@ -678,5 +678,5 @@ halt
 	addi
 	storei
 	jmp	label10
- label11:
+  label11:
 	ret	0, 4, 0

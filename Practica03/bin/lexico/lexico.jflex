@@ -1,11 +1,11 @@
-// ************  CÛdigo a incluir ********************
+// ************  C√≥digo a incluir ********************
 
 package lexico;
 import sintactico.Parser;
 
 %%
 // ************  Opciones ********************
-//% debug // * OpciÛn para depurar
+//% debug // * Opci√≥n para depurar
 %byaccj
 %class Lexico
 %public
@@ -14,14 +14,14 @@ import sintactico.Parser;
 %column
 
 %{
-// ************  Atributos y mÈtodos ********************
-// * Para acceder al n˙mero de lÌnea (yyline es package)
+// ************  Atributos y m√©todos ********************
+// * Para acceder al n√∫mero de l√≠nea (yyline es package)
 public int getLine() { 
 	// * Flex empieza en cero
 	return yyline+1;
 }
 
-// * Para acceder al n˙mero de columna (yycolumn es package)
+// * Para acceder al n√∫mero de columna (yycolumn es package)
 public int getColumn() { 
 	// * Flex empieza en cero
 	return yycolumn+1;
@@ -37,15 +37,15 @@ public Object getYylval() {
 
 // ************  Patrones (macros) ********************
 ConstanteEntera = [0-9]+
-ConstanteReal = ([0-9]+\.[0-9]+|[0-9]*\.[0-9]+|[0-9]+\.[0-9]*|[0-9]+)(e|E)?("+"|"-")?[0-9]*
-Identificador = [a-zA-Z·ÈÌÛ˙Ò¡…Õ”⁄—]+ [a-zA-Z0-9Z·ÈÌÛ˙Ò¡…Õ”⁄—_]*
+ConstanteReal = ([0-9]+\.[0-9]+| [0-9]*\.[0-9]+| [0-9]+\.[0-9]*| [0-9]+)((e|E)("+"|"-")?[0-9]+)?
+Identificador = [a-zA-Z√°√©√≠√≥√∫√±√Å√â√ç√ì√ö√ë]+ [a-zA-Z0-9Z√°√©√≠√≥√∫√±√Å√â√ç√ì√ö√ë_]*
 Operador = ("<"|">"|";"|":"|"("|")"|"["|"]"|"{"|"}"|","|"="|"+"|"-"|"*"|"/"|"."|"!"|"?"|"%")
-Caracter = "'"([0-9]|[a-zA-Z·ÈÌÛ˙Ò¡…Õ”⁄—]|"\\"([0-9]+|"n"|"t"))"'" 
+CaracterASCII = '"\\"[0-9]+' 
 %%
 // ************  Acciones ********************
-"//" ~ "\n"				{ } 
+"//" .*			        { } 
 "/*" ~ "*/"        		{ }	
-{ Operador }			{ this.yylval = yytext().charAt(0); 
+{ Operador }			{ this.yylval = new Character(yytext().charAt(0)); 
 							return yytext().charAt(0); }		
 "=="					{ this.yylval = yytext();
 							return Parser.IGUALDAD; }								
@@ -87,19 +87,17 @@ return   				{ this.yylval = yytext();
          			  		return Parser.CTE_ENTERA; }							
 { ConstanteReal }	    { this.yylval = new Double(yytext());
          			  		return Parser.CTE_REAL; }
-{ Identificador }		{ this.yylval = yytext();
+{ Identificador }		{ this.yylval = new String(yytext());
 							return Parser.ID; }	
-{ Caracter }			{ String aux = yytext().substring(1, yytext().length() - 1);
-						  if (aux.length() > 2)
-						  	this.yylval = (char) Integer.parseInt(aux.substring(1));
-						  else
-						  	this.yylval = aux;
-						  return Parser.CTE_CARACTER; }											 	
-[\n \r \t]		    	{ }				
+'.'						{this.yylval = new Character(yytext().charAt(1));
+							return Parser.CTE_CARACTER; }	
+"'\\n'"					{ this.yylval = new Character('\n');
+						  	return Parser.CTE_CARACTER; }
+"'\\t'"					{ this.yylval = new Character('\t');
+						  	return Parser.CTE_CARACTER; }							  						  								
+{ CaracterASCII }		{ this.yylval = (char) Integer.parseInt(yytext().substring(2, yytext().length() - 1));
+						  	return Parser.CTE_CARACTER; }											 	
+[\n \r \t ]		    { }				
 .						{ System.err.println("Ha fallado el token " + yytext()
 							+ " en la linea " + getLine() + ", en la columna "
 							+ getColumn()); }
-
-
-			
-

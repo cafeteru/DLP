@@ -37,7 +37,7 @@ public Object getYylval() {
 
 // ************  Patrones (macros) ********************
 ConstanteEntera = [0-9]+
-ConstanteReal = ([0-9]+\.[0-9]+| [0-9]*\.[0-9]+| [0-9]+\.[0-9]*| [0-9]+)((e|E)("+"|"-")?[0-9]+)?
+ConstanteReal = ([0-9]+\.[0-9]+ | [0-9]*\.[0-9]+ | [0-9]+\.[0-9]* | [0-9]+)((e|E)("+"|"-")?[0-9]+)?
 Identificador = [a-zA-ZáéíóúñÁÉÍÓÚÑ]+ [a-zA-Z0-9ZáéíóúñÁÉÍÓÚÑ_]*
 Operador = ("<"|">"|";"|":"|"("|")"|"["|"]"|"{"|"}"|","|"="|"+"|"-"|"*"|"/"|"."|"!"|"?"|"%")
 CaracterASCII = '"\\"[0-9]+' 
@@ -97,7 +97,7 @@ return   				{ this.yylval = yytext();
 						  	return Parser.CTE_CARACTER; }							  						  								
 { CaracterASCII }		{ this.yylval = (char) Integer.parseInt(yytext().substring(2, yytext().length() - 1));
 						  	return Parser.CTE_CARACTER; }											 	
-[\n \r \t ]		    { }				
+[\n \r \t ]		        { }				
 .						{ System.err.println("Ha fallado el token " + yytext()
 							+ " en la linea " + getLine() + ", en la columna "
 							+ getColumn()); }
