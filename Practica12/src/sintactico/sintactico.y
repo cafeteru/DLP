@@ -198,6 +198,7 @@ expresion: ID																							{ 	$$ = new Variable(lexico.getLine(), lexic
          | expresion IGUALDAD expresion  																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "==", (Expresion) $3);	}
          | expresion Y expresion  																		{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);	}
          | expresion O expresion 																		{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "||", (Expresion) $3);	}
+		 | expresion X expresion  																	    { 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "^^", (Expresion) $3);	}
          | '!' expresion %prec NEGACION  																{ 	$$ = new Negacion(lexico.getLine(), lexico.getColumn(),  "!", (Expresion) $2);	}
          | '-' expresion %prec MENOS_UNARIO  															{ 	$$ = new MenosUnario(lexico.getLine(), lexico.getColumn(),  "-",(Expresion) $2);	}
          | expresion '.' ID					    													    { 	$$ = new AccesoCampo(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (String) $3);	}
