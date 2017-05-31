@@ -191,7 +191,7 @@ public class GeneradorCodigo {
 	}
 
 	public void etiqueta(int count) {
-		id(" label" + count);
+		id("label" + count);
 	}
 
 	public void call(String etiqueta) {
@@ -217,7 +217,7 @@ public class GeneradorCodigo {
 	}
 
 	public void source(String constant) {
-		out.println("\n#source \"" + constant + "\"\n");
+		out.println("\n#source	\"" + constant + "\"\n");
 		out.flush();
 	}
 

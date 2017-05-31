@@ -3,10 +3,11 @@ package ast.sentencias;
 import ast.NodoAST;
 
 /**
- * Interfaz para definir el tipo "Sentencia" del análizador lexico.
+ * Interfaz para definir el tipo "Sentencia" del anï¿½lizador lexico.
  * 
- * @author Iván González Mahagamage
+ * @author Ivï¿½n Gonzï¿½lez Mahagamage
  *
  */
 public interface Sentencia extends NodoAST {
+	public int calcularLineaComienzo();
 }

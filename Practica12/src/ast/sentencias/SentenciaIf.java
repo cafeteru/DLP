@@ -43,4 +43,14 @@ public class SentenciaIf extends SentenciaAbstracta {
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
+
+	@Override
+	public int calcularLineaComienzo() {
+		int aux = 0;
+		for (Sentencia s : getCuerpoIf())
+			aux += s.calcularLineaComienzo();
+		for (Sentencia s : getCuerpoElse())
+			aux += s.calcularLineaComienzo();
+		return aux + 2;
+	}
 }

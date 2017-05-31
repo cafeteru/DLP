@@ -37,4 +37,11 @@ public class SentenciaWhile extends SentenciaAbstracta {
 		return v.visit(this, o);
 	}
 
+	@Override
+	public int calcularLineaComienzo() {
+		int aux = 0;
+		for (Sentencia s : getSentencias())
+			aux += s.calcularLineaComienzo();
+		return aux + 1;
+	}
 }

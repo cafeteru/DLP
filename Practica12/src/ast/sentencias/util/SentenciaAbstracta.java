@@ -10,4 +10,8 @@ public abstract class SentenciaAbstracta extends NodoPosicion
 		super(linea, columna);
 	}
 
+	public int calcularLineaComienzo() {
+		return 1;
+	}
+
 }

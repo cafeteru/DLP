@@ -107,7 +107,7 @@ halt
 	storei
 	' * While
 
-#line	32
+#line	28
  label0:
 	push	bp
 	pushi	-2
@@ -175,7 +175,7 @@ halt
  label1:
 	ret	0, 4, 6
 
-#line	36
+#line	35
 
  show:
 	' * Parameters
@@ -192,7 +192,7 @@ halt
 	storei
 	' * While
 
-#line	41
+#line	38
  label2:
 	push	bp
 	pushi	-2
@@ -270,7 +270,7 @@ halt
 	outb
 	ret	0, 2, 2
 
-#line	52
+#line	47
 
  main:
 	' * Parameters
@@ -340,7 +340,7 @@ halt
 	storei
 	' * While
 
-#line	65
+#line	60
  label4:
 	push	bp
 	pushi	-2

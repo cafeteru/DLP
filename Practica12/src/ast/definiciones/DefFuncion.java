@@ -19,6 +19,7 @@ public class DefFuncion extends DefinicionAbstracta {
 		super(linea, columna, nombre, tipo);
 		this.variablesLocales = variablesLocales;
 		this.cuerpo = cuerpo;
+		calcularLineaComienzo();
 	}
 
 	@Override
@@ -59,6 +60,16 @@ public class DefFuncion extends DefinicionAbstracta {
 			retorno = tp.getRetorno().nBytes();
 		}
 		GC.ret(retorno, getNumBytesLocal(), tp.getNumBytesParam());
+	}
+
+	private void calcularLineaComienzo() {
+		if (cuerpo.size() > 0) {
+			int aux = 0;
+			for (Sentencia s : cuerpo)
+				aux += s.calcularLineaComienzo();
+			int a = getLinea() - variablesLocales.size() - aux - 1;
+			setLinea(a);
+		}
 	}
 
 }
