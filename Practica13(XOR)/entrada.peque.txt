@@ -1,0 +1,21 @@
+
+// * Main program
+void main() {
+ int i, j;
+ i = 0;
+ j = 0;
+ write i ^^ j;
+ 
+ i = 0;
+ j = 5;
+ write i ^^ j;
+ 
+ i = 5;
+ j = 0;
+ write i ^^ j;
+ 
+ i = 5;
+ j = 5;
+ write i ^^ j;
+}
+	
