@@ -1,0 +1,11 @@
+int integer;
+char character;
+double real;
+
+void main() {
+  read integer; 
+  character=8.5; // * Error 1 -> No se puede sumar a char
+  3=integer; // * Error 2 -> Una constante no se puede modificar
+  read integer+2; // * Error 3 -> Read no puede tener una expresion sin LValue
+}
+

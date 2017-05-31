@@ -57,9 +57,4 @@ public class Variable extends ExpresionAbstracta implements Sentencia {
 		return "Variable [clave=" + clave + ", definicion=" + definicion + "]";
 	}
 
-	@Override
-	public int calcularLineaComienzo() {
-		return 1;
-	}
-
 }

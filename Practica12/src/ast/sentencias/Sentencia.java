@@ -9,5 +9,4 @@ import ast.NodoAST;
  *
  */
 public interface Sentencia extends NodoAST {
-	public int calcularLineaComienzo();
 }

@@ -10,18 +10,17 @@ public class SentenciaWhile extends SentenciaAbstracta {
 	private Expresion condicion;
 	private List<Sentencia> sentencias;
 
-	public SentenciaWhile(int linea, int columna, Expresion expresion,
-			List<Sentencia> cuerpo) {
+	public SentenciaWhile(int linea, int columna, Expresion expresion, List<Sentencia> cuerpo) {
 		super(linea, columna);
 		condicion = expresion;
 		sentencias = cuerpo;
+		setLinea(condicion.getLinea());
 	}
 
 	@Override
 	public String toString() {
-		return "SentenciaWhile [condicion=" + condicion + ", sentencias="
-				+ sentencias + ", linea=" + linea + ", columna=" + columna
-				+ "]";
+		return "SentenciaWhile [condicion=" + condicion + ", sentencias=" + sentencias + ", linea=" + linea
+				+ ", columna=" + columna + "]";
 	}
 
 	public Expresion getCondicion() {
@@ -35,13 +34,5 @@ public class SentenciaWhile extends SentenciaAbstracta {
 	@Override
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
-	}
-
-	@Override
-	public int calcularLineaComienzo() {
-		int aux = 0;
-		for (Sentencia s : getSentencias())
-			aux += s.calcularLineaComienzo();
-		return aux + 1;
 	}
 }
