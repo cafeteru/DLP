@@ -1,16 +1,19 @@
 
-#source	"entrada.grande.txt"
+#source	"entrada.txt"
 
-	' * record((integer x int)x(character x char)) pair (offset 0)
-	' * [2,record((employees x [2,record((age x int))]))] acme (offset 3)
-	' * [8,[3,int]] fibonacci (offset 11)
+	' * int i (offset 0)
+	' * int n (offset 2)
+	' * int j (offset 4)
+	' * char c (offset 6)
+	' * record((integer x int)x(character x char)) pair (offset 7)
+	' * [10,[10,int]] matrix (offset 10)
 
 ' Invocation to the main function
 call main
 halt
 
 
-#line	14
+#line	12
 
  p:
 	' * Parameters
@@ -18,7 +21,7 @@ halt
 	enter	0
 	ret	0, 0, 0
 
-#line	16
+#line	14
 
  f:
 	' * Parameters
@@ -27,253 +30,227 @@ halt
 	' * Local variables
 	' * real real (offset -4)
 	' * char c (offset -5)
-	' * int result (offset -7)
-	enter	7
+	enter	5
 
-#line	20
+#line	17
 	push	bp
 	pushi	-4
 	addi
+	pusha	7
+	pushi	2
+	addi
+	loadb
+	b2i
+	i2f
+	pusha	7
+	pushi	0
+	addi
+	loadi
+	i2f
+	addf
 	push	bp
 	pushi	6
 	addi
 	loadf
-	pushf	10.0
-	mulf
+	addf
+	push	bp
+	pushi	4
+	addi
+	loadi
+	i2f
+	addf
 	storef
 
-#line	21
+#line	18
 	push	bp
 	pushi	-5
 	addi
 	pushb	48
 	storeb
-	' * If statement
 
-#line	22
-	push	bp
-	pushi	4
-	addi
-	loadi
-	pushi	256
-	lti
-	jz	label0
-	' * Body of the if branch
-
-#line	23
-	push	bp
-	pushi	-5
-	addi
-	push	bp
-	pushi	4
-	addi
-	loadi
-	i2b
-	storeb
-
-#line	24
-	push	bp
-	pushi	-7
-	addi
+#line	19
+	' * Return
 	push	bp
 	pushi	-5
 	addi
 	loadb
 	b2i
+	ret	2, 5, 6
+
+#line	24
+
+ fill:
+	' * Parameters
+	' * int row (offset 8)
+	' * int value (offset 6)
+	' * int increment (offset 4)
+	' * Local variables
+	' * int i (offset -2)
+	' * int inc (offset -4)
+	enter	4
+
+#line	26
+	push	bp
+	pushi	-2
+	addi
+	pushi	0
 	storei
-	jmp	label1
- label0:
-	' * Body of the else branch
 
 #line	27
 	push	bp
-	pushi	-7
+	pushi	-4
+	addi
+	push	bp
+	pushi	4
+	addi
+	loadi
+	storei
+	' * While
+
+#line	28
+ label0:
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	10
+	lti
+	jz	label1
+	' * Body of the while statement
+
+#line	29
+	pusha	10
+	push	bp
+	pushi	8
+	addi
+	loadi
+	pushi	20
+	muli
+	addi
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	2
+	muli
+	addi
+	push	bp
+	pushi	6
+	addi
+	loadi
+	push	bp
+	pushi	-4
+	addi
+	loadi
+	addi
+	storei
+
+#line	30
+	push	bp
+	pushi	-2
+	addi
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	1
+	addi
+	storei
+
+#line	31
+	push	bp
+	pushi	-4
 	addi
 	push	bp
 	pushi	-4
 	addi
-	loadf
-	f2i
-	storei
- label1:
-
-#line	28
-	' * Return
+	loadi
 	push	bp
-	pushi	-7
+	pushi	4
 	addi
 	loadi
-	ret	2, 7, 6
+	addi
+	storei
+	jmp	label0
+ label1:
+	ret	0, 4, 6
 
-#line	31
+#line	35
 
- initialize:
+ show:
 	' * Parameters
+	' * int row (offset 4)
 	' * Local variables
 	' * int i (offset -2)
 	enter	2
 
-#line	33
-	pusha	11
-	pushi	0
-	pushi	6
-	muli
-	addi
-	pushi	0
-	pushi	2
-	muli
-	addi
-	pushi	0
-	storei
-
-#line	34
-	pusha	11
-	pushi	0
-	pushi	6
-	muli
-	addi
-	pushi	1
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	35
-	pusha	11
-	pushi	0
-	pushi	6
-	muli
-	addi
-	pushi	2
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	36
+#line	37
 	push	bp
 	pushi	-2
 	addi
-	pushi	1
+	pushi	0
 	storei
 	' * While
 
-#line	37
+#line	38
  label2:
 	push	bp
 	pushi	-2
 	addi
 	loadi
-	pushi	8
+	pushi	10
 	lti
 	jz	label3
 	' * Body of the while statement
 
-#line	38
-	pusha	11
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	muli
-	addi
-	pushi	0
-	pushi	2
-	muli
-	addi
-	pusha	11
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	subi
-	pushi	6
-	muli
-	addi
-	pushi	1
-	pushi	2
-	muli
-	addi
-	loadi
-	storei
-
 #line	39
-	pusha	11
+	' * Write
+	pushb	40
+	outb
+	' * Write
+	push	bp
+	pushi	4
+	addi
+	loadi
+	outi
+	' * Write
+	pushb	44
+	outb
+	' * Write
 	push	bp
 	pushi	-2
 	addi
 	loadi
-	pushi	6
+	outi
+	' * Write
+	pushb	41
+	outb
+	' * Write
+	pushb	58
+	outb
+	' * Write
+	pusha	10
+	push	bp
+	pushi	4
+	addi
+	loadi
+	pushi	20
 	muli
 	addi
-	pushi	1
-	pushi	2
-	muli
-	addi
-	pusha	11
 	push	bp
 	pushi	-2
 	addi
 	loadi
-	pushi	1
-	subi
-	pushi	6
-	muli
-	addi
-	pushi	2
 	pushi	2
 	muli
 	addi
 	loadi
-	storei
+	outi
+	' * Write
+	pushb	32
+	outb
 
 #line	40
-	pusha	11
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	muli
-	addi
-	pushi	2
-	pushi	2
-	muli
-	addi
-	pusha	11
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	muli
-	addi
-	pushi	0
-	pushi	2
-	muli
-	addi
-	loadi
-	pusha	11
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	muli
-	addi
-	pushi	1
-	pushi	2
-	muli
-	addi
-	loadi
-	addi
-	storei
-
-#line	41
 	push	bp
 	pushi	-2
 	addi
@@ -286,7 +263,12 @@ halt
 	storei
 	jmp	label2
  label3:
-	ret	0, 2, 0
+
+#line	42
+	' * Write
+	pushb	10
+	outb
+	ret	0, 2, 2
 
 #line	47
 
@@ -294,42 +276,41 @@ halt
 	' * Parameters
 	' * Local variables
 	' * int i (offset -2)
-	' * int j (offset -4)
-	enter	4
-
-#line	49
-	call	p
+	enter	2
 
 #line	50
+	call	p
+
+#line	51
 	push	bp
 	pushi	-2
 	addi
 	pushi	0
 	storei
 
-#line	51
-	pusha	0
+#line	52
+	pusha	7
 	pushi	2
 	addi
 	pushb	48
 	storeb
 
-#line	52
-	pusha	0
+#line	53
+	pusha	7
 	pushi	0
 	addi
 	pushb	48
 	b2i
 	storei
 
-#line	55
+#line	54
 	' * Write
 	push	bp
 	pushi	-2
 	addi
 	loadi
 	i2f
-	pusha	0
+	pusha	7
 	pushi	2
 	addi
 	loadb
@@ -347,12 +328,14 @@ halt
 	popi
 
 #line	58
-	call	initialize
-
-#line	59
 	push	bp
 	pushi	-2
 	addi
+	pushi	0
+	storei
+
+#line	59
+	pusha	4
 	pushi	0
 	storei
 	' * While
@@ -363,82 +346,29 @@ halt
 	pushi	-2
 	addi
 	loadi
-	pushi	8
+	pushi	10
 	lti
 	jz	label5
 	' * Body of the while statement
 
-#line	64
-	' * Write
-	pushb	40
-	outb
-	' * Write
+#line	61
 	push	bp
 	pushi	-2
 	addi
+	loadi
+	pusha	4
 	loadi
 	pushi	1
-	addi
-	outi
-	' * Write
-	pushb	41
-	outb
-	' * Write
-	pusha	11
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	muli
-	addi
-	pushi	0
-	pushi	2
-	muli
-	addi
-	loadi
-	outi
-	' * Write
-	pushb	43
-	outb
-	' * Write
-	pusha	11
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	muli
-	addi
-	pushi	1
-	pushi	2
-	muli
-	addi
-	loadi
-	outi
-	' * Write
-	pushb	61
-	outb
-	' * Write
-	pusha	11
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	muli
-	addi
-	pushi	2
-	pushi	2
-	muli
-	addi
-	loadi
-	outi
-	' * Write
-	pushb	10
-	outb
+	call	fill
 
-#line	65
+#line	62
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	call	show
+
+#line	63
 	push	bp
 	pushi	-2
 	addi
@@ -448,235 +378,17 @@ halt
 	loadi
 	pushi	1
 	addi
+	storei
+
+#line	64
+	pusha	4
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	10
+	muli
 	storei
 	jmp	label4
  label5:
-
-#line	68
-	pusha	3
-	pushi	1
-	pushi	4
-	muli
-	addi
-	pushi	0
-	addi
-	pushi	1
-	pushi	2
-	muli
-	addi
-	pushi	0
-	addi
-	pushi	56
-	storei
-
-#line	70
-	' * Write
-	pusha	3
-	pushi	1
-	pushi	4
-	muli
-	addi
-	pushi	0
-	addi
-	pushi	1
-	pushi	2
-	muli
-	addi
-	pushi	0
-	addi
-	loadi
-	outi
-	' * Write
-	pushb	10
-	outb
-
-#line	71
-	push	bp
-	pushi	-2
-	addi
-	pushi	0
-	storei
-	' * While
-
-#line	72
- label6:
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	2
-	lti
-	jz	label7
-	' * Body of the while statement
-
-#line	73
-	push	bp
-	pushi	-4
-	addi
-	pushi	0
-	storei
-	' * While
-
-#line	74
- label8:
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	lti
-	jz	label9
-	' * Body of the while statement
-
-#line	75
-	pusha	3
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	4
-	muli
-	addi
-	pushi	0
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	0
-	addi
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	addi
-	storei
-
-#line	76
-	push	bp
-	pushi	-4
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label8
- label9:
-
-#line	78
-	push	bp
-	pushi	-2
-	addi
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label6
- label7:
-
-#line	82
-	push	bp
-	pushi	-2
-	addi
-	pushi	0
-	storei
-	' * While
-
-#line	83
- label10:
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	2
-	lti
-	jz	label11
-	' * Body of the while statement
-
-#line	84
-	push	bp
-	pushi	-4
-	addi
-	pushi	0
-	storei
-	' * While
-
-#line	85
- label12:
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	lti
-	jz	label13
-	' * Body of the while statement
-
-#line	87
-	' * Write
-	pusha	3
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	4
-	muli
-	addi
-	pushi	0
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	0
-	addi
-	loadi
-	outi
-	' * Write
-	pushb	32
-	outb
-
-#line	88
-	push	bp
-	pushi	-4
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label12
- label13:
-
-#line	90
-	push	bp
-	pushi	-2
-	addi
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label10
- label11:
-	ret	0, 4, 0
+	ret	0, 2, 0

@@ -14,8 +14,8 @@ public class DefFuncion extends DefinicionAbstracta {
 	private List<Sentencia> cuerpo;
 	private int numBytesLocal;
 
-	public DefFuncion(int linea, int columna, String nombre, TipoFuncion tipo, List<DefVariable> variablesLocales,
-			List<Sentencia> cuerpo) {
+	public DefFuncion(int linea, int columna, String nombre, TipoFuncion tipo,
+			List<DefVariable> variablesLocales, List<Sentencia> cuerpo) {
 		super(linea, columna, nombre, tipo);
 		this.variablesLocales = variablesLocales;
 		this.cuerpo = cuerpo;
@@ -24,8 +24,10 @@ public class DefFuncion extends DefinicionAbstracta {
 
 	@Override
 	public String toString() {
-		return "DefFuncion [variablesLocales=" + variablesLocales + ", cuerpo=" + cuerpo + ", linea=" + linea
-				+ ", columna=" + columna + ", getTipo()=" + getTipo() + ", getNombre()=" + getNombre() + "]";
+		return "DefFuncion [variablesLocales=" + variablesLocales + ", cuerpo="
+				+ cuerpo + ", linea=" + linea + ", columna=" + columna
+				+ ", getTipo()=" + getTipo() + ", getNombre()=" + getNombre()
+				+ "]";
 	}
 
 	public List<DefVariable> getVariablesLocales() {
@@ -61,7 +63,11 @@ public class DefFuncion extends DefinicionAbstracta {
 	}
 
 	private void calcularLineaComienzo() {
-		if (!variablesLocales.isEmpty())
+		List<DefVariable> parametros = ((TipoFuncion) getTipo())
+				.getParametros();
+		if (!parametros.isEmpty())
+			setLinea(parametros.get(0).getLinea());
+		else if (!variablesLocales.isEmpty())
 			setLinea(variablesLocales.get(0).getLinea() - 1);
 		else if (!cuerpo.isEmpty())
 			setLinea(cuerpo.get(0).getLinea() - 1);
