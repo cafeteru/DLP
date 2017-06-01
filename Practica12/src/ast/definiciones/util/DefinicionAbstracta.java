@@ -4,12 +4,30 @@ import ast.definiciones.Definicion;
 import ast.tipos.Tipo;
 import ast.util.NodoPosicion;
 
+/**
+ * Implementación abstracta de la interfaz Definicion para implementar las
+ * partes comunes de todas las clases que heredan de esta interfaz.
+ * 
+ * @author Iván González Mahagamage
+ */
 public abstract class DefinicionAbstracta extends NodoPosicion
 		implements Definicion {
 	private String nombre;
 	private Tipo tipo;
 	private int ambito;
 
+	/**
+	 * Constructor con parámetros.
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la definición.
+	 * @param columna
+	 *            Columna en la que se encuentra la definición.
+	 * @param nombre
+	 *            Nombre de la definición.
+	 * @param tipo
+	 *            Tipo de la definición.
+	 */
 	public DefinicionAbstracta(int linea, int columna, String nombre,
 			Tipo tipo) {
 		super(linea, columna);

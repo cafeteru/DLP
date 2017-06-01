@@ -9,6 +9,10 @@ import ast.tipos.TipoVoid;
 import generacioncodigo.GeneradorCodigo;
 import visitor.Visitor;
 
+/**
+ * 
+ * @author Iván González Mahagamage
+ */
 public class DefFuncion extends DefinicionAbstracta {
 	private List<DefVariable> variablesLocales;
 	private List<Sentencia> cuerpo;
