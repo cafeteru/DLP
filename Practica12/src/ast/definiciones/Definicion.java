@@ -11,28 +11,28 @@ import ast.tipos.Tipo;
 public interface Definicion extends NodoAST {
 
 	/**
-	 * Devuelve el tipo de la definición.
+	 * Método que devuelve el tipo de la definición.
 	 * 
 	 * @return Tipo de la definición.
 	 */
 	public Tipo getTipo();
 
 	/**
-	 * Devuelve el nombre (identificador) de la definición.
+	 * Método que devuelve el nombre (identificador) de la definición.
 	 * 
 	 * @return Nombre de la defición.
 	 */
 	public String getNombre();
 
 	/**
-	 * Devuelve el ámbito de la definición.
+	 * Método que devuelve el ámbito de la definición.
 	 * 
 	 * @return Ámbito de la definición
 	 */
 	public int getAmbito();
 
 	/**
-	 * Modifica el ámbito de la definición.
+	 * Método que modifica el ámbito de la definición.
 	 * 
 	 * @param ambito
 	 *            Nuevo ámbito de la definición.

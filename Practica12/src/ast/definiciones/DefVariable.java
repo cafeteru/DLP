@@ -4,9 +4,25 @@ import ast.definiciones.util.DefinicionAbstracta;
 import ast.tipos.Tipo;
 import visitor.Visitor;
 
+/**
+ * Clase que simboliza la definición de una variable.
+ * 
+ * @author Iván González Mahagamage
+ */
 public class DefVariable extends DefinicionAbstracta {
 	private int offset;
 
+	/**
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la definición.
+	 * @param columna
+	 *            Columna en la que se encuentra la definición.
+	 * @param nombre
+	 *            Nombre de la definición.
+	 * @param tipo
+	 *            Tipo de la definición.
+	 */
 	public DefVariable(int linea, int columna, String nombre, Tipo tipo) {
 		super(linea, columna, nombre, tipo);
 	}
