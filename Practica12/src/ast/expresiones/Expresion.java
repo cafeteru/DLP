@@ -4,17 +4,39 @@ import ast.NodoAST;
 import ast.tipos.Tipo;
 
 /**
- * Interfaz para definir el tipo "Expresion" del an醠izador lexico.
+ * Interfaz para las expresiones.
  * 
- * @author Iv醤 Gonz醠ez Mahagamage
+ * @author Iv谩n Gonz谩lez Mahagamage
  *
  */
 public interface Expresion extends NodoAST {
+	/**
+	 * M茅todo que devuelve el valor que guarda la expresi贸n.
+	 * 
+	 * @return Valor guardado en la expresi贸n.
+	 */
 	public boolean getLValue();
 
+	/**
+	 * M茅todo que modifica el valor guardado dentro de la expresi贸n.
+	 * 
+	 * @param lValue
+	 *            Nuevo valor.
+	 */
 	public void setLValue(boolean lValue);
 
+	/**
+	 * M茅todo que devuelve el tipo de la expresi贸n.
+	 * 
+	 * @return Tipo de la expresi贸n.
+	 */
 	public Tipo getTipo();
 
+	/**
+	 * M茅todo que modifica el tipo de la expresi贸n.
+	 * 
+	 * @param lValue
+	 *            Nuevo Tipo.
+	 */
 	public void setTipo(Tipo tipo);
 }

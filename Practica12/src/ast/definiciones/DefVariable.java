@@ -39,10 +39,21 @@ public class DefVariable extends DefinicionAbstracta {
 		return v.visit(this, o);
 	}
 
+	/**
+	 * Método que devuelve el desplazamiento en memoria sobre la dirección base.
+	 * 
+	 * @return Desplazamiento en memoria sobre la dirección base.
+	 */
 	public int getOffset() {
 		return offset;
 	}
 
+	/**
+	 * Método que modifica el desplazamiento en memoria sobre la dirección base.
+	 * 
+	 * @param offset
+	 *            Desplazamiento en memoria sobre la dirección base.
+	 */
 	public void setOffset(int offset) {
 		this.offset = offset;
 	}

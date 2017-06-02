@@ -8,12 +8,27 @@ import ast.sentencias.util.SentenciaAbstracta;
 import ast.tipos.Tipo;
 import visitor.Visitor;
 
+/**
+ * Clase que simula la invocación a un método con o sin parámetros.
+ * 
+ * @author Iván González Mahagamage
+ */
 public class Invocacion extends SentenciaAbstracta implements Expresion {
 	private List<Expresion> expresiones;
 	private Variable variable;
 	private boolean lValue;
 	private Tipo tipo;
 
+	/**
+	 * Constructor con parámetros.
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la sentencía.
+	 * @param columna
+	 *            Columna en la que se encuentra la sentencía.
+	 * @param variable
+	 * @param expresiones
+	 */
 	public Invocacion(int linea, int columna, Variable variable,
 			List<Expresion> expresiones) {
 		super(linea, columna);

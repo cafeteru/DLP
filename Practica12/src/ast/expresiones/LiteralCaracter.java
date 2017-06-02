@@ -3,14 +3,19 @@ package ast.expresiones;
 import ast.expresiones.util.ExpresionAbstracta;
 import visitor.Visitor;
 
+/**
+ * Clase que representa un caracter.
+ * 
+ * @author Iván González Mahagamage
+ */
 public class LiteralCaracter extends ExpresionAbstracta {
 	private char valor;
 
 	/**
-	 * Constructor con par�metros.
+	 * Constructor con parámetros.
 	 * 
 	 * @param linea
-	 *            L�nea en la que se encuentra el lexema.
+	 *            Línea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 * @param valor
@@ -32,6 +37,11 @@ public class LiteralCaracter extends ExpresionAbstracta {
 		return v.visit(this, o);
 	}
 
+	/**
+	 * Método que devuelve el caracter.
+	 * 
+	 * @return Caracter.
+	 */
 	public char getValor() {
 		return valor;
 	}

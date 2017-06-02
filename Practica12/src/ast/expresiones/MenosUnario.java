@@ -4,14 +4,26 @@ import ast.expresiones.util.OperacionUnaria;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el an醠izador l閤ico un token que es un menos unario.
- * (Vuelve a negativo el valor de la expresi髇 a su derecha.)
+ * Clase que simula un menos unario. (Vuelve a negativo el valor de la expresi贸n
+ * a su derecha.)
  * 
- * @author Iv醤 Gonz醠ez Mahagamage
+ * @author Iv谩n Gonz谩lez Mahagamage
  *
  */
 public class MenosUnario extends OperacionUnaria {
 
+	/**
+	 * Constructor con par谩metro.
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la expresi贸n.
+	 * @param columna
+	 *            Columna en la que se encuentra la expresi贸n.
+	 * @param operador
+	 *            Operador de la expresi贸n
+	 * @param expresion
+	 *            Expresi贸n afectada por el operador
+	 */
 	public MenosUnario(int linea, int columna, String operador,
 			Expresion expresion) {
 		super(linea, columna, operador, expresion);

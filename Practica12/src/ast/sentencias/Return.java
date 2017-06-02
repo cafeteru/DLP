@@ -7,6 +7,14 @@ import visitor.Visitor;
 public class Return extends SentenciaAbstracta {
 	private Expresion expresion;
 
+	/**
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la sentencía.
+	 * @param columna
+	 *            Columna en la que se encuentra la sentencía.
+	 * @param expresion
+	 */
 	public Return(int linea, int columna, Expresion expresion) {
 		super(linea, columna);
 		this.expresion = expresion;

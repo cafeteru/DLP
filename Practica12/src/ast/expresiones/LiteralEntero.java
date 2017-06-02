@@ -4,20 +4,19 @@ import ast.expresiones.util.ExpresionAbstracta;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el análizador léxico un token que es un literal entero.
- * (Un número)
+ * Clase que simula un literal entero.
  * 
- * @author Iván González Mahagamage
+ * @author IvÃ¡n GonzÃ¡lez Mahagamage
  *
  */
 public class LiteralEntero extends ExpresionAbstracta {
 	private int valor;
 
 	/**
-	 * Constructor con parámetros.
+	 * Constructor con parÃ¡metros.
 	 * 
 	 * @param linea
-	 *            Línea en la que se encuentra el lexema.
+	 *            LÃ­nea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 * @param valor
@@ -29,7 +28,7 @@ public class LiteralEntero extends ExpresionAbstracta {
 	}
 
 	/**
-	 * Método que devuelve el parámetro valor.
+	 * Mï¿½todo que devuelve el parÃ¡metro valor.
 	 * 
 	 * @return Valor entero del literal entero.
 	 */

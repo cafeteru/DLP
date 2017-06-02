@@ -12,8 +12,18 @@ public class SentenciaIf extends SentenciaAbstracta {
 	private List<Sentencia> cuerpoIf = new ArrayList<>();
 	private List<Sentencia> cuerpoElse = new ArrayList<>();
 
-	public SentenciaIf(int linea, int columna, Expresion condicion, List<Sentencia> cuerpoIf,
-			List<Sentencia> cuerpoElse) {
+	/**
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la sentencía.
+	 * @param columna
+	 *            Columna en la que se encuentra la sentencía.
+	 * @param condicion
+	 * @param cuerpoIf
+	 * @param cuerpoElse
+	 */
+	public SentenciaIf(int linea, int columna, Expresion condicion,
+			List<Sentencia> cuerpoIf, List<Sentencia> cuerpoElse) {
 		super(linea, columna);
 		this.condicion = condicion;
 		this.cuerpoIf = cuerpoIf;
@@ -23,8 +33,9 @@ public class SentenciaIf extends SentenciaAbstracta {
 
 	@Override
 	public String toString() {
-		return "SentenciaIf [condicion=" + condicion + ", cuerpoIf=" + cuerpoIf + ", cuerpoElse=" + cuerpoElse
-				+ ", linea=" + linea + ", columna=" + columna + "]";
+		return "SentenciaIf [condicion=" + condicion + ", cuerpoIf=" + cuerpoIf
+				+ ", cuerpoElse=" + cuerpoElse + ", linea=" + linea
+				+ ", columna=" + columna + "]";
 	}
 
 	public Expresion getCondicion() {

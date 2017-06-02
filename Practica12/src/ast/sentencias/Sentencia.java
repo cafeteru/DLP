@@ -3,9 +3,9 @@ package ast.sentencias;
 import ast.NodoAST;
 
 /**
- * Interfaz para definir el tipo "Sentencia" del an�lizador lexico.
+ * Interfaz para definir Sentencias.
  * 
- * @author Iv�n Gonz�lez Mahagamage
+ * @author Iván González Mahagamage
  *
  */
 public interface Sentencia extends NodoAST {

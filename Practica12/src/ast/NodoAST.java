@@ -3,23 +3,32 @@ package ast;
 import visitor.Visitor;
 
 /**
- * Interfaz para definir el tipo "NodoAST" del an·lizador lexico.
+ * Interfaz para definir el tipo "NodoAST" del an√°lizador lexico.
  */
 public interface NodoAST {
 
 	/**
-	 * MÈtodo que devuelve el par·metro linea.
+	 * M√©todo que devuelve el par√°metro linea.
 	 * 
-	 * @return LÌnea en la que se encuentra el token.
+	 * @return L√≠nea en la que se encuentra el token.
 	 */
 	public int getLinea();
 
 	/**
-	 * MÈtodo que devuelve el par·metro columna
+	 * M√©todo que devuelve el par√°metro columna
 	 * 
 	 * @return Columna en la que se encuentra el token.
 	 */
 	public int getColumna();
 
+	/**
+	 * M√©todo que usan los visitor para recoger los nodos del √°rbol.
+	 * 
+	 * @param v
+	 *            Visitor que recorre el nodo.
+	 * @param o
+	 *            Par√°metro que trae consigo el visitor
+	 * @return Un objeto dependiendo del visitor.
+	 */
 	public Object accept(Visitor v, Object o);
 }

@@ -7,9 +7,9 @@ import ast.sentencias.util.SentenciaAbstracta;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el análizador léxico un token que es una lectura.
+ * Clase que simula en el anï¿½lizador lï¿½xico un token que es una lectura.
  * 
- * @author Iván González Mahagamage
+ * @author Ivï¿½n Gonzï¿½lez Mahagamage
  *
  */
 public class Lectura extends SentenciaAbstracta {
@@ -17,14 +17,14 @@ public class Lectura extends SentenciaAbstracta {
 	private List<Expresion> expresiones;
 
 	/**
-	 * Constructor con parámetros.
+	 * Constructor con parï¿½metros.
 	 * 
 	 * @param linea
-	 *            Línea en la que se encuentra el lexema.
+	 *            LÃ­nea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 * @param sentecia
-	 *            Expresión que queremos leer.
+	 *            ExpresiÃ³n que queremos leer.
 	 */
 	public Lectura(int linea, int columna, List<Expresion> expresiones) {
 		super(linea, columna);

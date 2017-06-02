@@ -7,19 +7,19 @@ import ast.util.NodoPosicion;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el an·lizador lÈxico un token que es un programa
+ * Clase que simula un programa
  * 
- * @author Iv·n Gonz·lez Mahagamage
+ * @author Iv√°n Gonz√°lez Mahagamage
  *
  */
 public class Programa extends NodoPosicion implements NodoAST {
 	private List<Definicion> definiciones;
 
 	/**
-	 * Constructor con par·metros.
+	 * Constructor con par√°metros.
 	 * 
 	 * @param linea
-	 *            LÌnea en la que se encuentra el lexema.
+	 *            L√≠nea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 * @param sentencias
@@ -36,6 +36,11 @@ public class Programa extends NodoPosicion implements NodoAST {
 				+ ", columna=" + columna + "]";
 	}
 
+	/**
+	 * M√©todo que devuelve la lista de definiciones del programa.
+	 * 
+	 * @return Lista de definiciones.
+	 */
 	public List<Definicion> getDefiniciones() {
 		return definiciones;
 	}

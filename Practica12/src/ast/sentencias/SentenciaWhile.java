@@ -10,7 +10,17 @@ public class SentenciaWhile extends SentenciaAbstracta {
 	private Expresion condicion;
 	private List<Sentencia> sentencias;
 
-	public SentenciaWhile(int linea, int columna, Expresion expresion, List<Sentencia> cuerpo) {
+	/**
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la sentencía.
+	 * @param columna
+	 *            Columna en la que se encuentra la sentencía.
+	 * @param expresion
+	 * @param cuerpo
+	 */
+	public SentenciaWhile(int linea, int columna, Expresion expresion,
+			List<Sentencia> cuerpo) {
 		super(linea, columna);
 		condicion = expresion;
 		sentencias = cuerpo;
@@ -19,8 +29,9 @@ public class SentenciaWhile extends SentenciaAbstracta {
 
 	@Override
 	public String toString() {
-		return "SentenciaWhile [condicion=" + condicion + ", sentencias=" + sentencias + ", linea=" + linea
-				+ ", columna=" + columna + "]";
+		return "SentenciaWhile [condicion=" + condicion + ", sentencias="
+				+ sentencias + ", linea=" + linea + ", columna=" + columna
+				+ "]";
 	}
 
 	public Expresion getCondicion() {

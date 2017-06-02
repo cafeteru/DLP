@@ -8,6 +8,15 @@ public class CampoRegistro extends NodoPosicion {
 	private int offset;
 	private Tipo tipo;
 
+	/**
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra.
+	 * @param columna
+	 *            Columna en la que se encuentra.
+	 * @param nombre
+	 * @param tipo
+	 */
 	public CampoRegistro(int linea, int columna, String nombre, Tipo tipo) {
 		super(linea, columna);
 		this.nombre = nombre;

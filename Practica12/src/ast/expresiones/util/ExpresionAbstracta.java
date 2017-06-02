@@ -4,11 +4,25 @@ import ast.expresiones.Expresion;
 import ast.tipos.Tipo;
 import ast.util.NodoPosicion;
 
+/**
+ * Implementación abstracta de la interfaz Expresion para implementar las partes
+ * comunes de todas las clases que heredan de esta interfaz.
+ * 
+ * @author Iván González Mahagamage
+ */
 public abstract class ExpresionAbstracta extends NodoPosicion
 		implements Expresion {
 	protected boolean lValue;
 	protected Tipo tipo;
 
+	/**
+	 * Constructor con parámetros.
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la expresión.
+	 * @param columna
+	 *            Columna en la que se encuentra la expresión.
+	 */
 	public ExpresionAbstracta(int linea, int columna) {
 		super(linea, columna);
 	}

@@ -3,14 +3,19 @@ package ast.expresiones;
 import ast.expresiones.util.ExpresionAbstracta;
 import visitor.Visitor;
 
+/**
+ * Clase que representa un literal real.
+ * 
+ * @author Iván González Mahagamage
+ */
 public class LiteralReal extends ExpresionAbstracta {
 	private double valor;
 
 	/**
-	 * Constructor con par�metros.
+	 * Constructor con parámetros.
 	 * 
 	 * @param linea
-	 *            L�nea en la que se encuentra el lexema.
+	 *            Línea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 * @param valor
@@ -32,6 +37,11 @@ public class LiteralReal extends ExpresionAbstracta {
 		return v.visit(this, o);
 	}
 
+	/**
+	 * Método que devuelve el valor de la expresión.
+	 * 
+	 * @return Expresión.
+	 */
 	public double getValor() {
 		return valor;
 	}

@@ -5,9 +5,9 @@ import ast.sentencias.util.SentenciaAbstracta;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el an·lizador lÈxico un token que es una asignaciÛn.
+ * Clase que simula una asignaci√≥n.
  * 
- * @author Iv·n Gonz·lez Mahagamage
+ * @author Iv√°n Gonz√°lez Mahagamage
  *
  */
 public class Asignacion extends SentenciaAbstracta {
@@ -15,10 +15,10 @@ public class Asignacion extends SentenciaAbstracta {
 	private Expresion valor;
 
 	/**
-	 * Constructor con par·metros.
+	 * Constructor con par√°metros.
 	 * 
 	 * @param linea
-	 *            LÌnea en la que se encuentra el lexema.
+	 *            L√≠nea en la que se encuentra el lexema.
 	 * @param columna
 	 *            Columna en la que se encuentra el lexema.
 	 * @param variable
@@ -34,7 +34,7 @@ public class Asignacion extends SentenciaAbstracta {
 	}
 
 	/**
-	 * MÈtodo que devuelve el par·metro variable.
+	 * M√©todo que devuelve el par√°metro variable.
 	 * 
 	 * @return Variable a la que se le asigna un valor.
 	 */
@@ -43,7 +43,7 @@ public class Asignacion extends SentenciaAbstracta {
 	}
 
 	/**
-	 * MÈtodo que devuelve el par·metro valor.
+	 * M√©todo que devuelve el par√°metro valor.
 	 * 
 	 * @return Valor a asignar a la variable.
 	 */

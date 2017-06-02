@@ -6,7 +6,7 @@ import ast.sentencias.Sentencia;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el análizador léxico un token que es una variable.
+ * Clase que simula una variable.
  * 
  * @author Iván González Mahagamage
  *
@@ -44,10 +44,21 @@ public class Variable extends ExpresionAbstracta implements Sentencia {
 		return v.visit(this, o);
 	}
 
+	/**
+	 * Método que devuelve la definición de la variable.
+	 * 
+	 * @return Definición de la variable.
+	 */
 	public Definicion getDefinicion() {
 		return definicion;
 	}
 
+	/**
+	 * Método que modifica la definición de la variable.
+	 * 
+	 * @param definicion
+	 *            Nueva definición de la variable.
+	 */
 	public void setDefinicion(Definicion definicion) {
 		this.definicion = definicion;
 	}

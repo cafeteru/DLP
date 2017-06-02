@@ -4,14 +4,27 @@ import ast.expresiones.util.OperacionBinaria;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el an醠izador l閤ico un token que es una operaci髇
- * aritm閠ica.
+ * Clase que simula una operaci贸n aritm茅tica.
  * 
- * @author Iv醤 Gonz醠ez Mahagamage
+ * @author Iv谩n Gonz谩lez Mahagamage
  *
  */
 public class Aritmetica extends OperacionBinaria {
 
+	/**
+	 * Constructor con par谩metros.
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la expresi贸n.
+	 * @param columna
+	 *            Columna en la que se encuentra la expresi贸n.
+	 * @param izq
+	 *            Expresi贸n izquierda.
+	 * @param operador
+	 *            Operador.
+	 * @param der
+	 *            Expresi贸n derecha.
+	 */
 	public Aritmetica(int linea, int columna, Expresion izq, String operador,
 			Expresion der) {
 		super(linea, columna, izq, operador, der);
