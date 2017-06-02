@@ -7,13 +7,12 @@ import ast.sentencias.util.SentenciaAbstracta;
 import visitor.Visitor;
 
 /**
- * Clase que simula en el an�lizador l�xico un token que es una lectura.
+ * Clase que simula una lectura.
  * 
- * @author Iv�n Gonz�lez Mahagamage
+ * @author Iván González Mahagamage
  *
  */
 public class Lectura extends SentenciaAbstracta {
-
 	private List<Expresion> expresiones;
 
 	/**
@@ -42,6 +41,11 @@ public class Lectura extends SentenciaAbstracta {
 		return v.visit(this, o);
 	}
 
+	/**
+	 * Método que devuelve todas las expresiones a leer.
+	 * 
+	 * @return Expresiones a leer.
+	 */
 	public List<Expresion> getExpresiones() {
 		return expresiones;
 	}

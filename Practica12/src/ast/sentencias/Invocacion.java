@@ -27,7 +27,9 @@ public class Invocacion extends SentenciaAbstracta implements Expresion {
 	 * @param columna
 	 *            Columna en la que se encuentra la sentencía.
 	 * @param variable
+	 *            Variable (nombre) del método.
 	 * @param expresiones
+	 *            Parámetros del método.
 	 */
 	public Invocacion(int linea, int columna, Variable variable,
 			List<Expresion> expresiones) {
@@ -57,10 +59,20 @@ public class Invocacion extends SentenciaAbstracta implements Expresion {
 		return v.visit(this, o);
 	}
 
+	/**
+	 * Método que devuelve la lista de parámetros del método.
+	 * 
+	 * @return Lista de parámetros del método.
+	 */
 	public List<Expresion> getExpresiones() {
 		return expresiones;
 	}
 
+	/**
+	 * Método que devuelve el variable(nombre) del método.
+	 * 
+	 * @return Variable del método
+	 */
 	public Variable getVariable() {
 		return variable;
 	}

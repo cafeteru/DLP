@@ -44,7 +44,7 @@ public class Escritura extends SentenciaAbstracta {
 	/**
 	 * Método que devuelve todas las expresiones a escribir.
 	 * 
-	 * @return Expresiones a escribir
+	 * @return Expresiones a escribir.
 	 */
 	public List<Expresion> getExpresiones() {
 		return expresiones;
