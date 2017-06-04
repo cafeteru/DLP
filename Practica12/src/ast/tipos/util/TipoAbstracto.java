@@ -4,6 +4,11 @@ import java.util.List;
 
 import ast.tipos.Tipo;
 
+/**
+ * Clase abstracta de tipo que define las salidas por defectos de sus métodos.
+ * 
+ * @author Iván González Mahagamage
+ */
 public abstract class TipoAbstracto implements Tipo {
 
 	@Override

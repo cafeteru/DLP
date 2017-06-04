@@ -6,6 +6,11 @@ import ast.expresiones.AccesoCampo;
 import ast.expresiones.Variable;
 import ast.tipos.TipoEntero;
 
+/**
+ * Lvalue
+ * 
+ * @author Iván González Mahagamage
+ */
 public class VisitorGCDireccion extends AbstractVisitorGC {
 
 	private GeneradorCodigo GC;

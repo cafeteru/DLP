@@ -17,6 +17,11 @@ import ast.tipos.TipoEntero;
 import ast.tipos.TipoFuncion;
 import ast.tipos.TipoVoid;
 
+/**
+ * Sentencias
+ * 
+ * @author Iván González Mahagamage
+ */
 public class VisitorGCEjecutar extends AbstractVisitorGC {
 
 	private GeneradorCodigo GC;

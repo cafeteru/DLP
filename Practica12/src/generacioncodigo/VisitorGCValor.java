@@ -5,6 +5,11 @@ import ast.sentencias.Invocacion;
 import ast.tipos.Tipo;
 import ast.tipos.TipoFuncion;
 
+/**
+ * Expresiones
+ * 
+ * @author Iván González Mahagamage
+ */
 public class VisitorGCValor extends AbstractVisitorGC {
 	private static VisitorGCValor valor;
 
