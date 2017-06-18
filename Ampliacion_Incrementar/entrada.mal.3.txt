@@ -1,0 +1,16 @@
+
+int i;
+double f;
+
+struct  {
+  int a;
+} a;
+
+void main() {
+  write i && f; // * Error 1 -> f no tiene el mismo tipo que i (double e int), comprobar que se int o que promocione a int
+  write a >= 3; // * Error 2 -> no se puede comprarar struct con int
+  while (f)     // * Error 3 -> f no es un tipo logico
+    if (f)      // * Error 4 -> f no es un tipo logico
+      write !f;   // * Error 5 -> f no es un tipo logico
+}
+
