@@ -1,9 +1,0 @@
-int counter;
-
-void main(){ 
- counter = 0;
- while(counter < 5){
-  counter++;
-  write counter;
- }
-}
