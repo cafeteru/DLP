@@ -212,7 +212,7 @@ expresion: ID																							{ 	$$ = new Variable(lexico.getLine(), lexic
          | '(' tipoSimple ')' expresion	%prec CASTP													    { 	$$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);	}
          | invocacion						 															{ 	$$ = $1;}
          | expresion '[' expresion ']'																	{ 	$$ = new AccesoArray(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3); }			   
-         | expresion IGUALDADDOBLE expresion IGUALDADDOBLE expresion  														{ 	Logica a = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);
+         | expresion IGUALDADDOBLE expresion IGUALDADDOBLE expresion  									{ 	Logica a = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);
 			 																								$$ = new Logica(lexico.getLine(), lexico.getColumn(), a, "&&", (Expresion) $5);	
 																										}
 		 ;

@@ -321,20 +321,25 @@ public class GeneradorCodigo {
 		out.flush();
 	}
 
-	public void convertirA(Tipo tipo, Tipo tipo2) {
-		if (tipo instanceof TipoReal && tipo2 instanceof TipoEntero)
+	public void convertirA(Tipo tipoInicio, Tipo tipoFin) {
+		if (tipoInicio instanceof TipoReal && tipoFin instanceof TipoEntero)
 			f2i();
-		else if (tipo instanceof TipoCaracter && tipo2 instanceof TipoEntero)
+		else if (tipoInicio instanceof TipoCaracter
+				&& tipoFin instanceof TipoEntero)
 			b2i();
-		else if (tipo instanceof TipoCaracter && tipo2 instanceof TipoReal) {
+		else if (tipoInicio instanceof TipoCaracter
+				&& tipoFin instanceof TipoReal) {
 			b2i();
 			i2f();
-		} else if (tipo instanceof TipoReal && tipo2 instanceof TipoCaracter) {
+		} else if (tipoInicio instanceof TipoReal
+				&& tipoFin instanceof TipoCaracter) {
 			f2i();
 			i2b();
-		} else if (tipo instanceof TipoEntero && tipo2 instanceof TipoReal)
+		} else if (tipoInicio instanceof TipoEntero
+				&& tipoFin instanceof TipoReal)
 			i2f();
-		else if (tipo instanceof TipoEntero && tipo2 instanceof TipoCaracter)
+		else if (tipoInicio instanceof TipoEntero
+				&& tipoFin instanceof TipoCaracter)
 			i2b();
 	}
 

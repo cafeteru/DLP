@@ -3,6 +3,7 @@ package generacioncodigo;
 import ast.expresiones.*;
 import ast.sentencias.Invocacion;
 import ast.tipos.Tipo;
+import ast.tipos.TipoEntero;
 import ast.tipos.TipoFuncion;
 
 public class VisitorGCValor extends AbstractVisitorGC {
@@ -15,6 +16,15 @@ public class VisitorGCValor extends AbstractVisitorGC {
 			VisitorGCDireccion direccion) {
 		GC = GeneradorCodigo.getInstancia(entrada, salida);
 		this.direccion = direccion;
+	}
+
+	@Override
+	public Object visit(MenosUnario a, Object o) {
+		a.getExpresion().accept(this, o); // Valor en la pila
+		GC.push(-1);
+		GC.convertirA(TipoEntero.getInstancia(), a.getExpresion().getTipo());
+		GC.mul(a.getExpresion().getTipo().sufijo());
+		return null;
 	}
 
 	@Override
