@@ -1,34 +1,16 @@
 
 #source	"entrada.peque.txt"
 
-	' * [2,record((employees x [2,record((age x int))]))] acme (offset 0)
 
 ' Invocation to the main function
 call main
 halt
 
 
-#line	6
+#line	3
 
  main:
 	' * Parameters
 	' * Local variables
-	enter	0
-
-#line	7
-	pusha	0
-	pushi	1
-	pushi	4
-	muli
-	addi
-	pushi	0
-	addi
-	pushi	1
-	pushi	2
-	muli
-	addi
-	pushi	0
-	addi
-	pushi	56
-	storei
-	ret	0, 0, 0
+	' * int i (offset -2)
+	enter	2

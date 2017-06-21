@@ -113,8 +113,11 @@ sentencia: expresion '=' expresion ';' 							                						{ 	$$ = new 
 		 | READ expresiones ';'																			{ 	$$ = new Lectura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2); }
 		 | invocacion ';'																				{ 	$$ = $1; }
 		 | RETURN expresion ';'																			{ 	$$ = new Return(lexico.getLine(), lexico.getColumn(), (Expresion)$2);}
-		 | FOR '(' sentencia ';' expresionFor ';' sentencia ')' cuerpoCondicional				        {   $$ = new SentenciaFor(lexico.getLine(), lexico.getColumn(), (Sentencia)$3, (Expresion)$5, (Sentencia)$7, (List<Sentencia>)$9);}
+		 | FOR '(' sentencia  expresionFor ';' s ')' cuerpoCondicional		    {   $$ = new SentenciaFor(lexico.getLine(), lexico.getColumn(), (Sentencia)$3, (Expresion)$4, (Sentencia)$6, (List<Sentencia>)$8);}
          ;
+
+s: expresion '=' expresion  							                						{ 	$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$3); } 
+ ;
 
 expresionFor: expresionLogica																			{ 	$$ = $1; }
 			| expresionComparacion																		{ 	$$ = $1; }
@@ -217,10 +220,10 @@ expresionComparacion: expresion '>' expresion 																{ 	$$ = new Compar
          | expresion DISTINTO expresion 																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "!=", (Expresion) $3);	}
          | expresion IGUALDAD expresion  																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "==", (Expresion) $3);	}
 
-expresionLogica : expresion Y expresion  																		{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);	}
+expresionLogica : expresion Y expresion  																{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);	}
          | expresion O expresion 																		{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "||", (Expresion) $3);	}
          
-invocacion: ID '(' argumentosLlamada ')' 																{ 	$$ = new Invocacion(lexico.getLine(), lexico.getColumn(), new Variable(lexico.getLine(), lexico.getColumn(), (String)$1),(List<Expresion>)$3); 	}
+invocacion: expresion '(' argumentosLlamada ')' 														{ 	$$ = new Invocacion(lexico.getLine(), lexico.getColumn(), new Variable(lexico.getLine(), lexico.getColumn(), (String)$1),(List<Expresion>)$3); 	}
 		   ;
 			     
 argumentosLlamada: expresiones 																			{ 	$$ = $1;}
