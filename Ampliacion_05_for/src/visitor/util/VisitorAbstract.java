@@ -161,6 +161,16 @@ public class VisitorAbstract implements Visitor {
 	}
 
 	@Override
+	public Object visit(SentenciaFor f, Object o) {
+		f.getInicio().accept(this, o);
+		f.getFin().accept(this, o);
+		f.getPaso().accept(this, o);
+		for (Sentencia e : f.getSentencias())
+			e.accept(this, o);
+		return null;
+	}
+
+	@Override
 	public Object visit(CampoRegistro campoRegistro, Object o) {
 		campoRegistro.getTipo().accept(this, o);
 		return null;

@@ -61,4 +61,10 @@ public class Asignacion extends SentenciaAbstracta {
 	public Object accept(Visitor v, Object o) {
 		return v.visit(this, o);
 	}
+
+	@Override
+	public boolean esAsignacion() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

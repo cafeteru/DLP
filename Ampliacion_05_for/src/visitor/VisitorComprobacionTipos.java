@@ -134,7 +134,7 @@ public class VisitorComprobacionTipos extends VisitorAbstract {
 		super.visit(asignacion, o);
 		if (!asignacion.getVariable().getLValue())
 			new TipoError(asignacion,
-					"Se esperaba LValue, asignaci�n -> " + this.getClass());
+					"Se esperaba LValue, asignación -> " + this.getClass());
 		asignacion.getVariable().setTipo(asignacion.getValor().getTipo()
 				.promocionaA(asignacion.getVariable().getTipo()));
 		if (asignacion.getVariable().getTipo() == null)
@@ -201,6 +201,27 @@ public class VisitorComprobacionTipos extends VisitorAbstract {
 					.setTipo(new TipoError(sentenciaWhile.getCondicion(),
 							"Error tipo senteciaWhile "));
 		for (Sentencia e : sentenciaWhile.getSentencias())
+			e.accept(this, o);
+		return null;
+	}
+
+	@Override
+	public Object visit(SentenciaFor f, Object o) {
+		f.getInicio().accept(this, o);		
+		if(!f.getInicio().esAsignacion()) 
+			new TipoError(f, "Error tipo SentenciaFor Inicio");
+		
+		f.getFin().accept(this, o);
+		if (!f.getFin().getTipo().esLogico())
+			f.getFin().setTipo(new TipoError(f.getFin(),
+					"Error tipo SentenciaFor Fin"));
+		
+
+		f.getPaso().accept(this, o);
+		if(!f.getInicio().esAsignacion()) 
+			new TipoError(f, "Error tipo SentenciaFor Paso");
+		
+		for (Sentencia e : f.getSentencias())
 			e.accept(this, o);
 		return null;
 	}

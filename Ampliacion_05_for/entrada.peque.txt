@@ -1,9 +1,9 @@
-struct {
-  struct { int age; } [2] employees;
-} [2] acme;
 
 // * Main program
 void main() {
- acme[1].employees[1].age = 56;
+ int i;
+ 
+ for(i = 0; i < 10; i++){
+  write i;
 }
 	

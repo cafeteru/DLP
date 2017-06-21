@@ -4,6 +4,7 @@ import ast.definiciones.DefVariable;
 import ast.expresiones.AccesoArray;
 import ast.expresiones.AccesoCampo;
 import ast.expresiones.Variable;
+import ast.sentencias.SentenciaFor;
 import ast.tipos.TipoEntero;
 
 /**

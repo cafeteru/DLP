@@ -76,4 +76,5 @@ public interface Visitor {
 	public Object visit(TipoRegistro registro, Object o);
 
 	public Object visit(TipoVoid tipoVoid, Object o);
+
 }

@@ -113,8 +113,12 @@ sentencia: expresion '=' expresion ';' 							                						{ 	$$ = new 
 		 | READ expresiones ';'																			{ 	$$ = new Lectura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2); }
 		 | invocacion ';'																				{ 	$$ = $1; }
 		 | RETURN expresion ';'																			{ 	$$ = new Return(lexico.getLine(), lexico.getColumn(), (Expresion)$2);}
-		 | FOR '(' expresion '=' expresion ';' expresion '<' expresion ';' expresion '++' ')' cuerpoCondicional				{  }
+		 | FOR '(' sentencia ';' expresionFor ';' sentencia ')' cuerpoCondicional				        {   $$ = new SentenciaFor(lexico.getLine(), lexico.getColumn(), (Sentencia)$3, (Expresion)$5, (Sentencia)$7, (List<Sentencia>)$9);}
          ;
+
+expresionFor: expresionLogica																			{ 	$$ = $1; }
+			| expresionComparacion																		{ 	$$ = $1; }
+			;
          
 cuerpoCondicional: '{' sentencias '}'																	{ 	$$ = $2;	}
 		         | sentencia 																			{ 	$$ = new ArrayList<Sentencia>(); ((List<Sentencia>)$$).add((Sentencia)$1);  }
@@ -191,14 +195,12 @@ expresion: ID																							{ 	$$ = new Variable(lexico.getLine(), lexic
          | expresion '/' expresion  																	{ 	$$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "/", (Expresion) $3);		}
          | expresion '-' expresion 																		{ 	$$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "-", (Expresion) $3);		}
          | expresion '%' expresion 																		{ 	$$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "%", (Expresion) $3);		}
-         | expresion '>' expresion 																		{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, ">", (Expresion) $3);	}
+         | expresionLogica																				{ 	$$ = $1; }expresion '>' expresion 																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, ">", (Expresion) $3);	}
          | expresion '<' expresion  																	{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "<", (Expresion) $3);	}
          | expresion MAYORIGUALQUE expresion  															{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, ">=", (Expresion) $3);	}
          | expresion MENORIGUALQUE expresion 															{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "<=", (Expresion) $3);	}
          | expresion DISTINTO expresion 																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "!=", (Expresion) $3);	}
          | expresion IGUALDAD expresion  																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "==", (Expresion) $3);	}
-         | expresion Y expresion  																		{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);	}
-         | expresion O expresion 																		{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "||", (Expresion) $3);	}
          | '!' expresion %prec NEGACION  																{ 	$$ = new Negacion(lexico.getLine(), lexico.getColumn(),  "!", (Expresion) $2);	}
          | '-' expresion %prec MENOS_UNARIO  															{ 	$$ = new MenosUnario(lexico.getLine(), lexico.getColumn(),  "-",(Expresion) $2);	}
          | expresion '.' ID					    													    { 	$$ = new AccesoCampo(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (String) $3);	}
@@ -207,6 +209,16 @@ expresion: ID																							{ 	$$ = new Variable(lexico.getLine(), lexic
          | invocacion						 															{ 	$$ = $1;}
          | expresion '[' expresion ']'																	{ 	$$ = new AccesoArray(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3); }			   
          ;
+
+expresionComparacion: expresion '>' expresion 																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, ">", (Expresion) $3);	}
+         | expresion '<' expresion  																	{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "<", (Expresion) $3);	}
+         | expresion MAYORIGUALQUE expresion  															{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, ">=", (Expresion) $3);	}
+         | expresion MENORIGUALQUE expresion 															{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "<=", (Expresion) $3);	}
+         | expresion DISTINTO expresion 																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "!=", (Expresion) $3);	}
+         | expresion IGUALDAD expresion  																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "==", (Expresion) $3);	}
+
+expresionLogica : expresion Y expresion  																		{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);	}
+         | expresion O expresion 																		{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "||", (Expresion) $3);	}
          
 invocacion: ID '(' argumentosLlamada ')' 																{ 	$$ = new Invocacion(lexico.getLine(), lexico.getColumn(), new Variable(lexico.getLine(), lexico.getColumn(), (String)$1),(List<Expresion>)$3); 	}
 		   ;

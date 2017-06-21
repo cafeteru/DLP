@@ -159,4 +159,10 @@ public abstract class AbstractVisitorGC implements Visitor {
 		throw new IllegalStateException();
 	}
 
+	@Override
+	public Object visit(SentenciaFor sentenciaFor, Object o)
+			throws IllegalStateException {
+		throw new IllegalStateException();
+	}
+
 }

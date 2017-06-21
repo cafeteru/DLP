@@ -11,7 +11,7 @@ import visitor.Visitor;
  * @author Iván González Mahagamage
  *
  */
-public class Variable extends ExpresionAbstracta implements Sentencia {
+public class Variable extends ExpresionAbstracta {
 	private String clave;
 	private Definicion definicion;
 

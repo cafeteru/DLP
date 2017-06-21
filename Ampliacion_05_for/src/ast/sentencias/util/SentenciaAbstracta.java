@@ -15,5 +15,11 @@ public abstract class SentenciaAbstracta extends NodoPosicion
 	public SentenciaAbstracta(int linea, int columna) {
 		super(linea, columna);
 	}
+	
+	@Override
+	public boolean esAsignacion() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
