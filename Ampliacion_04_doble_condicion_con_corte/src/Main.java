@@ -19,14 +19,17 @@ import manejadorerrores.ME;
 public class Main {
 
 	public static void main(String args[]) throws IOException {
-		if (args.length < 1) {
+		/*if (args.length < 1) {
 			System.err.println("Necesito el archivo de entrada.");
 			return;
 		} else if (args.length < 2) {
 			System.err.println("Necesito el archivo de salida.");
 			return;
-		}
-
+		}*/
+		args = new String[2];
+		args[0] = "entrada.peque.txt";
+		args[1] = "salida.peque.txt";
+		
 		FileReader fr = null;
 		try {
 			fr = new FileReader(args[0]);

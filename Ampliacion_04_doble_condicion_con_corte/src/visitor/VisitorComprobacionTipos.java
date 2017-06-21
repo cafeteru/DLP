@@ -98,7 +98,19 @@ public class VisitorComprobacionTipos extends VisitorAbstract {
 		l.setTipo(l.getIzq().getTipo().logica(l.getDer().getTipo()));
 		if (l.getTipo() == null)
 			l.setTipo(new TipoError(l,
-					"Error tipo l�gico -> " + l.getIzq() + " - " + l.getDer()));
+					"Error tipo lógico -> " + l.getIzq() + " - " + l.getDer()));
+		return null;
+	}
+
+	@Override
+	public Object visit(CondicionDoble c, Object o) {
+		super.visit(c, o);
+		c.setLValue(false);
+		c.setTipo(c.getIzq().getTipo()
+				.logica(c.getCen().getTipo().logica(c.getDer().getTipo())));
+		if (c.getTipo() == null)
+			c.setTipo(new TipoError(c, "Error tipo doble condición -> "
+					+ c.getIzq() + " - " + c.getCen() + " - " + c.getDer()));
 		return null;
 	}
 

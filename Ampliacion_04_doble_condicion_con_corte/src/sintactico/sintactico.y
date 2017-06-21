@@ -18,13 +18,12 @@ import ast.tipos.*;
 %token READ WRITE WHILE IF ELSE 
 %token INT DOUBLE CHAR STRUCT 
 %token RETURN VOID MAIN ID 
-%token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD
-%token IGUALDADDOBLE
+%token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD MENOR MAYOR
 
 // Más arriba, menos precedencia
-%right '='
+%right '=' 
 %left Y O 
-%left '>' MAYORIGUALQUE MENORIGUALQUE '<' DISTINTO IGUALDAD IGUALDADDOBLE
+%left '>' MAYORIGUALQUE MENORIGUALQUE '<' DISTINTO IGUALDAD MENOR MAYOR
 %left '+' '-'
 %left '*' '/' '%'
 %right MENOS_UNARIO
@@ -208,13 +207,12 @@ expresion: ID																							{ 	$$ = new Variable(lexico.getLine(), lexic
          | '!' expresion %prec NEGACION  																{ 	$$ = new Negacion(lexico.getLine(), lexico.getColumn(),  "!", (Expresion) $2);	}
          | '-' expresion %prec MENOS_UNARIO  															{ 	$$ = new MenosUnario(lexico.getLine(), lexico.getColumn(),  "-",(Expresion) $2);	}
          | expresion '.' ID					    													    { 	$$ = new AccesoCampo(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (String) $3);	}
-         | '(' expresion ')' 																			{ 	$$ = $2;}
+         | '(' expresion ')' 																			{ 	$$ = $2;	}
          | '(' tipoSimple ')' expresion	%prec CASTP													    { 	$$ = new Cast(lexico.getLine(), lexico.getColumn(), (Tipo) $2, (Expresion) $4);	}
-         | invocacion						 															{ 	$$ = $1;}
+         | invocacion						 															{ 	$$ = $1;	}
          | expresion '[' expresion ']'																	{ 	$$ = new AccesoArray(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3); }			   
-         | expresion IGUALDADDOBLE expresion IGUALDADDOBLE expresion  														{ 	Logica a = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);
-			 																								$$ = new Logica(lexico.getLine(), lexico.getColumn(), a, "&&", (Expresion) $5);	
-																										}
+         | expresion MAYOR expresion MAYOR expresion 									                { 	$$ = new CondicionDoble(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3, (Expresion) $5, ">");	}
+		 | expresion MENOR expresion MENOR expresion 									                { 	$$ = new CondicionDoble(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3, (Expresion) $5, "<");	}
 		 ;
          
 invocacion: ID '(' argumentosLlamada ')' 																{ 	$$ = new Invocacion(lexico.getLine(), lexico.getColumn(), new Variable(lexico.getLine(), lexico.getColumn(), (String)$1),(List<Expresion>)$3); 	}

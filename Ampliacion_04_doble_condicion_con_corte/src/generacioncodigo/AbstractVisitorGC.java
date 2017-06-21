@@ -159,4 +159,9 @@ public abstract class AbstractVisitorGC implements Visitor {
 		throw new IllegalStateException();
 	}
 
+	public Object visit(CondicionDoble c, Object o)
+			throws IllegalStateException {
+		throw new IllegalStateException();
+	}
+
 }

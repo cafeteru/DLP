@@ -39,16 +39,18 @@ public Object getYylval() {
 ConstanteEntera = [0-9]+
 ConstanteReal = ([0-9]+\.[0-9]+ | [0-9]*\.[0-9]+ | [0-9]+\.[0-9]* | [0-9]+)((e|E)("+"|"-")?[0-9]+)?
 Identificador = [a-zA-ZáéíóúñÁÉÍÓÚÑ]+ [a-zA-Z0-9ZáéíóúñÁÉÍÓÚÑ_]*
-Operador = ["<"">"";"":""("")""[""]""{""}"",""=""+""-""*""/"".""!""?""%""<<"]
+Operador = ["<"">"";"":""("")""[""]""{""}"",""=""+""-""*""/"".""!""?""%"]
 CaracterASCII = '"\\"[0-9]+' 
 %%
 // ************  Acciones ********************
 "//" .*			        { } 
 "/*" ~ "*/"        		{ }	
 { Operador }			{ this.yylval = new Character(yytext().charAt(0)); 
-							return yytext().charAt(0); }		
+							return yytext().charAt(0); }
 "<<"					{ this.yylval = yytext();
-							return Parser.IGUALDADDOBLE; }
+							return Parser.MENOR; }										
+">>"					{ this.yylval = yytext();
+							return Parser.MAYOR; }								
 "=="					{ this.yylval = yytext();
 							return Parser.IGUALDAD; }								
 "!="					{ this.yylval = yytext();

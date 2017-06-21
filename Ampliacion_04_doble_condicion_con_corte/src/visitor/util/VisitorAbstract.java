@@ -211,4 +211,12 @@ public class VisitorAbstract implements Visitor {
 	public Object visit(TipoVoid tipoVoid, Object o) {
 		return null;
 	}
+
+	@Override
+	public Object visit(CondicionDoble c, Object o) {
+		c.getIzq().accept(this, o);
+		c.getCen().accept(this, o);
+		c.getDer().accept(this, o);
+		return null;
+	}
 }

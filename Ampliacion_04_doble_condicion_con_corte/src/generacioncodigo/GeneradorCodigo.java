@@ -35,6 +35,10 @@ public class GeneradorCodigo {
 		return aux;
 	}
 
+	public int getLabels() {
+		return numLables;
+	}
+
 	public void push(char c) {
 		out.println("\tpushb\t" + (int) c);
 		out.flush();

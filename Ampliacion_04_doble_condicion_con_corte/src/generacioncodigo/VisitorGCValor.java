@@ -24,15 +24,6 @@ public class VisitorGCValor extends AbstractVisitorGC {
 	}
 
 	@Override
-	public Object visit(MenosUnario a, Object o) {
-		a.getExpresion().accept(this, o); // Valor en la pila
-		GC.push(-1);
-		GC.convertirA(TipoEntero.getInstancia(), a.getExpresion().getTipo());
-		GC.mul(a.getExpresion().getTipo().sufijo());
-		return null;
-	}
-
-	@Override
 	public Object visit(LiteralCaracter c, Object o) {
 		GC.push(c.getValor());
 		return null;
@@ -83,6 +74,41 @@ public class VisitorGCValor extends AbstractVisitorGC {
 		a.getIzq().accept(this, o);
 		a.getDer().accept(this, o);
 		GC.logica(a.getOperador());
+		return null;
+	}
+
+	@Override
+	public Object visit(CondicionDoble a, Object o) {
+		int count = GC.getLabels(2);
+		Tipo mayor = a.getIzq().getTipo()
+				.Mayor(a.getCen().getTipo().Mayor(a.getDer().getTipo()));
+		a.getIzq().accept(this, o);
+		GC.convertirA(a.getIzq().getTipo(), mayor);
+		a.getCen().accept(this, o);
+		GC.convertirA(a.getCen().getTipo(), mayor);
+		GC.comparacion(a.getTipo(), a.getOperador());
+		GC.jz(count); // Si 0 ya no miro más
+		
+		a.getCen().accept(this, o);
+		GC.convertirA(a.getCen().getTipo(), mayor);
+		a.getDer().accept(this, o);
+		GC.convertirA(a.getCen().getTipo(), mayor);
+		GC.comparacion(a.getTipo(), a.getOperador());
+		GC.jmp(count + 1);
+		
+		GC.etiqueta(count);
+		GC.push(0);
+		
+		GC.etiqueta(count + 1);
+		return null;
+	}
+
+	@Override
+	public Object visit(MenosUnario a, Object o) {
+		a.getExpresion().accept(this, o); // Valor en la pila
+		GC.push(-1);
+		GC.convertirA(TipoEntero.getInstancia(), a.getExpresion().getTipo());
+		GC.mul(a.getExpresion().getTipo().sufijo());
 		return null;
 	}
 

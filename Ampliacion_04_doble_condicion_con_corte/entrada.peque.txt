@@ -1,13 +1,10 @@
 // * Main program
+
+
 void main() {
-	int i, j, k;
-	i = 0;
-	j = 0;
-	k = 0;
-	
-	if(i == 0 << j == 0 << k == 0)
-		i = 1;
-	else
-		i = 2;	
+	write(5 << 9 << 30);
+	write(50 >> 19 >> 3);
+	write(50 >> 19 >> 30);
+	write(50 << 19 << 30);
 }
 	
