@@ -15,7 +15,7 @@ import ast.tipos.*;
 
 // * Declaraciones Yacc
 %token CTE_ENTERA CTE_REAL CTE_CARACTER
-%token READ WRITE WHILE IF ELSE 
+%token READ WRITE WHILE IF ELSE FOR
 %token INT DOUBLE CHAR STRUCT 
 %token RETURN VOID MAIN ID 
 %token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD
@@ -113,6 +113,7 @@ sentencia: expresion '=' expresion ';' 							                						{ 	$$ = new 
 		 | READ expresiones ';'																			{ 	$$ = new Lectura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2); }
 		 | invocacion ';'																				{ 	$$ = $1; }
 		 | RETURN expresion ';'																			{ 	$$ = new Return(lexico.getLine(), lexico.getColumn(), (Expresion)$2);}
+		 | FOR '(' expresion '=' expresion ';' expresion '<' expresion ';' expresion '++' ')' cuerpoCondicional				{  }
          ;
          
 cuerpoCondicional: '{' sentencias '}'																	{ 	$$ = $2;	}

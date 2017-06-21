@@ -1,0 +1,73 @@
+
+#source	"entrada.peque.txt"
+
+	' * int counter (offset 0)
+
+' Invocation to the main function
+call main
+halt
+
+
+#line	3
+
+ main:
+	' * Parameters
+	' * Local variables
+	' * [2,int] x (offset -4)
+	enter	4
+
+#line	5
+	push	bp
+	pushi	-4
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	pushi	0
+	storei
+
+#line	6
+	' * Write
+	push	bp
+	pushi	-4
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	loadi
+	outi
+
+#line	7
+	push	bp
+	pushi	-4
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	push	bp
+	pushi	-4
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	loadi
+	pushi	1
+	addi
+	storei
+
+#line	8
+	' * Write
+	push	bp
+	pushi	-4
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	loadi
+	outi
+	ret	0, 4, 0

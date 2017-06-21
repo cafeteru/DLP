@@ -77,6 +77,8 @@ write   				{ this.yylval = yytext();
 							return Parser.WRITE; }
 while   				{ this.yylval = yytext();
 							return Parser.WHILE; }
+for   				    { this.yylval = yytext();
+							return Parser.FOR; }
 double   				{ this.yylval = yytext();
 							return Parser.DOUBLE; }
 struct   				{ this.yylval = yytext();

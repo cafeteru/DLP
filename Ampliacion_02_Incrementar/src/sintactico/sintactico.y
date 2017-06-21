@@ -115,10 +115,9 @@ sentencia: expresion '=' expresion ';' 							                						{ 	$$ = new 
 		 | READ expresiones ';'																			{ 	$$ = new Lectura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2); }
 		 | invocacion ';'																				{ 	$$ = $1; }
 		 | RETURN expresion ';'																			{ 	$$ = new Return(lexico.getLine(), lexico.getColumn(), (Expresion)$2);}
-		 | ID INCREMENTAR ';'																	        {   Variable c = new Variable(lexico.getLine(), lexico.getColumn(), (String) $1); 
-			 																								LiteralEntero a = new LiteralEntero(lexico.getLine(), lexico.getColumn(), 1);
-			 																								Aritmetica b = new Aritmetica(lexico.getLine(), lexico.getColumn(), c, "+", a);	 
-																											$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), c, b); 
+		 | expresion INCREMENTAR ';'																	{  	LiteralEntero a = new LiteralEntero(lexico.getLine(), lexico.getColumn(), 1);
+			 																								Aritmetica b = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "+", a);	 
+																											$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, b); 
 																										}			   
          ;
          

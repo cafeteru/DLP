@@ -1,9 +1,9 @@
 int counter;
 
 void main(){ 
- counter = 0;
- while(counter < 5){
-  counter++;
-  write counter;
- }
+  int[2] x;
+  x[1] = 0;
+  write x[1];
+  x[1]++;
+  write x[1];
 }
