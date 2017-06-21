@@ -1,0 +1,107 @@
+programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'
+definiciones: definiciones definicion
+       |/*vacio*/
+       ;
+  
+definicion: tipoSimple ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}' 																									
+	  | VOID ID '(' parametros ')' '{' declaraciones cuerpoDefinicion '}'																										
+	  | declaracionVariable ';'
+	  ;	
+	  
+declaraciones: declaraciones declaracionVariable ';'
+			| /*vacio*/	
+			;
+	   
+parametros: parametros ',' definicionVariable
+		  | definicionVariable
+		  | /*vacio*/
+		  ;
+		  
+definicionVariable: tipoSimple ID;
+		 
+cuerpoDefinicion: sentencias
+	  | /*vacio*/
+	  ;
+
+sentencias: sentencias sentencia
+	     | sentencia
+		 ;
+		 	
+sentencia: expresion '=' expresion ';'
+		 | WHILE '(' expresion ')' cuerpoCondicional
+		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE
+		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional
+		 | WRITE expresiones ';'
+		 | READ expresiones ';'
+		 | invocacion ';'
+		 | RETURN expresion ';'
+         ;
+         
+cuerpoCondicional: '{' sentencias '}'
+		         | sentencia
+		         ;
+      
+declaracionVariable: tipoSimple identificador
+		           | tipoSimple indices identificador
+		           | STRUCT '{' campos '}' identificador
+				   | STRUCT '{' campos '}' indices identificador
+		           ;
+				  
+campos: campos declaracionVariable ';'
+	  | declaracionVariable ';'
+      ;
+
+expresiones: expresiones ',' expresion
+		   | expresion
+		   ;	   
+	  		     
+expresion: ID
+		 | CTE_ENTERA
+         | CTE_REAL
+         | CTE_CARACTER
+         | expresionAritmetica
+         | expresionComparacion
+         | expresionLogica
+         | '-' expresion %prec MENOS_UNARIO
+         | expresion '.' ID
+         | '(' expresion ')'
+         | '(' tipoSimple ')' expresion	%prec CASTP
+         | invocacion
+         | expresion '[' expresion ']'
+         ;
+expresionAritmetica: expresion '+' expresion
+         | expresion '*' expresion
+         | expresion '/' expresion
+         | expresion '-' expresion
+         | expresion '%' expresion
+
+expresionComparacion: expresion '>' expresion
+         | expresion '<' expresion
+         | expresion MAYORIGUALQUE expresion
+         | expresion MENORIGUALQUE expresion
+         | expresion DISTINTO expresion
+         | expresion IGUALDAD expresion
+
+expresionLogica: expresion Y expresion
+         | expresion O expresion
+         | '!' expresion %prec NEGACION
+         
+invocacion: ID '(' argumentosLlamada ')';
+			     
+argumentosLlamada: expresiones
+				 | /*vacio*/
+				 ;							  
+				
+         
+indices: '[' CTE_ENTERA ']'	indices
+	   | '[' CTE_ENTERA ']'
+	   ;
+         
+identificador: identificador ',' ID
+		     | ID
+		     ;
+	
+tipoSimple: INT
+	      | DOUBLE
+	      | CHAR
+	      ;
