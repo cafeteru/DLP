@@ -1,9 +1,0 @@
-
-int[10] v;
-
-void main() {
-  int i;
-  i[0]=0;      // * Error 1 -> i es int, no uin struct
-  v[3]=3.4;    // * Error 2 -> v es de int no double
-  v[1][2]='a'; // * Error 3 -> dimensiones mal
-}

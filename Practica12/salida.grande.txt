@@ -1,5 +1,5 @@
 
-#source	"entrada.txt"
+#source	"entrada.grande.txt"
 
 	' * record((integer x int)x(character x char)) pair (offset 0)
 	' * [2,record((employees x [2,record((age x int))]))] acme (offset 3)
