@@ -1,0 +1,34 @@
+programa -> definiciones:Definicion* main:DefFuncion
+
+DefVariable:Definicion -> nombre:String tipo:Tipo
+DefFuncion:Definicion -> variablesLocales:DefVariable* cuerpo:Sentencias*
+
+Asignacion:sentencia -> variable:Expresion valor:Expresion
+Escritura:sentencia -> expresiones:Expresion*
+Invocacion:sentencia -> expresiones:Expresion* variable:Expresion lValue:boolean tipo:Tipo
+Lectura:sentencia -> expresiones:Expresion*
+Return:sentencia -> expresion:Expresion
+SentenciaIf:sentencia -> condicion:Expresion cuerpoIf:Expresion* cuerpoElse:Expresion*
+SentenciaWhile:sentencia -> condicion:Expresion sentencias:Expresion*
+      
+AccesoArray:expresion -> izq:Expresion der:Expresion
+AccesoCampo:expresion -> expresion:Expresion nombreCampo:String
+Aritmetica:expresion -> izq:Expresion operador:String der:Expresion
+Cast:expresion -> tipoCast:Tipo expresion:Expresion
+Comparacion:expresion -> izq:Expresion operador:String der:Expresion
+LiteralCaracter:expresion -> valor:char
+LiteralEntero:expresion -> valor:int
+LiteralReal:expresion -> valor:double
+Logica:expresion -> izq:Expresion operador:String der:Expresion
+MenosUnario:expresion -> operador:String expresion:Expresion
+Negacion:expresion -> operador:String expresion:Expresion
+Variable:expresion -> clave:String definicion:Definicion
+				  
+CampoRegistro:Tipo -> nombre:String tipo:Tipo
+TipoArray:Tipo -> tamaño:int tipo:Tipo
+TipoCaracter:Tipo ->
+TipoEntero:Tipo ->
+TipoFuncion:Tipo -> parametros:DefVariable* retorno:Tipo
+TipoReal:Tipo ->
+TipoRegistro:Tipo -> campos:Tipo*
+TipoVoid:Tipo ->
