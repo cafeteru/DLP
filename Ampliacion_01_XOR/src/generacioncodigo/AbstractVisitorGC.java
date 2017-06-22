@@ -160,7 +160,7 @@ public abstract class AbstractVisitorGC implements Visitor {
 	}
 
 	@Override
-	public Object visit(XOR xor, Object o) {
+	public Object visit(XOR xor, Object o) throws IllegalStateException {
 		throw new IllegalStateException();
 	}
 

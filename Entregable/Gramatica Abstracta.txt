@@ -1,7 +1,7 @@
 programa -> definiciones:Definicion*
 
 DefVariable:Definicion -> nombre:String tipo:Tipo
-DefFuncion:Definicion -> variablesLocales:DefVariable* cuerpo:Sentencias*
+DefFuncion:Definicion -> variablesLocales:DefVariable* cuerpo:Sentencias* tipo:Tipo
 
 Asignacion:Sentencia -> variable:Expresion valor:Expresion
 Escritura:Sentencia -> expresiones:Expresion*

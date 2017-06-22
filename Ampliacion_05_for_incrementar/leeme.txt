@@ -1,0 +1,502 @@
+############################ lexico.jflex ##############################
+
+// ************  Acciones ********************
+...
+for   				    { this.yylval = yytext();
+							return Parser.FOR; }
+"++"					{ this.yylval = yytext();
+							return Parser.AUMENTAR; }
+"--"					{ this.yylval = yytext();
+							return Parser.DISMINUIR; }
+
+############################ sintactico.y ##############################
+// * Declaraciones Yacc
+%token CTE_ENTERA CTE_REAL CTE_CARACTER
+%token READ WRITE WHILE IF ELSE FOR
+%token INT DOUBLE CHAR STRUCT 
+%token RETURN VOID MAIN ID 
+%token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD
+%token AUMENTAR DISMINUIR
+
+sentencia: ...
+		 | FOR '(' inicioFor ';'  finFor ';' pasoFor ')' cuerpoCondicional		                        {   $$ = new SentenciaFor(lexico.getLine(), lexico.getColumn(), (List<Sentencia>)$3, (Expresion)$5, (Sentencia)$7, (List<Sentencia>)$9);}
+         ;
+
+inicioFor: expresion '=' expresion																		{ 	$$ = new ArrayList<Sentencia>();
+																											Asignacion a = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$3); 
+																											((List<Sentencia>)$$).add(a);
+																										}
+		 | /*vacio*/																					{   $$ = new ArrayList<Sentencia>(); }
+		 ;
+
+finFor: expresionLogica																			        { 	$$ = $1;  }
+	  | expresionComparacion																		    { 	$$ = $1;  }
+	  ;
+
+pasoFor: expresion '=' expresionAritmetica																{ 	$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$3); }	
+	   | incre																							{   $$ = $1; }
+	   
+	   ;
+
+incre: expresion AUMENTAR 																	            {  	LiteralEntero a = new LiteralEntero(lexico.getLine(), lexico.getColumn(), 1);
+			 																								Aritmetica b = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "+", a);	 
+																											$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, b); 
+																										}
+	 | expresion DISMINUIR 																	            {  	LiteralEntero a = new LiteralEntero(lexico.getLine(), lexico.getColumn(), 1);
+			 																								Aritmetica b = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "-", a);	 
+																											$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, b); 
+																										}
+	 ;
+
+############################ SentenciaFor.java ##############################
+
+package ast.sentencias;
+
+import java.util.List;
+
+import ast.expresiones.Expresion;
+import ast.sentencias.util.SentenciaAbstracta;
+import visitor.Visitor;
+
+/**
+ * Clase que simula una sentencia for.
+ * 
+ * @author Iván González Mahagamage
+ */
+public class SentenciaFor extends SentenciaAbstracta {
+	private List<Sentencia> inicio;
+	private Expresion fin;
+	private Sentencia paso;
+	private List<Sentencia> sentencias;
+
+	public SentenciaFor(int linea, int columna, List<Sentencia> inicio,
+			Expresion fin, Sentencia paso, List<Sentencia> sentencias) {
+		super(linea, columna);
+		this.paso = paso;
+		this.fin = fin;
+		this.inicio = inicio;
+		this.sentencias = sentencias;
+	}
+
+	public Sentencia getPaso() {
+		return paso;
+	}
+
+	public void setPaso(Sentencia paso) {
+		this.paso = paso;
+	}
+
+	public Expresion getFin() {
+		return fin;
+	}
+
+	public void setFin(Expresion fin) {
+		this.fin = fin;
+	}
+
+	public List<Sentencia> getInicio() {
+		return inicio;
+	}
+
+	public void setInicio(List<Sentencia> inicio) {
+		this.inicio = inicio;
+	}
+
+	public List<Sentencia> getSentencias() {
+		return sentencias;
+	}
+
+	public void setSentencias(List<Sentencia> sentencias) {
+		this.sentencias = sentencias;
+	}
+
+	@Override
+	public String toString() {
+		return "SentenciaFor [paso=" + paso + ", fin=" + fin + ", inicio="
+				+ inicio + ", sentencias=" + sentencias + "]";
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+}
+
+############################ Expresion.java ##############################
+
+package ast.expresiones;
+
+import ast.NodoAST;
+import ast.tipos.Tipo;
+
+/**
+ * Interfaz para las expresiones.
+ * 
+ * @author Iván González Mahagamage
+ *
+ */
+public interface Expresion extends NodoAST {
+    ...
+
+	public boolean getFor();
+
+	public void setFor(boolean a);
+}
+
+############################ ExpresionAbstracta.java ##############################
+
+package ast.expresiones.util;
+
+import ast.expresiones.Expresion;
+import ast.tipos.Tipo;
+import ast.util.NodoPosicion;
+
+/**
+ * Implementación abstracta de la interfaz Expresion para implementar las partes
+ * comunes de todas las clases que heredan de esta interfaz.
+ * 
+ * @author Iván González Mahagamage
+ */
+public abstract class ExpresionAbstracta extends NodoPosicion
+		implements Expresion {
+	protected boolean lValue, fora;
+	protected Tipo tipo;
+
+	/**
+	 * Constructor con parámetros.
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la expresión.
+	 * @param columna
+	 *            Columna en la que se encuentra la expresión.
+	 */
+	public ExpresionAbstracta(int linea, int columna) {
+		super(linea, columna);
+		setFor(false);
+	}
+
+    ....
+
+	@Override
+	public boolean getFor() {
+		return fora;
+	}
+
+	@Override
+	public void setFor(boolean a) {
+		this.fora = a;
+	}
+
+}
+
+############################ Invocacion.java ##############################
+package ast.sentencias;
+
+import java.util.List;
+
+import ast.expresiones.Expresion;
+import ast.expresiones.Variable;
+import ast.sentencias.util.SentenciaAbstracta;
+import ast.tipos.Tipo;
+import visitor.Visitor;
+
+/**
+ * Clase que simula la invocación a un método con o sin parámetros.
+ * 
+ * @author Iván González Mahagamage
+ */
+public class Invocacion extends SentenciaAbstracta implements Expresion {
+	private List<Expresion> expresiones;
+	private Variable variable;
+	private boolean lValue, fora;
+	private Tipo tipo;
+
+	/**
+	 * Constructor con parámetros.
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la sentencía.
+	 * @param columna
+	 *            Columna en la que se encuentra la sentencía.
+	 * @param variable
+	 *            Variable (nombre) del método.
+	 * @param expresiones
+	 *            Parámetros del método.
+	 */
+	public Invocacion(int linea, int columna, Variable variable,
+			List<Expresion> expresiones) {
+		super(linea, columna);
+		this.variable = variable;
+		this.expresiones = expresiones;
+		setFor(false);
+	}
+
+	@Override
+	public boolean getFor() {
+		return fora;
+	}
+
+	@Override
+	public void setFor(boolean a) {
+		this.fora = a;
+	}
+
+}
+
+############################ Comparacion.java ##############################
+package ast.expresiones;
+
+import ast.expresiones.util.OperacionBinaria;
+import visitor.Visitor;
+
+/**
+ * Clase que representa una comparación entre dos expresiones.
+ * 
+ * @author Iván González Mahagamage
+ */
+public class Comparacion extends OperacionBinaria {
+
+	/**
+	 * Constructor con parámetros
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la expresión.
+	 * @param columna
+	 *            Columna en la que se encuentra la expresión.
+	 * @param izq
+	 *            Expresión izquierda.
+	 * @param operador
+	 *            Operador.
+	 * @param der
+	 *            Expresión derecha.
+	 */
+	public Comparacion(int linea, int columna, Expresion izq, String operador,
+			Expresion der) {
+		super(linea, columna, izq, operador, der);
+		setFor(true);
+	}
+
+	@Override
+	public String toString() {
+		return "Comparacion [operador=" + operador + ", linea=" + linea
+				+ ", columna=" + columna + ", getIzq()=" + getIzq()
+				+ ", getDer()=" + getDer() + "]";
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+}
+
+############################ Logica.java ##############################
+package ast.expresiones;
+
+import ast.expresiones.util.OperacionBinaria;
+import visitor.Visitor;
+
+/**
+ * Clase que representa una operación lógica.
+ * 
+ * @author Iván González Mahagamage
+ */
+public class Logica extends OperacionBinaria {
+
+	/**
+	 * Constructor con parámetros.
+	 * 
+	 * @param linea
+	 *            Linea en la que se encuentra la expresión.
+	 * @param columna
+	 *            Columna en la que se encuentra la expresión.
+	 * @param izq
+	 *            Expresión izquierda.
+	 * @param operador
+	 *            Operador.
+	 * @param der
+	 *            Expresión derecha.
+	 */
+	public Logica(int linea, int columna, Expresion izq, String operador,
+			Expresion der) {
+		super(linea, columna, izq, operador, der);
+		setFor(true);
+	}
+
+	@Override
+	public String toString() {
+		return "Logica [operador=" + operador + ", linea=" + linea
+				+ ", columna=" + columna + ", getIzq()=" + getIzq()
+				+ ", getDer()=" + getDer() + "]";
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+}
+
+############################ Visitor.java ##############################
+
+package visitor;
+
+import ast.Programa;
+import ast.definiciones.*;
+import ast.expresiones.*;
+import ast.sentencias.*;
+import ast.tipos.CampoRegistro;
+import ast.tipos.TipoArray;
+import ast.tipos.TipoCaracter;
+import ast.tipos.TipoEntero;
+import ast.tipos.TipoError;
+import ast.tipos.TipoFuncion;
+import ast.tipos.TipoReal;
+import ast.tipos.TipoRegistro;
+import ast.tipos.TipoVoid;
+
+public interface Visitor {
+	...
+
+	public Object visit(SentenciaFor sentenciaFor, Object o);
+}
+
+############################ VisitorAbstract.java ##############################
+
+package visitor.util;
+
+import ast.Programa;
+import ast.definiciones.*;
+import ast.expresiones.*;
+import ast.sentencias.*;
+import ast.tipos.*;
+import visitor.Visitor;
+
+public class VisitorAbstract implements Visitor {
+
+	...
+
+	@Override
+	public Object visit(SentenciaFor f, Object o) {
+		for (Sentencia e : f.getInicio())
+			e.accept(this, o);
+		f.getFin().accept(this, o);
+		f.getPaso().accept(this, o);
+		for (Sentencia e : f.getSentencias())
+			e.accept(this, o);
+		return null;
+	}
+}
+
+############################ VisitorComprobacionTipos.java ##############################
+
+package visitor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ast.definiciones.DefFuncion;
+import ast.definiciones.DefVariable;
+import ast.expresiones.*;
+import ast.sentencias.*;
+import ast.tipos.*;
+import visitor.util.VisitorAbstract;
+
+public class VisitorComprobacionTipos extends VisitorAbstract {
+
+	...
+
+	@Override
+	public Object visit(SentenciaFor f, Object o) {
+		for (Sentencia s : f.getInicio()) {
+			s.accept(this, o);
+			if (!s.esAsignacion())
+				new TipoError(f, "Error tipo SentenciaFor Inicio");
+		}
+		
+		f.getFin().accept(this, o);
+		if (!f.getFin().getFor())
+			f.getFin().setTipo(
+					new TipoError(f.getFin(), "Error tipo SentenciaFor Fin"));
+		
+		f.getPaso().accept(this, o);
+	
+		for (Sentencia e : f.getSentencias())
+			e.accept(this, o);
+		return null;
+	}
+}
+
+############################ AbstractVisitorGC.java ##############################
+package generacioncodigo;
+
+import ast.Programa;
+import ast.definiciones.*;
+import ast.expresiones.*;
+import ast.sentencias.*;
+import ast.tipos.*;
+import visitor.Visitor;
+
+public abstract class AbstractVisitorGC implements Visitor {
+
+	...
+
+	@Override
+	public Object visit(SentenciaFor sentenciaFor, Object o)
+			throws IllegalStateException {
+		throw new IllegalStateException();
+	}
+
+}
+
+############################ VisitorGCEjecutar.java ##############################
+
+package generacioncodigo;
+
+import ast.Programa;
+import ast.definiciones.DefFuncion;
+import ast.definiciones.DefVariable;
+import ast.definiciones.Definicion;
+import ast.expresiones.Expresion;
+import ast.sentencias.Asignacion;
+import ast.sentencias.Escritura;
+import ast.sentencias.Invocacion;
+import ast.sentencias.Lectura;
+import ast.sentencias.Return;
+import ast.sentencias.Sentencia;
+import ast.sentencias.SentenciaFor;
+import ast.sentencias.SentenciaIf;
+import ast.sentencias.SentenciaWhile;
+import ast.tipos.TipoEntero;
+import ast.tipos.TipoFuncion;
+import ast.tipos.TipoVoid;
+
+/**
+ * Sentencias
+ * 
+ * @author Iván González Mahagamage
+ */
+public class VisitorGCEjecutar extends AbstractVisitorGC {
+
+	...
+
+	@Override
+	public Object visit(SentenciaFor f, Object o) {
+		GC.comentarioSentencia("* For statement");
+		GC.line(f.getLinea());
+		int count = GC.getLabels(2);
+		for (Sentencia s : f.getInicio())
+			s.accept(this, o);
+		GC.etiqueta(count);
+		
+		f.getFin().accept(valor, o);
+		GC.convertirA(f.getFin().getTipo(), TipoEntero.getInstancia());
+		GC.jz(count + 1);
+		
+		for (Sentencia s : f.getSentencias()) {
+			s.accept(this, o);
+		}
+		f.getPaso().accept(this, o);
+		GC.jmp(count);
+		GC.etiqueta(count + 1);
+		return null;
+	}
+}

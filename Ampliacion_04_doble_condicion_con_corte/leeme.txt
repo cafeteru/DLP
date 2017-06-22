@@ -1,0 +1,270 @@
+#################################### lexico.jflex #######################
+// ************  Acciones ********************
+"//" .*			        { } 
+"/*" ~ "*/"        		{ }	
+{ Operador }			{ this.yylval = new Character(yytext().charAt(0)); 
+							return yytext().charAt(0); }
+"<<"					{ this.yylval = yytext();
+							return Parser.MENOR; }										
+">>"					{ this.yylval = yytext();
+							return Parser.MAYOR; }	
+
+#################################### sintactico.y #########################
+// * Declaraciones Yacc
+%token CTE_ENTERA CTE_REAL CTE_CARACTER
+%token READ WRITE WHILE IF ELSE 
+%token INT DOUBLE CHAR STRUCT 
+%token RETURN VOID MAIN ID 
+%token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD MENOR MAYOR
+
+// Más arriba, menos precedencia
+%right '=' 
+%left Y O 
+%left '>' MAYORIGUALQUE MENORIGUALQUE '<' DISTINTO IGUALDAD MENOR MAYOR
+%left '+' '-'
+%left '*' '/' '%'
+%right MENOS_UNARIO
+%right NEGACION
+%left CASTP
+%nonassoc '[' ']'
+%left '.'
+%nonassoc MENORQUEELSE
+%nonassoc ELSE
+%nonassoc '(' ')'
+%nonassoc '{' '}'
+
+expresion: ...		   
+         | expresion MAYOR expresion MAYOR expresion 									                { 	$$ = new CondicionDoble(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3, (Expresion) $5, ">");	}
+		 | expresion MENOR expresion MENOR expresion 									                { 	$$ = new CondicionDoble(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3, (Expresion) $5, "<");	}
+		 ;
+
+#################################### CondicionDoble.java #########################
+
+package ast.expresiones;
+
+import ast.expresiones.util.ExpresionAbstracta;
+import visitor.Visitor;
+
+public class CondicionDoble extends ExpresionAbstracta {
+	private Expresion izq, cen, der;
+	private String operador;
+
+	public CondicionDoble(int linea, int columna) {
+		super(linea, columna);
+	}
+
+	public CondicionDoble(int linea, int columna, Expresion izq, Expresion cen,
+			Expresion der, String operador) {
+		super(linea, columna);
+		this.izq = izq;
+		this.cen = cen;
+		this.der = der;
+		this.operador = operador;
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+
+	public Expresion getIzq() {
+		return izq;
+	}
+
+	public void setIzq(Expresion izq) {
+		this.izq = izq;
+	}
+
+	public Expresion getCen() {
+		return cen;
+	}
+
+	public void setCen(Expresion cen) {
+		this.cen = cen;
+	}
+
+	public Expresion getDer() {
+		return der;
+	}
+
+	public void setDer(Expresion der) {
+		this.der = der;
+	}
+
+	public String getOperador() {
+		return operador;
+	}
+
+	public void setOperador(String operador) {
+		this.operador = operador;
+	}
+
+	@Override
+	public String toString() {
+		return "CondicionDoble [izq=" + izq + ", cen=" + cen + ", der=" + der
+				+ ", linea=" + linea + ", columna=" + columna + "]";
+	}
+
+}
+
+#################################### Visitor.java #########################
+package visitor;
+
+import ast.Programa;
+import ast.definiciones.*;
+import ast.expresiones.*;
+import ast.sentencias.*;
+import ast.tipos.CampoRegistro;
+import ast.tipos.TipoArray;
+import ast.tipos.TipoCaracter;
+import ast.tipos.TipoEntero;
+import ast.tipos.TipoError;
+import ast.tipos.TipoFuncion;
+import ast.tipos.TipoReal;
+import ast.tipos.TipoRegistro;
+import ast.tipos.TipoVoid;
+
+public interface Visitor {
+	...
+
+	public Object visit(CondicionDoble condicionDoble, Object o);
+}
+
+#################################### VisitorAbstract.java #########################
+package visitor.util;
+
+import ast.Programa;
+import ast.definiciones.*;
+import ast.expresiones.*;
+import ast.sentencias.*;
+import ast.tipos.*;
+import visitor.Visitor;
+
+public class VisitorAbstract implements Visitor {
+
+	...
+
+	@Override
+	public Object visit(CondicionDoble c, Object o) {
+		c.getIzq().accept(this, o);
+		c.getCen().accept(this, o);
+		c.getDer().accept(this, o);
+		return null;
+	}
+}
+
+#################################### VisitorAbstract.java #########################
+package visitor.util;
+
+import ast.Programa;
+import ast.definiciones.*;
+import ast.expresiones.*;
+import ast.sentencias.*;
+import ast.tipos.*;
+import visitor.Visitor;
+
+public class VisitorAbstract implements Visitor {
+
+	....
+
+	@Override
+	public Object visit(CondicionDoble c, Object o) {
+		c.getIzq().accept(this, o);
+		c.getCen().accept(this, o);
+		c.getDer().accept(this, o);
+		return null;
+	}
+}
+
+
+#################################### VisitorComprobacionTipos.java #########################
+
+package visitor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ast.definiciones.DefFuncion;
+import ast.definiciones.DefVariable;
+import ast.expresiones.*;
+import ast.sentencias.*;
+import ast.tipos.*;
+import visitor.util.VisitorAbstract;
+
+public class VisitorComprobacionTipos extends VisitorAbstract {
+
+	...
+
+	@Override
+	public Object visit(CondicionDoble c, Object o) {
+		super.visit(c, o);
+		c.setLValue(false);
+		c.setTipo(c.getIzq().getTipo()
+				.logica(c.getCen().getTipo().logica(c.getDer().getTipo())));
+		if (c.getTipo() == null)
+			c.setTipo(new TipoError(c, "Error tipo doble condición -> "
+					+ c.getIzq() + " - " + c.getCen() + " - " + c.getDer()));
+		return null;
+	}
+}
+
+#################################### AbstractVisitorGC.java #########################
+
+package generacioncodigo;
+
+import ast.Programa;
+import ast.definiciones.*;
+import ast.expresiones.*;
+import ast.sentencias.*;
+import ast.tipos.*;
+import visitor.Visitor;
+
+public abstract class AbstractVisitorGC implements Visitor {
+    ....
+
+	public Object visit(CondicionDoble c, Object o)
+			throws IllegalStateException {
+		throw new IllegalStateException();
+	}
+
+}
+
+#################################### VisitorGCValor.java #########################
+package generacioncodigo;
+
+import ast.expresiones.*;
+import ast.sentencias.Invocacion;
+import ast.tipos.Tipo;
+import ast.tipos.TipoEntero;
+import ast.tipos.TipoFuncion;
+
+public class VisitorGCValor extends AbstractVisitorGC {
+	...
+
+	@Override
+	public Object visit(CondicionDoble a, Object o) {
+		int count = GC.getLabels(2);
+		Tipo mayor = a.getIzq().getTipo()
+				.Mayor(a.getCen().getTipo().Mayor(a.getDer().getTipo()));
+		a.getIzq().accept(this, o);
+		GC.convertirA(a.getIzq().getTipo(), mayor);
+		a.getCen().accept(this, o);
+		GC.convertirA(a.getCen().getTipo(), mayor);
+		GC.comparacion(a.getTipo(), a.getOperador());
+		GC.jz(count); // Si 0 ya no miro más
+		
+		a.getCen().accept(this, o);
+		GC.convertirA(a.getCen().getTipo(), mayor);
+		a.getDer().accept(this, o);
+		GC.convertirA(a.getCen().getTipo(), mayor);
+		GC.comparacion(a.getTipo(), a.getOperador());
+		GC.jmp(count + 1);
+		
+		GC.etiqueta(count);
+		GC.push(0);
+		
+		GC.etiqueta(count + 1);
+		return null;
+	}
+
+}

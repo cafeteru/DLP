@@ -1,0 +1,17 @@
+####################################### sintactico.y ######################################
+
+sentencia: expresion '=' expresion ';' 							                						{ 	$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$3); }			
+		 | WHILE '(' expresion ')' cuerpoCondicional													{ 	$$ = new SentenciaWhile(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5); }
+		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE									{ 	$$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, new ArrayList()); }
+		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 								{ 	$$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, (List<Sentencia>)$7); }
+		 | WRITE expresiones ';'																		{ 	$$ = new Escritura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2); }
+		 | READ expresiones ';'																			{ 	$$ = new Lectura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2); }
+		 | invocacion ';'																				{ 	$$ = $1; }
+		 | RETURN expresion ';'																			{ 	$$ = new Return(lexico.getLine(), lexico.getColumn(), (Expresion)$2); }
+		 | expresion '=' '(' expresion ')' '?' expresion ':' expresion ';' 								{ 	Asignacion a = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$7);
+		 																									Asignacion b = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$9);
+																											List<Sentencia> c = new ArrayList<>(); c.add(a);
+																											List<Sentencia> d = new ArrayList<>(); d.add(b);
+			 																								$$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$4, c, d);
+																										}
+         ;

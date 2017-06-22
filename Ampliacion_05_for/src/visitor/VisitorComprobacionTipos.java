@@ -206,27 +206,6 @@ public class VisitorComprobacionTipos extends VisitorAbstract {
 	}
 
 	@Override
-	public Object visit(SentenciaFor f, Object o) {
-		f.getInicio().accept(this, o);		
-		if(!f.getInicio().esAsignacion()) 
-			new TipoError(f, "Error tipo SentenciaFor Inicio");
-		
-		f.getFin().accept(this, o);
-		if (!f.getFin().getTipo().esLogico())
-			f.getFin().setTipo(new TipoError(f.getFin(),
-					"Error tipo SentenciaFor Fin"));
-		
-
-		f.getPaso().accept(this, o);
-		if(!f.getInicio().esAsignacion()) 
-			new TipoError(f, "Error tipo SentenciaFor Paso");
-		
-		for (Sentencia e : f.getSentencias())
-			e.accept(this, o);
-		return null;
-	}
-
-	@Override
 	public Object visit(SentenciaIf if1, Object o) {
 		if1.getCondicion().accept(this, o);
 		if (!if1.getCondicion().getTipo().esLogico())
@@ -235,6 +214,26 @@ public class VisitorComprobacionTipos extends VisitorAbstract {
 		for (Sentencia e : if1.getCuerpoIf())
 			e.accept(this, o);
 		for (Sentencia e : if1.getCuerpoElse())
+			e.accept(this, o);
+		return null;
+	}
+
+	@Override
+	public Object visit(SentenciaFor f, Object o) {
+		for (Sentencia s : f.getInicio()) {
+			s.accept(this, o);
+			if (!s.esAsignacion())
+				new TipoError(f, "Error tipo SentenciaFor Inicio");
+		}
+		
+		f.getFin().accept(this, o);
+		if (!f.getFin().getFor())
+			f.getFin().setTipo(
+					new TipoError(f.getFin(), "Error tipo SentenciaFor Fin"));
+		
+		f.getPaso().accept(this, o);
+	
+		for (Sentencia e : f.getSentencias())
 			e.accept(this, o);
 		return null;
 	}

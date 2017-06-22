@@ -1,0 +1,46 @@
+####################################### lexico.jflex #################################
+// ************  Patrones (macros) ********************
+ConstanteEntera = [0-9]+
+ConstanteReal = ([0-9]+\.[0-9]+ | [0-9]*\.[0-9]+ | [0-9]+\.[0-9]* | [0-9]+)((e|E)("+"|"-")?[0-9]+)?
+Identificador = [a-zA-ZáéíóúñÁÉÍÓÚÑ]+ [a-zA-Z0-9ZáéíóúñÁÉÍÓÚÑ_]*
+Operador = ["<"">"";"":""("")""[""]""{""}"",""=""+""-""*""/"".""!""?""%""<<"]
+CaracterASCII = '"\\"[0-9]+' 
+%%
+// ************  Acciones ********************
+"//" .*			        { } 
+"/*" ~ "*/"        		{ }	
+{ Operador }			{ this.yylval = new Character(yytext().charAt(0)); 
+							return yytext().charAt(0); }		
+"<<"					{ this.yylval = yytext();
+							return Parser.IGUALDADDOBLE; }
+
+####################################### sintactico.y #################################
+// * Declaraciones Yacc
+%token CTE_ENTERA CTE_REAL CTE_CARACTER
+%token READ WRITE WHILE IF ELSE 
+%token INT DOUBLE CHAR STRUCT 
+%token RETURN VOID MAIN ID 
+%token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD
+%token IGUALDADDOBLE
+
+// Más arriba, menos precedencia
+%right '='
+%left Y O 
+%left '>' MAYORIGUALQUE MENORIGUALQUE '<' DISTINTO IGUALDAD IGUALDADDOBLE
+%left '+' '-'
+%left '*' '/' '%'
+%right MENOS_UNARIO
+%right NEGACION
+%left CASTP
+%nonassoc '[' ']'
+%left '.'
+%nonassoc MENORQUEELSE
+%nonassoc ELSE
+%nonassoc '(' ')'
+%nonassoc '{' '}'
+
+expresion: ....
+         | expresion IGUALDADDOBLE expresion IGUALDADDOBLE expresion  									{ 	Logica a = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);
+			 																								$$ = new Logica(lexico.getLine(), lexico.getColumn(), a, "&&", (Expresion) $5);	
+																										}
+		 ;

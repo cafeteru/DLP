@@ -19,7 +19,6 @@ import ast.tipos.*;
 %token INT DOUBLE CHAR STRUCT 
 %token RETURN VOID MAIN ID 
 %token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD
-%token TERNARIO
 
 // Más arriba, menos precedencia
 %right '='

@@ -1,0 +1,143 @@
+######################### lexico.jflex ####################################
+"^^"                	{ this.yylval = yytext();
+							return Parser.X; }	
+######################### sintactico.y ###################################
+// * Declaraciones Yacc
+%token CTE_ENTERA CTE_REAL CTE_CARACTER
+%token READ WRITE WHILE IF ELSE 
+%token INT DOUBLE CHAR STRUCT 
+%token RETURN VOID MAIN ID 
+%token Y O X MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD
+
+// Más arriba, menos precedencia
+%right '='
+%left Y O X
+%left '>' MAYORIGUALQUE MENORIGUALQUE '<' DISTINTO IGUALDAD
+%left '+' '-'
+%left '*' '/' '%'
+%right MENOS_UNARIO
+%right NEGACION
+%left CASTP
+%nonassoc '[' ']'
+%left '.'
+%nonassoc MENORQUEELSE
+%nonassoc ELSE
+%nonassoc '(' ')'
+%nonassoc '{' '}'
+
+expresion: ...
+		| expresion X expresion  	{ 	$$ = new XOR(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "^^", (Expresion) $3);	}
+...
+;
+########################## XOR.java ###################################
+
+package ast.expresiones;
+
+import ast.expresiones.util.OperacionBinaria;
+import visitor.Visitor;
+
+public class XOR extends OperacionBinaria {
+
+	public XOR(int linea, int columna, Expresion izq, String operador,
+			Expresion der) {
+		super(linea, columna, izq, operador, der);
+	}
+
+	@Override
+	public Object accept(Visitor v, Object o) {
+		return v.visit(this, o);
+	}
+
+	@Override
+	public String toString() {
+		return "XOR [operador=" + operador + ", lValue=" + lValue + ", tipo="
+				+ tipo + ", linea=" + linea + ", columna=" + columna + "]";
+	}
+
+}
+
+############################# Visitor.java #################################
+
+package visitor;
+
+public interface Visitor {
+    .....
+
+	public Object visit(XOR xor, Object o);
+
+}
+
+############################# VisitorAbstract.java #################################
+package visitor.util;
+
+public class VisitorAbstract implements Visitor {
+    ..........
+	@Override
+	public Object visit(XOR xor, Object o) {
+		xor.getIzq().accept(this, o);
+		xor.getDer().accept(this, o);
+		return null;
+	}
+}
+
+############################# VisitorComprobacionTipos.java #################################
+
+package visitor;
+
+public class VisitorComprobacionTipos extends VisitorAbstract {
+    ........
+	@Override
+	public Object visit(XOR l, Object o) {
+		super.visit(l, o);
+		l.setLValue(false);
+		l.setTipo(l.getIzq().getTipo().logica(l.getDer().getTipo()));
+		if (l.getTipo() == null)
+			l.setTipo(new TipoError(l,
+					"Error tipo lógico -> " + l.getIzq() + " - " + l.getDer()));
+		return null;
+	}
+    .......
+}
+
+############################# AbstractVisitorGC.java #################################
+
+package generacioncodigo;
+
+public abstract class AbstractVisitorGC implements Visitor {
+    ....
+
+	@Override
+	public Object visit(XOR xor, Object o) throws IllegalStateException {
+		throw new IllegalStateException();
+	}
+}
+
+############################# VisitorGCValor.java #################################
+public class VisitorGCValor extends AbstractVisitorGC {
+    ............
+
+	@Override
+	public Object visit(XOR a, Object o) {
+		int count = GC.getLabels(2);
+		a.getIzq().accept(this, o);
+		a.getDer().accept(this, o);
+		GC.and();
+		GC.jnz(count);
+
+		a.getIzq().accept(this, o);
+		a.getDer().accept(this, o);
+		GC.or();
+		GC.jz(count);
+
+		GC.push(1);
+		GC.jmp(count + 1);
+
+		GC.etiqueta(count);
+
+		GC.push(0);
+
+		GC.etiqueta(count + 1);
+		return null;
+	}
+    ..................
+}

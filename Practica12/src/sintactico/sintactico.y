@@ -195,11 +195,13 @@ expresion: ID																							{ 	$$ = new Variable(lexico.getLine(), lexic
          | invocacion						 															{ 	$$ = $1;}
          | expresion '[' expresion ']'																	{ 	$$ = new AccesoArray(lexico.getLine(), lexico.getColumn(), (Expresion) $1, (Expresion) $3); }			   
          ;
+
 expresionAritmetica: expresion '+' expresion 															{ 	$$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "+", (Expresion) $3);		}
          | expresion '*' expresion  																	{ 	$$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "*", (Expresion) $3);		}
          | expresion '/' expresion  																	{ 	$$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "/", (Expresion) $3);		}
          | expresion '-' expresion 																		{ 	$$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "-", (Expresion) $3);		}
          | expresion '%' expresion 																		{ 	$$ = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "%", (Expresion) $3);		}
+		 ;
 
 expresionComparacion: expresion '>' expresion 															{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, ">", (Expresion) $3);	}
          | expresion '<' expresion  																	{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "<", (Expresion) $3);	}
@@ -207,10 +209,11 @@ expresionComparacion: expresion '>' expresion 															{ 	$$ = new Compara
          | expresion MENORIGUALQUE expresion 															{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "<=", (Expresion) $3);	}
          | expresion DISTINTO expresion 																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "!=", (Expresion) $3);	}
          | expresion IGUALDAD expresion  																{ 	$$ = new Comparacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "==", (Expresion) $3);	}
-
+		 ;
 expresionLogica: expresion Y expresion  																{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "&&", (Expresion) $3);	}
          | expresion O expresion 																		{ 	$$ = new Logica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "||", (Expresion) $3);	}
          | '!' expresion %prec NEGACION  																{ 	$$ = new Negacion(lexico.getLine(), lexico.getColumn(),  "!", (Expresion) $2);	}
+		 ;
          
 invocacion: ID '(' argumentosLlamada ')' 																{ 	$$ = new Invocacion(lexico.getLine(), lexico.getColumn(), new Variable(lexico.getLine(), lexico.getColumn(), (String)$1),(List<Expresion>)$3); 	}
 		   ;

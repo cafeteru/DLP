@@ -1,3 +1,29 @@
+%token CTE_ENTERA CTE_REAL CTE_CARACTER
+%token READ WRITE WHILE IF ELSE FOR
+%token INT DOUBLE CHAR STRUCT 
+%token RETURN VOID MAIN ID 
+%token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD
+
+// Más arriba, menos precedencia
+%right '='
+%left Y O 
+%left '>' MAYORIGUALQUE MENORIGUALQUE '<' DISTINTO IGUALDAD
+%left '+' '-'
+%left '*' '/' '%'
+%right MENOS_UNARIO
+%right NEGACION
+%left CASTP
+%nonassoc '[' ']'
+%left '.'
+%nonassoc MENORQUEELSE
+%nonassoc ELSE
+%nonassoc '(' ')'
+%nonassoc '{' '}'
+
+
+
+%%
+// * Gramática y acciones Yacc
 programa: definiciones VOID MAIN '(' ')' '{' declaraciones sentencias '}'
 definiciones: definiciones definicion
        |/*vacio*/

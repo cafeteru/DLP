@@ -1,0 +1,28 @@
+############################### lexico.jflex ######################
+"++"					{ this.yylval = yytext();
+							return Parser.INCREMENTAR; }	
+
+############################### sintactico.y ######################
+// * Declaraciones Yacc
+%token CTE_ENTERA CTE_REAL CTE_CARACTER
+%token READ WRITE WHILE IF ELSE 
+%token INT DOUBLE CHAR STRUCT 
+%token RETURN VOID MAIN ID 
+%token Y O MAYORIGUALQUE MENORIGUALQUE DISTINTO IGUALDAD
+%token INCREMENTAR
+
+.........
+
+sentencia: expresion '=' expresion ';' 							                						{ 	$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion)$1, (Expresion)$3); }			
+		 | WHILE '(' expresion ')' cuerpoCondicional													{ 	$$ = new SentenciaWhile(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5); }
+		 | IF '(' expresion ')' cuerpoCondicional %prec MENORQUEELSE									{ 	$$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, new ArrayList()); }
+		 | IF '(' expresion ')' cuerpoCondicional ELSE cuerpoCondicional 								{ 	$$ = new SentenciaIf(lexico.getLine(), lexico.getColumn(), (Expresion)$3, (List<Sentencia>)$5, (List<Sentencia>)$7); }
+		 | WRITE expresiones ';'																		{ 	$$ = new Escritura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2); }
+		 | READ expresiones ';'																			{ 	$$ = new Lectura(lexico.getLine(), lexico.getColumn(),(List<Expresion>)$2); }
+		 | invocacion ';'																				{ 	$$ = $1; }
+		 | RETURN expresion ';'																			{ 	$$ = new Return(lexico.getLine(), lexico.getColumn(), (Expresion)$2);}
+		 | expresion INCREMENTAR ';'																	{  	LiteralEntero a = new LiteralEntero(lexico.getLine(), lexico.getColumn(), 1);
+			 																								Aritmetica b = new Aritmetica(lexico.getLine(), lexico.getColumn(), (Expresion) $1, "+", a);	 
+																											$$ = new Asignacion(lexico.getLine(), lexico.getColumn(), (Expresion) $1, b); 
+																										}			   
+         ;

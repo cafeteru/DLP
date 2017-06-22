@@ -1,0 +1,1 @@
+En cada ampliación realizada, se encuentra un archivo léeme.txt donde se reflejan los cambios realizados para que esta funcione correctamente.
