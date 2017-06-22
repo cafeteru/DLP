@@ -1,15 +1,15 @@
-programa -> definiciones:Definicion* main:DefFuncion
+programa -> definiciones:Definicion*
 
 DefVariable:Definicion -> nombre:String tipo:Tipo
 DefFuncion:Definicion -> variablesLocales:DefVariable* cuerpo:Sentencias*
 
-Asignacion:sentencia -> variable:Expresion valor:Expresion
-Escritura:sentencia -> expresiones:Expresion*
-Invocacion:sentencia -> expresiones:Expresion* variable:Expresion lValue:boolean tipo:Tipo
-Lectura:sentencia -> expresiones:Expresion*
-Return:sentencia -> expresion:Expresion
-SentenciaIf:sentencia -> condicion:Expresion cuerpoIf:Expresion* cuerpoElse:Expresion*
-SentenciaWhile:sentencia -> condicion:Expresion sentencias:Expresion*
+Asignacion:Sentencia -> variable:Expresion valor:Expresion
+Escritura:Sentencia -> expresiones:Expresion*
+Invocacion:Sentencia -> expresiones:Expresion* variable:Expresion
+Lectura:Sentencia -> expresiones:Expresion*
+Return:Sentencia -> expresion:Expresion
+SentenciaIf:Sentencia -> condicion:Expresion cuerpoIf:Sentencia* cuerpoElse:Sentencia*
+SentenciaWhile:Sentencia -> condicion:Expresion sentencias:Sentencia*
       
 AccesoArray:expresion -> izq:Expresion der:Expresion
 AccesoCampo:expresion -> expresion:Expresion nombreCampo:String
