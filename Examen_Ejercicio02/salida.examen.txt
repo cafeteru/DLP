@@ -1,0 +1,109 @@
+
+#source	"entrada.examen.bien.txt"
+
+
+' Invocation to the main function
+call main
+halt
+
+
+#line	1
+
+ f3:
+	' * Parameters
+	' * real p1 (offset 7)
+	' * int p2 (offset 5)
+	' * char p3 (offset 4)
+	' * Local variables
+	enter	0
+
+#line	2
+	' * Write
+	push	bp
+	pushi	7
+	addi
+	loadf
+	outf
+
+#line	3
+	' * Write
+	push	bp
+	pushi	5
+	addi
+	loadi
+	outi
+
+#line	4
+	' * Write
+	push	bp
+	pushi	4
+	addi
+	loadb
+	outb
+	ret	0, 0, 7
+
+#line	7
+
+ main:
+	' * Parameters
+	' * Local variables
+	enter	0
+
+#line	8
+	pushi	0
+	i2f
+	pushi	2
+	pushb	51
+	call	f3
+
+#line	9
+	' * Write
+	pushb	10
+	outb
+
+#line	10
+	pushf	0.1
+	pushi	0
+	pushb	51
+	call	f3
+
+#line	11
+	' * Write
+	pushb	10
+	outb
+
+#line	12
+	pushf	1.1
+	pushi	2
+	pushb	48
+	call	f3
+
+#line	13
+	' * Write
+	pushb	10
+	outb
+
+#line	14
+	pushi	0
+	i2f
+	pushi	0
+	pushb	51
+	call	f3
+
+#line	15
+	' * Write
+	pushb	10
+	outb
+
+#line	16
+	pushi	0
+	i2f
+	pushi	0
+	pushb	48
+	call	f3
+
+#line	17
+	' * Write
+	pushb	10
+	outb
+	ret	0, 0, 0

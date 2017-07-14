@@ -1,0 +1,47 @@
+
+#source	"entrada.peque.txt"
+
+
+' Invocation to the main function
+call main
+halt
+
+
+#line	2
+
+ a:
+	' * Parameters
+	' * int edad (offset 8)
+	' * real sueldo (offset 4)
+	' * Local variables
+	enter	0
+
+#line	3
+	' * Write
+	push	bp
+	pushi	8
+	addi
+	loadi
+	outi
+
+#line	4
+	' * Write
+	push	bp
+	pushi	4
+	addi
+	loadf
+	outf
+	ret	0, 0, 6
+
+#line	7
+
+ main:
+	' * Parameters
+	' * Local variables
+	enter	0
+
+#line	8
+	pushi	5
+	pushf	5.5
+	call	a
+	ret	0, 0, 0

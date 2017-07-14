@@ -1,0 +1,18 @@
+void f3(double p1, int p2, char p3){
+	write p1;
+	write p2;
+	write p3;
+}
+
+void main(){
+ f3(p2:2, p3:'3');
+ write '\n';
+ f3(p3:'3', p1:0.1);
+ write '\n';
+ f3(p1:1.1, p2:2);
+ write '\n';
+ f3(p3:'3');
+ write '\n';
+ f3();
+ write '\n';
+ }

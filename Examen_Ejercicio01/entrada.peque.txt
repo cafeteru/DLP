@@ -1,0 +1,10 @@
+// * Main program
+void a(int edad, double sueldo){
+ write edad;
+ write sueldo;
+}
+
+void main() {
+  a(edad:5, sueldo:5.5);
+}
+	
